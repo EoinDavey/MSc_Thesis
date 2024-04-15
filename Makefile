@@ -1,15 +1,16 @@
 .PHONY: default clean
 
-ASSETS := uvalogo.pdf UvaLogoTekst.pdf uvamath.cls
+CHAPTERS := $(wildcard chapters/*.tex)
+ASSETS := $(wildcard asssets/*)
 
 default: build/thesis.pdf
 
 clean:
 	rm -rf build/
 
-build/thesis.pdf: thesis.tex ${ASSETS}
+build/thesis.pdf: thesis.tex uvamath.cls macros.sty zotero.bib ${ASSETS} ${CHAPTERS}
 	docker run --rm \
 		-v "${CURDIR}:/workdir" \
 		-e TEX_UID=$$(id -u) \
-		--entrypoint=/workdir/Docker/entrypoint.sh \
-		texlive/texlive latexmk -output-directory=build -xelatex thesis.tex
+		thesis-tex \
+		latexmk -output-directory=build -xelatex thesis.tex

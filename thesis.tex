@@ -5,7 +5,17 @@
 \usepackage[english]{babel}
 
 \usepackage{graphicx}
+\graphicspath{{assets/}}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage[pdfborder={0 0 0}]{hyperref}
+
+\usepackage[
+    style=numeric-comp]{biblatex}
+\addbibresource{zotero.bib}
+
+\input{macros.sty}
 
 \title{Local Flag Algebras: Bounding the Strong Chromatic Index} % Title of your thesis
 \author[eoin.davey@student.uva.nl, 14246287]{Eoin Davey} %Your name, email and student number
@@ -20,6 +30,10 @@
 \secondexaminer{Dr. K. Guo} %This is the name of the second examiner, for the second page
 \date{July 19, 2024} %This is the examination date, i.e. the date of your thesis presentation
 
+\newtheorem{theorem}{Theorem}
+\newtheorem*{knowntheorem}{Theorem}
+\newtheorem{conjecture}{Conjecture}
+
 \begin{document}
 \maketitle
 
@@ -29,9 +43,7 @@ Scientific abstract (5-10 lines)
 
 \tableofcontents
 
-\chapter*{Introduction}
-\addcontentsline{toc}{chapter}{Introduction}
-Here you should write your scientific introduction, giving an overview of the results, and their broader context (typically 2 to 5 pages).
+\include{chapters/introduction}
 
 \chapter{First Chapter}
 [Text for first chapter]
@@ -41,10 +53,6 @@ Here you should write your scientific introduction, giving an overview of the re
 \addcontentsline{toc}{chapter}{Popular summary}
 Popular summary (half to one page, in English or Dutch, accessible to a first year bachelor student in mathematics)
 
-
-\begin{thebibliography}{10}
-\addcontentsline{toc}{chapter}{Bibliography}
-\bibitem{Article1} Article 1 by Author 1
- \end{thebibliography}
+\printbibliography{}
 
 \end{document}
