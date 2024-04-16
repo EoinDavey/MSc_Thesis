@@ -4,16 +4,20 @@
 \documentclass{uvamath}
 \usepackage[english]{babel}
 
+
 \usepackage{graphicx}
 \graphicspath{{assets/}}
+\usepackage{graphbox}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage[pdfborder={0 0 0}]{hyperref}
 
+\usepackage{csquotes,xpatch} % Recommended by biblatex
 \usepackage[
-    style=numeric-comp]{biblatex}
+    style=numeric]{biblatex}
 \addbibresource{zotero.bib}
+\addbibresource{manual.bib}
 
 \input{macros.sty}
 
@@ -33,6 +37,7 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem*{knowntheorem}{Theorem}
 \newtheorem{conjecture}{Conjecture}
+\newtheorem*{note}{Note}
 
 \begin{document}
 \maketitle

@@ -3,10 +3,10 @@
 
 Consider a simple\footnote{An undirected graph with no self loops and at most 1 edge between any two nodes} graph $G$. How many colours do you need to colour each edge such that no edges which touch
 have the same colour? What if no edges which even touch some common edge can have the same colour?
-Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ edges, but
-the best known proof only shows an upper bound of $1.772\Delta(G)^2$ edges. In this thesis
-we show how we can bring this bound down to $1.73\Delta(G)^2$ by introducing a new framework
-which is a modification of the flag algebras framework.
+Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colours, but
+the best known proof only shows an upper bound of $1.772\Delta(G)^2$ colours. In this thesis
+we show how we can bring this bound down to $1.73\Delta(G)^2$ by introducing a novel framework
+which is a modification of Razborov's flag algebras framework.
 
 \section*{Strong Edge Colouring}
 \addcontentsline{toc}{section}{Strong Edge Colouring}
@@ -33,12 +33,12 @@ is the corresponding minimum number of colours required for a strong edge colour
 
 Vizing's theorem is a well known result which tells us $\chi'(G)$ almost exactly in terms of
 the max degree of the graph $\Delta(G)$:
-\begin{knowntheorem}[Vizing, 1965]
+\begin{knowntheorem}[Vizing, 1965 \cite{Vizing_1965}]
     $\Delta(G) \leq \chi'(G) \leq \Delta(G) + 1$.
 \end{knowntheorem}
-Erd\H{o}s and Nešetřil conjectured in 1985 \cite{faudreeInducedMatchingsBipartite1989} that
+Erd\H{o}s and Nešetřil conjectured in 1985 that
 the strong chromatic index can also be bounded precisely by a function of the max degree:
-\begin{conjecture}[Erd\H{o}s and Nešetřil]
+\begin{conjecture}[Erd\H{o}s and Nešetřil \cite{faudreeInducedMatchingsBipartite1989}]
     \label{conj:erdos-nesetril}
     $\chi'_s(G) \leq \frac{5}{4}\Delta(G)^2$.
 \end{conjecture}
@@ -75,7 +75,9 @@ The 1997 paper by Molloy \& Reed introduced a method for strong edge colouring w
 This method has been modified by the papers which followed the Molloy \& Reed paper but this
 strategy has remained the core idea. We will look at this strategy in more detail (including
 defining strong neighbourhood density) in chapter TODO.
-For this thesis we focus on the first step, using the second step as a black box.
+For this thesis we focus on the first step, using the second step as a black box. We will
+find a new, lower, upper-bound on the strong neighbourhood density and hence achieve our
+new colouring number.
 
 % Given an edge $e\in E(G)$ we define the \textit{strong neighbourhood} of $e$,
 % denoted $N_e(G)\subseteq E(G)$, to be all those edges $f\in E(G)$ which are at distance
@@ -94,21 +96,161 @@ For this thesis we focus on the first step, using the second step as a black box
 \section*{Flag Algebras}
 \addcontentsline{toc}{section}{Flag Algebras}
 
-Step 1 of the above method
-asks us to find an upper bound on the strong neighbourhood density. Bounding densities
+Step 1 of the 2-step strategy
+asks us to find an upper bound on the strong neighbourhood density. The strong neighbourhood
+density belongs to a broad family of density functions which ask: How many copies of some
+structure $F$ do we find in some larger structure $G$, expressed as a real number $\in [0,1]$?
+For example the density of edges in some graph $G$ is $|E(G)|/\binom{|G|}{2}$.
+
+Bounding densities
 is a common problem in combinatorics and in 2007 Razborov \cite{razborovFlagAlgebras2007}
 introduced a framework called \textit{flag algebras}
 which can be used to prove asymptotic results about densities in various combinatorial structures.
-
-These flag algebras are a syntactic tool which enables us to use computer search (in particular
-the semidefinite method) in order to rigorously prove bounds on density functions.
-They do this by capturing the algebraic relationships between the densities of small structures
-into a symbolic algebra. Search methods can then apply standard algebraic identities and
-tools such as Cauchy-Schwarz inequalities to prove bounds on density functions.
-
 These flag algebras are defined very generally in terms of finite model theory in \cite{razborovFlagAlgebras2007} but we focus on their use with respect to simple graphs.
+
+We give a brief flavour of flag algebras here but defer a full exploration until chapter TODO.
+
+\subsection*{A motivating example}
+
+As a reminder, for a graph $G$ and subset of vertices $U\subseteq V(G)$ the \textit{induced subgraph}
+$G[U]$ is the subgraph of $G$ consisting of the vertices in $U$ and all edges between them.
+
+We can then define the \textit{induced count} of $F$ in $G$, denoted $c(F; G)$ as
+the number of subsets $U\subseteq V(G)$ such that $G[U] \cong F$. Then we define the
+\textit{induced density} as $p(F; G) := c(F; G) / \binom{|G|}{|F|}$.
+
+\begin{note}
+    $p(F; G)$ is precisely the same as the probability that $G[U] \cong F$ if
+    $U \subseteq V(G)$ is a uniformly random subset of size $|F|$.
+\end{note}
+
+What are some simple algebraic relationships between small subgraphs?
+One thing that seems intuitive is that the density of edges in $G$ plus the density
+of non-edges in $G$ is precisely 1. Similarly the densities of all possible graphs on
+3 vertices is also 1.
+\begin{align*}
+    p(\edge; G) + p(\nonedge; G) &= 1\\
+    p(\triangleflag; G)
+    + p(\triangletwoedge; G)
+    + p(\triangleoneedge; G)
+    + p(\triangleempty; G) &= 1
+\end{align*}
+
+The density of edges is the probability that if we pick a pair of vertices, there is an
+edge between them. We can relate this to the densities of graphs on 3 vertices by remarking
+that sampling a pair of vertices uniformly at random can be done by first sampling a
+triple of vertices at random, and then sampling 2 of those 3 uniformly again. This gives
+us the following relation:
+\[
+    p(\edge; G) = 
+    p(\triangleflag; G)
+    + \frac{2}{3}p(\triangletwoedge; G)
+    + \frac{1}{3}p(\triangleoneedge; G)
+    + 0\cdot p(\triangleempty; G)
+\]
+A similar thought experiment relating sampling two pairs uniformly at random to sampling 4
+vertices and then splitting the 4 randomly into two halves tells us:
+\[
+    p(\edge; G)^2 \sim p(\kfour; G) + \frac{2}{3}(p(\kfourmone; G) + p(\cfour; G))
+        + \frac{1}{3}(p(\kfourmtwo; G) + p(\kfourbucket; G) + p(\kfourtwopair; G))
+\]
+
+Simplifying our notation then we might describe a symbolic algebra which has relations
+like
+\begin{align*}
+    \edge + \nonedge &= 1\\
+    \triangleflag
+    + \triangletwoedge
+    + \triangleoneedge
+    + \triangleempty &= 1\\
+    \edge &=
+    \triangleflag
+    + \frac{2}{3}\triangletwoedge
+    + \frac{1}{3}\triangleoneedge\\
+    \edge^2 &=
+    \kfour + \frac{2}{3}(\kfourmone + \cfour)
+        + \frac{1}{3}(\kfourmtwo + \kfourbucket + \kfourtwopair).
+\end{align*}
+
+We can then prove results with simple symbolic manipulation: In a triangle free graph
+we would have $\triangleflag = 0$, hence
+\[
+    \edge = \frac{2}{3}\triangletwoedge + \frac{1}{3}\triangleoneedge \leq
+    \frac{2}{3}(\triangletwoedge + \triangleoneedge)
+    \leq \frac{2}{3}(\triangleflag + \triangletwoedge + \triangleoneedge + \triangleempty)
+    \leq \frac{2}{3}
+\]
+as flags are non-negative. This (given all the formal definitions we've deferred) is a formal proof
+that $p(\edge; G) \leq \frac{2}{3}$ for any triangle free graph. The best possible result
+says that $p(\edge; G) \leq \frac{1}{2}$ and is known as
+\textit{Mantel's theorem} \cite{Mantel_1910}. This is
+also easily proved with flag algebras, which is seen in chapter TODO.
+
+\subsection*{Computer Search}
+
+One of the most (if not \textbf{the most}) important, aspects of flag algebras is that
+they lend themselves very well to computer search methods.
+
+The flag algebras allow us to prove results using only simple symbol manipulation in a very
+tractable way; All details of the structures at play are abstracted out, only algebraic relations
+between real numbers remains. We then have several tools at our disposal, in particular
+linear combinations of flag inequalities can capture complex counting arguments, and
+we will see later an operator on the algebra which enables us to use Cauchy-Schwarz style
+arguments.
+
+In practice we use the \textit{semidefinite method} to optimise some objective function
+over the algebra, and due to duality this gives us a rigorous proof of an upper bound on our
+function.
+
+We will see in chapter TODO how we construct the semidefinite program, and how we can interpret
+the dual solutions in a more human understandable way.
+
+\section*{Local Flags}
+\addcontentsline{toc}{section}{Local Flags}
 
 One might be tempted to try to apply these flag algebras directly to our strong neighbourhood
 density problem but in practice this problem doesn't fit well into the flag algebra model.
-Instead, this thesis introduces a modification of the flag algebra framework which can prove
-results in problems of the flavour we are interested in.
+
+In particular, Razborov's flag algebras are constructed to work well with density functions
+like the induced density function $p(F; G) = c(F; G)/\binom{|G|}{|F|}$ which have a
+denominator which is $\Theta(|G|^{|F|})$. This is convenient if we are trying to prove
+a bound on some function which is polynomial in $|G|$
+(e.g. Mantel's theorem says the number of edges is $\leq \frac{1}{4}|G|^2$). But what if
+we want to prove a bound on a function which is polynomial in some other function
+of $G$? e.g. The \hyperref[conj:erdos-nesetril]{Erd\H{o}s-Nešetřil Conjecture}
+wants to bound $\chi'_s(G)$ with a polynomial in $\Delta(G).$ This does not lend itself
+to the same methods.
+
+Instead, we can define a new "density" function which instead normalises our induced
+count by a different denominator, one which captures the graph parameter we want to measure
+our count "relative to". What happens when we do this?
+
+One immediate consequence is that we no longer necessarily have output $\in [0,1]$. In
+fact our range becomes $\R_{\geq 0}$. This has the clear effect of destroying our nice
+probabilistic interpretation, but it also means many of the nice properties that make
+the classic flag algebras work so well are gone.
+
+However, it turns out it is still possible to work without these nice properties.
+This thesis introduces a novel framework which is a modification of the classic flag algebra
+method which is still capable of proving strong bounds on these new modified density functions.
+
+In particular in chapter TODO we introduce a
+new \textit{local density function} and a concept we call a \textit{local flag}.
+We show that, under certain conditions, these local flags also form a nice algebra
+with which we can apply the semidefinite method to prove bounds.
+
+\section*{Results}
+\addcontentsline{toc}{section}{Results}
+
+Using this new framework we have made progress on several open problems:
+\begin{itemize}
+    \item In chapter TODO we show a "warmup" application of the new framework by making progress on
+        a modification of the famous Erd\H{o}s' pentagon conjecture \cite{erdos_pentagon_1984}.
+        This problem was chosen as the original conjecture was first proven in 2012 using
+        the classic flag algebras \cite{grzesikMaximumNumberFivecycles2012}.
+    \item In chapter TODO then we will apply this new framework to make progress on the
+        \hyperref[conj:erdos-nesetril]{Erd\H{o}s-Nešetřil Conjecture}, achieving the best-yet
+        bound of $\chi'_s(G) \leq 1.73\Delta(G)^2$.
+    \item We continue then in chapter TODO to make the first progress on the bipartite version of
+        the same conjecture. TODO WHAT IS THE BOUND.
+\end{itemize}
