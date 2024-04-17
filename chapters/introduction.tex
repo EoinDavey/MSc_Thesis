@@ -79,20 +79,6 @@ For this thesis we focus on the first step, using the second step as a black box
 find a new, lower, upper-bound on the strong neighbourhood density and hence achieve our
 new colouring number.
 
-% Given an edge $e\in E(G)$ we define the \textit{strong neighbourhood} of $e$,
-% denoted $N_e(G)\subseteq E(G)$, to be all those edges $f\in E(G)$ which are at distance
-% $\leq 2$ from $e$ (i.e. those relevant to strong edge colouring). Consider all pairs of
-% distinct edges $f, f' \in N_e(G)$, some of these pairs of edges are themselves at distance $\leq 2$ to
-% each other. Call the total number of such pairs $F(e)$ and note
-% $F(e) \leq \binom{2\Delta(G)^2}{2}$.
-% We define then the \textit{strong neighbourhood density}
-% to be $F(e) / \binom{2\Delta(G)^2}{2}$ which is some real number $\in[0, 1]$.
-% 
-% If we think of the strong neighbourhood of $e$ as the set of edges which conflict with $e$
-% in strong edge colouring, then the strong neighbourhood density at $e$ tells us how
-% many of those edges which conflict with $e$ conflict with each other. Intuitively then
-% the lower this number, the easier the colouring problem should be.
-
 \section*{Flag Algebras}
 \addcontentsline{toc}{section}{Flag Algebras}
 
@@ -108,9 +94,11 @@ introduced a framework called \textit{flag algebras}
 which can be used to prove asymptotic results about densities in various combinatorial structures.
 These flag algebras are defined very generally in terms of finite model theory in \cite{razborovFlagAlgebras2007} but we focus on their use with respect to simple graphs.
 
-We give a brief flavour of flag algebras here but defer a full exploration until chapter TODO.
+We give a brief flavour of flag algebras here but defer a full exposition until
+chapter \ref{chap:classic_flags}.
 
 \subsection*{A motivating example}
+\label{sec:motivating_example}
 
 As a reminder, for a graph $G$ and subset of vertices $U\subseteq V(G)$ the \textit{induced subgraph}
 $G[U]$ is the subgraph of $G$ consisting of the vertices in $U$ and all edges between them.

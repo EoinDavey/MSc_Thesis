@@ -32,12 +32,15 @@
 \supervisors{Dr. J.R. Kang} %This is the list of supervisors for the second page, seperate with comma
 
 \secondexaminer{Dr. K. Guo} %This is the name of the second examiner, for the second page
-\date{July 19, 2024} %This is the examination date, i.e. the date of your thesis presentation
+\date{June 28, 2024} %This is the examination date, i.e. the date of your thesis presentation
 
-\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
 \newtheorem*{knowntheorem}{Theorem}
 \newtheorem{conjecture}{Conjecture}
 \newtheorem*{note}{Note}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem*{example}{Example}
 
 \begin{document}
 \maketitle
@@ -50,9 +53,7 @@ Scientific abstract (5-10 lines)
 
 \include{chapters/introduction}
 
-\chapter{First Chapter}
-[Text for first chapter]
-
+\include{chapters/classic_flags}
 
 \chapter*{Popular summary}
 \addcontentsline{toc}{chapter}{Popular summary}
