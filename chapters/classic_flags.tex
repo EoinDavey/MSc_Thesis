@@ -6,36 +6,59 @@ graphs. If the reader is already familiar with flag algebras this section can be
 
 In the second section we will discuss how the semidefinite method is applied to flag algebras.
 The method we use is slightly different to the method used in other works
-(e.g. \cite{silvaFlagAlgebrasFirst2016}) but is more easily adapted to our new framework.
+(e.g. \cite{silvaFlagAlgebrasFirst2016}) but is more easily adapted to our new framework. This
+section may be of interest even to a reader familiar with flag algebras.
 
 \section{Flag Algebras}
 
-All the following definitions are concepts from \cite{razborovFlagAlgebras2007}, rephrased
+All the following definitions, theorems etc.
+are concepts from \cite{razborovFlagAlgebras2007}, rephrased
 to focus only on the simple graph case.
 For similar introductions to flag algebras we point the reader to
 \textit{Flag Algebras: A First Glance} by Silva, Filho and Sato
 \cite{silvaFlagAlgebrasFirst2016} and \textit{A Brief Introduction to Flag Algebra} by Qi
 \cite{qiBriefIntroductionFlag}.
 
-In our \hyperref[sec:motivating_example]{example} we only discussed counting how many copies of
-some $F$ are in some larger
-graph $G$, but in practice we often want to be able to ask how many copies are
-there of $F$ in $G$ where we force some part of $F$ to be mapped to a specific part of $G$.
-For example, if $F=\edge$ and $G$ is any graph then $c(F; G) = |E(G)|$, but if we pick
-some vertex $v\in V(G)$ and ask how many copies of $\edge$ are there in $G$ such that the first
-vertex in $\edge$ is mapped to $v$ then we get $c(F; G) = \deg v$. This ability to pin down certain
-vertices is what really unlocks the potential of flags.
+We saw in the \hyperref[sec:motivating_example]{motivating example} above that we want
+to construct a symbolic algebra out of small graphs with some nice properties:
+\begin{itemize}
+    \item We would like the algebraic operations
+        to be easily computable\footnote{at least with some computer software assistance}.
+    \item We want the algebra to describe true relationships about densities in large graphs.
+        i.e. If $A + B \geq C^2\cdot D$ is a true statement in our algebra
+        then that must imply that $p(A; G) + p(B; G) \geq p(C; G)^2 \cdot p(D; G)$ for any $G$ large
+        enough.
+\end{itemize}
 
-We will represent this action of fixing some subset of vertices by partial labelling,
-and just as in our \hyperref[sec:motivating_example]{motivating example} we will create
-a algebra out of some small graphs, in a such a way that symbolic operations capture
-algebraic relations between the densities of the underlying graphs.
+When we defined the induced count $c(F; G)$ we counted all possible instances of $F$
+in $G$; Sometimes we want to only consider a subset of those instances, those where
+we force some fixed vertices in $F$ to be mapped to some fixed vertices in $G$.
+(e.g. if we count the copies of $\edge$ in $G$ where we force the first vertex to be mapped
+to some fixed $v\in V(G)$ then $c(F; G) = \deg v$). This motivates the last desirable
+properties of our algebra.
+
+\begin{itemize}
+    \item We would like our symbolic algebra to be able to capture densities where we have fixed
+        some vertices.
+    \item We want to be able to relate these "fixed" densities to the un-fixed densities.
+\end{itemize}
+
+Razborov's flags algebras give us all these nice properties. This section covers the
+basic formalisms; Introducing a density function which accounts for pre-fixing some vertices,
+defining what it means for something to hold "for large graphs", defining the actual
+flag algebras with their properties, introducing an ordering $\geq$ and finally
+covering the averaging operator which
+relates "fixed vertex" densities to their un-fixed counterparts.
 
 \subsection{Flags}
 
 The fundamental object of our algebra is the \textit{flag} which is a partially
 labelled graph, meaning some of the vertices of the graph have integer labels assigned to
-them. The \textit{type} of the flag then is the subgraph induced by the labelled vertices.
+them\footnote{The term flag apparently refers to the fact that some of the graph is fixed and the rest hangs loose, like a flag in the wind}. There may be no labelled vertices.
+The labelled vertices will correspond then to those vertices which are fixed when we count
+copies of the graph in some larger graph.
+
+The \textit{type} of the flag is the subgraph induced by the labelled vertices.
 In figure \ref{fig:flags-types} we see some example flags and their types. The labelled vertices
 are represented visually with a partially filled vertex.
 
@@ -86,9 +109,10 @@ the introduction.
 \subsection{Induced Counts and Density}
 
 In the introduction we defined the induced count $c(F; G)$ to be the number of
-$U\subseteq V(F)$ such that $G[U] \cong F$. We need to adapt this notion now to handle
-labelled vertices which must be preserved by the isomorphism. In particular if $G[U] \cong F$
-then $U$ must contain the labelled vertices of $G$.
+$U\subseteq V(F)$ such that $G[U] \cong F$. If both $F$ and $G$ are partially labelled
+and have the same type (so are "compatible"), then we
+can ask how many copies of $F$ are there in $G$ where the fixed part of $F$ maps to the
+fixed part in $G$.
 
 \begin{definition}[Induced Count]
     Fix two $\sigma$-flags $(F,\theta), (G,\eta).$ We define the induced count of $(F,\theta)$ in
@@ -97,8 +121,8 @@ then $U$ must contain the labelled vertices of $G$.
     $(F,\theta) \cong (G[U], \eta)$.\footnote{Where we restrict the codomain of $\eta$ appropriately}
 \end{definition}
 
-We can extend this notion of counting how many copies of $F$ there are in $G$ to ask
-how many tuples of disjoint copies of $F_1, \dots, F_t$ are there in $G$ (where
+We can extend this notion of counting how many copies of $F$ there are in $G$ to multiple flags,
+asking how many tuples of disjoint copies of $F_1, \dots, F_t$ are there in $G$ (where
 disjoint means vertex-disjoint apart from the fixed labelled vertices).
 
 Precisely we define $c(F_1, \dots, F_t; G)$ to be the number of
@@ -118,8 +142,7 @@ disjoint copies of $F_1, \dots, F_t$ leading us to the following definition.
     just a graph with a specific distinguished vertex (the unique labelled vertex).
 
     Consider then the $\sigma$-flag $F=\edgemarked$, an edge with a single labelled vertex.
-    For any $G$ with distinguished vertex $v$, $c(\edgemarked; G) = \deg_G(v)$ as explained
-    above.
+    For any $G$ with distinguished vertex $v$ we have $c(\edgemarked; G) = \deg_G(v)$.
 
     Similarly, $c(\edgemarked, \edgemarked; G) = \binom{\deg(v)}{2}.$ This is as
     we are counting how many distinct pairs of vertices $(a, b)$ are there in $G$ such that
@@ -186,11 +209,46 @@ Given some graph class $\mathcal{G}^\sigma$ then we get the very power \textit{c
 This chain rule is one of the crucial properties that we will lose when we define our
 local flags framework.
 
+\subsection{Limit Functionals}
+
+We want to define our algebra such that the results it derives are true for large enough
+flags. How do we make that precise?
+
+Consider a sequence of $\sigma$-flags $(G_k)_{k\in\N}$ which is \textit{increasing}, meaning
+the sequence $(|G_k|)_{k\in\N}$ is strictly increasing. Then for $F\in\Gcl^\sigma$
+consider the function $\lim_{k\to\infty} p(F; G_k)$. We call a sequence of $\sigma$-flags
+$(G_k)_{k\in\N}$ \textbf{convergent} if this limit exists for all $F\in\Gcl^\sigma$.
+It is a result of Tychonoff's theorem that any increasing sequence of graphs contains a convergent
+subsequence (as $[0,1]^{\Gcl^\sigma}$ is compact). For this reason it suffices to only
+consider convergent sequences.
+
+Now we can introduce the limit functional which precisely links our symbolic algebra
+to it's underlying interpretation in terms of density functions.
+
+\begin{definition}[Limit Functional]
+    Given some convergent $\sigma$-flag sequence we construct the corresponding
+    \textbf{limit functional} $\phi\colon \Gcl^\sigma \to [0,1]$
+    as
+    \[
+        \phi(F) := \lim_{k \to \infty} p(F; G_k)
+    \]
+\end{definition}
+
+We write $\Phi^\sigma$ for the collection of all limit functionals for type $\sigma$.
+
+\begin{example}
+    If we prove that $\phi(\edge) \leq \frac{1}{2}$ for all $\phi\in\Phi^\emptyset$
+    where $\Gcl$ is the class of triangle free graphs, then we will have proved Mantel's theorem
+\end{example}
+
+We will see later that limit functionals give us exactly the interpretation of statements
+in our algebra as asymptotic statements about densities.
+
 \subsection{The Algebra}
 
-We've describe now our flags in detail, understanding a partially labelled flag and
+We've described flags in detail, understanding a partially labelled flag and
 the density functions they in some way represent. We would like to then formally
-describe a structure on these flags such that relations in the structure describe true
+describe a symbolic structure on these flags such that relations in the structure describe true
 relations about their associated density functions. As a start we want to be able
 to describe linear combinations of flags, e.g. $\edge + \nonedge$ should in some
 way represent $p(\edge; G) + p(\nonedge; G)$.
@@ -203,7 +261,7 @@ $p(\edge + \nonedge; G) = p(\edge; G) + p(\nonedge; G) = 1$ and similar relation
 
 The chain rule (Lemma \ref{lemma:chain_rule}) tells us then that for any $F, G\in\Gcl^\sigma$
 and $n \geq |F|$ we have $p(F; G) = \sum_{H \in \Gcl^\sigma_n}p(F; H)p(H; G)$. In
-In particular, $p(F; H)$ is just some real number for each $H$ meaning
+In particular $p(F; H)$ is just some real, computable number for each $H$ meaning
 $p(F; G) - \sum_{H \in \Gcl^\sigma_n}p(F; H)p(H; G) = 0$ is a linear relation on
 density functions which holds for all $F, G$. This tells us that in our algebra
 any vector of the form $v = F - \sum_{H \in \Gcl^\sigma_n}p(F; H)H$ has the property
@@ -214,6 +272,10 @@ $F - \sum_{H \in \Gcl^\sigma_n}p(F; H)H$ for $F\in\Gcl^\sigma$, $n\geq |F|$ and
 quotient out this relation from $\R\Gcl^\sigma$. Because $p(v; G) = 0$ for all
 $v \in\mathcal{K}^\sigma, G \in\mathcal{G}$ our linear extension of $p$ is still well defined
 on this space.
+
+Not only is $p$ well defined on this space, we can now also
+linearly extend any limit functional $\phi$ to be a function
+$\phi\colon\R\Gcl^\sigma / \mathcal{K}^\sigma\to \R$.
 
 \begin{example}
     If $\Gcl$ is the class of triangle free graphs then we know from our
@@ -231,8 +293,8 @@ However, linear combinations are not powerful enough. We also want to be able to
 statements about products of densities. Ideally we would be able to define a
 product on vectors $f, g \in \R\Gcl^\sigma / \mathcal{K}^\sigma$ such that for any $G\in\Gcl^\sigma$
 we have $p(f \cdot g; G) = p(f; G)\cdot p(g; G)$. Unfortunately we don't achieve the
-ideal relation, but we do get the result asymptotically which is enough:
-$p(f\cdot g; G) = p(f; G) \cdot p(g; G) + o(1)$.
+ideal relation, but we do get the result asymptotically:
+$\phi(f\cdot g) = \phi(f) \cdot \phi(g)\ \forall\ \phi\in\Phi^\sigma$.
 
 \begin{definition}[$\sigma$ Flag Algebra]
     For fixed type $\sigma$ define the following product $\Gcl^\sigma \times \Gcl^\sigma \to \R\Gcl^\sigma / \mathcal{K}^\sigma$
@@ -246,27 +308,30 @@ $p(f\cdot g; G) = p(f; G) \cdot p(g; G) + o(1)$.
     $\R\Gcl^\sigma / \mathcal{K}^\sigma \times \R\Gcl^\sigma / \mathcal{K}^\sigma \to \R\Gcl^\sigma / \mathcal{K}^\sigma$.
 
     This is all well defined due to Lemma 2.4 in \cite{razborovFlagAlgebras2007}.
-
     This turns the space
     $\R\Gcl^\sigma / \mathcal{K}^\sigma$ into an algebra. We call this the
-    $\sigma$ flag algebra $\Acl^\sigma$.
+    \textbf{$\sigma$ flag algebra} $\Acl^\sigma$.
 
 \end{definition}
 
 This algebra is then associative, commutative and unital
-(also lemma 2.4 in \cite{razborovFlagAlgebras2007}).
+(also lemma 2.4 in \cite{razborovFlagAlgebras2007}). Again this product can be computed
+with a small number of $p(F, G; H)$ calculations where $F, G, H$ are fixed meaning this
+is computable.
 
 Now we see the theorem which tells us why this product is useful:
 \begin{theorem}[Theorem 2 \cite{silvaFlagAlgebrasFirst2016}]
+    \label{thm:classic_product_lim}
     For fixed type $\sigma$, vectors $f, g\in \Acl^\sigma$ we have
     \[
-        |p(f\cdot g; G) - p(f; G)\cdot p(g; G)| \in O\left(\frac{1}{|G|}\right)
+        p(f; G)\cdot p(g; G) = p(f\cdot g; G) + O\left(\frac{1}{|G|}\right)
     \]
     where $G\in\Gcl^\sigma$.
 \end{theorem}
 
 What this theorem tells us is that our symbolic product corresponds to a valid product of
 the underlying density functions in the limit, which we can use to prove asymptotic results.
+We make this precise in the next section.
 
 \begin{example}
     Returning to our example with $\sigma=\vertex$ and $F=\edgemarked$ we can compute that (choosing representative of cosets etc) we have
@@ -274,7 +339,7 @@ the underlying density functions in the limit, which we can use to prove asympto
     with labelled vertex $v$. Then we know $c(\edgemarked; G) = \deg v$ from before.
     Then we can see that $c(\trianglemarked; G) + c(\triangletwoedgemarked)$ counts
     all possible ways of choosing pairs from the neighbourhood of $v$ hence
-    $c(\trianglemarked; G) + c(\triangletwoedgemarked; G) = \binom{\deg v}{2}$.
+    $c\left(\trianglemarked; G\right) + c\left(\triangletwoedgemarked; G\right) = \binom{\deg v}{2}$.
     Therefore:
     \[
     \begin{split}
@@ -290,7 +355,284 @@ the underlying density functions in the limit, which we can use to prove asympto
         &= O\left(\frac{1}{|G|}\right).
     \end{split}
     \]
-    as $\deg(v)\in O(|G|)$. Hence in the limit for large graphs $|G|$ we get
-    the multiplicative relationships we're looking for. This will be made more precise
-    in section TODO.
+    as $\deg(v)\in O(|G|)$.
 \end{example}
+
+Now theorem \ref{thm:classic_product_lim} proves that our algebra does exactly capture
+the algebraic behaviour of densities in the limit.
+\begin{lemma}
+    Any limit functional $\phi\colon\Acl^\sigma \to\R$ is an algebra homomorphism.
+    Meaning for any $f, g\in\Acl^\sigma$ we have $\phi(f + g) = \phi(f) + \phi(g)$
+    and $\phi(f\cdot g) = \phi(f) \cdot \phi(g)$.
+\end{lemma}
+
+\subsection{Positivity}
+
+We want to introduce an order on our algebra so that statements like
+$\edge \leq \triangleflag + \triangletwoedge + \triangleoneedge + \triangleempty$ have
+meaning.
+
+\begin{definition}[Positive]
+    We say that $f\in\Acl^\sigma$ is \textbf{positive} if
+    $\phi(f) \geq 0\ \forall\ \phi \in \Phi^\sigma$.
+
+    We write this as $f \geq_{\Acl^\sigma} 0$ or most often just
+    $f \geq 0$.
+\end{definition}
+
+\begin{example}
+    All flags are positive elements of the algebra as densities are non-negative.
+    Additionally any squared vector $f^2$ is positive as $\phi(f^2)=\phi(f)^2 \geq 0$.
+    The zero vector is also positive.
+\end{example}
+
+We then extend this notation writing $f \geq g$ iff $f-g \geq 0$ meaning
+$f \geq g$ iff $\phi(f) \geq \phi(g)$ for all $\phi\in\Phi^\sigma$.
+
+\begin{note}
+    Sometimes we will write something like $\edge \leq \frac{1}{2}$ which is technically
+    not a valid statement. You can make this precise by thinking of $\frac{1}{2}$ as
+    $\frac{1}{2}\emptyset$ as the empty graph always has $\phi(\emptyset) = 1$.
+    This gives $\edge \leq \frac{1}{2}$ the intended meaning that
+    $\phi(\edge) \leq \frac{1}{2}\ \forall\ \phi\in\Phi^\sigma$.
+\end{note}
+
+\begin{lemma}
+    The set of positive elements of $\Acl^\sigma$ forms a convex cone, meaning it is
+    closed under non-negative linear combination.
+
+    We call this the semantic cone $\SemCone^\sigma$
+\end{lemma}
+
+Now that we have positivity, and we know that the set of positive elements form a cone we can actually prove some results. In particular we know make formal the simple argument that
+$p(\edge; G) \leq \frac{2}{3}$ for $G$ triangle free 
+from our \hyperref[sec:motivating_example]{motivating example}.
+\begin{example}
+    Let $\Gcl$ be the class of triangle free graphs.
+
+    We know that $F \geq 0$ for all flags $F$ ($\Gcl^\emptyset \subseteq \SemCone^\sigma$).
+    We know that $\edge = \frac{2}{3}\triangletwoedge + \frac{1}{3}\triangleoneedge$
+    and $\emptyset = \triangletwoedge + \triangleoneedge + \triangleempty$
+    as they are in the same cosets (equal mod $\mathcal{K}^\sigma$).
+
+    To prove that $\edge \leq \frac{2}{3}$ we formally need to show
+    $\frac{2}{3}\emptyset - \edge \geq_{\Acl^\emptyset} 0$ which is equivalent to
+    $\frac{2}{3}(\triangletwoedge+\triangleoneedge+\triangleempty) - (\frac{2}{3}\triangletwoedge + \frac{1}{3}\triangletwoedge) \geq 0$
+    which simplifies to $\frac{1}{3}\triangleoneedge + \frac{2}{3}\triangletwoedge \geq 0$.
+    This is then true as the set of positive elements is a convex cone.
+    Hence $\edge \leq \frac{2}{3}$ so $\phi(\edge) \leq \frac{2}{3}\ \forall\ \phi\in\Phi^\emptyset$.
+    \footnote{Technically this only proves for $G$ large enough, but as we didn't use any products the result actually holds for all $G$}
+\end{example}
+
+Finally we show how the \textit{averaging operator} connects $\Acl^\sigma$ and
+$\Acl^\emptyset$.
+
+\subsection{Averaging Operator}
+
+We introduce some notation for the unlabelled version of a partially labelled
+flag.
+\begin{definition}[Downward operator]
+    For a $\sigma$-flag $(F, \theta)$ define $\downflag{F}$ as the $\emptyset$-flag
+    obtained by forgetting the partial labelling.
+\end{definition}
+
+We then define a computable normalising factor $q_\sigma(F)$:
+
+\begin{definition}
+    For a $\sigma$-flag $F$ define $q_\sigma(F)$ to be the probability that a
+    random injective
+    $\theta\colon [|\sigma|]\to V(F)$ is such that
+    $(\downflag{F},\theta)\cong F.$
+\end{definition}
+
+See figure \ref{fig:qsig_example} for example flags $F$ and their $q_\sigma(F)$
+normalising factors.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{qsig_example}
+    \caption{Flags and their normalising factors}
+    \label{fig:qsig_example}
+\end{figure}
+
+Now we can define the averaging operator:
+
+\begin{definition}[Averaging Operator]
+    We define the map $\llbracket \cdot \rrbracket\colon \Acl^\sigma \to \Acl^\emptyset$
+    as follows. For a fixed $\sigma$-flag $F$ define
+    $\llbracket F \rrbracket := q_\sigma(F) \downflag{F}$.
+    We then extend this function linearly to the space
+    $\mathcal{A}^\sigma = \R\Gcl^\sigma / \mathcal{K}^\sigma$. This is well defined by
+    theorem 2.5 in \cite{razborovFlagAlgebras2007}.
+\end{definition}
+
+\begin{note}
+    This map $\llbracket \cdot \rrbracket$ is a linear map, but not an algebra homomorphism.
+    i.e. We do not have
+    $\llbracket f\cdot g \rrbracket = \llbracket f \rrbracket \llbracket g \rrbracket$
+    in general.
+\end{note}
+
+The following result is the key to linking $\Acl^\sigma \to \Acl^\emptyset$:
+\begin{lemma}[Lemma 4 \cite{silvaFlagAlgebrasFirst2016}]
+    \label{lemma:classic_exp_flags}
+    Let $F$ be a $\sigma$-flag and $G$ a graph with $p(\sigma; G) > 0.$ Then let
+    $\theta$ be a uniformly random $\sigma$-embedding into $G$, then:
+    \[
+        \E_\theta[p(F; (G, \theta)]
+        = \frac{p(\llbracket F \rrbracket; G)}{p(\llbracket \sigma \rrbracket; G)}
+        = \frac{q_\sigma(F)p(\downflag{F}; G)}{q_\sigma(\sigma)p(\sigma; G)}
+    \]
+    In particular by linearity of expectation this can be extended
+    $\Acl^\sigma$.
+\end{lemma}
+
+\begin{note}
+    In Razborov's paper he describes (definition 10) a measure theoretic way of constructing
+    a random distribution of limit functionals $\psi$ from some fixed limit functional
+    $\phi$ in such a way that
+    $\E_\psi[\psi(F)] = \frac{\phi(\llbracket f \rrbracket)}{\phi(\sigma)}$.
+\end{note}
+
+An important corollary of lemma \ref{lemma:classic_exp_flags} is the following:
+\begin{lemma}
+    The averaging operator $\llbracket \cdot \rrbracket$ maps $\SemCone^\sigma$ to
+    $\SemCone^\emptyset$, meaning it preserves positivity.
+
+    In particular, $\llbracket f^2 \rrbracket \geq 0\ \forall\ f \in\Acl^\sigma$.
+\end{lemma}
+
+This gives us yet another important tool to prove results using this algebra. In particular
+we are now able to prove Mantel's theorem.
+
+\begin{example}[Proof of Mantel's theorem]
+    Let $\Gcl$ be the class of triangle free graphs. Mantel's theorem says that
+    $\phi(\edge) \leq \frac{1}{2}\ \forall\ \phi\in\Phi^\emptyset$. We prove this
+    by showing $\edge \leq \frac{1}{2}$ meaning $\frac{1}{2}\emptyset - \edge \geq 0$.
+    Choosing representatives of the cosets of $\emptyset$ and $\edge$ this is the same
+    as showing
+    $\frac{1}{2}(\triangletwoedge + \triangleoneedge + \triangleempty) - (\frac{2}{3}\triangletwoedge + \frac{1}{3}\triangleoneedge) \geq 0$.
+    Simplifying coefficients this means we need to show
+    $-\frac{1}{6}\triangletwoedge + \frac{1}{6}\triangleoneedge + \frac{1}{2}\triangleempty \geq 0$.
+
+    Consider then the type $\sigma=\vertex.$ We must
+    have $(\edgemarked -\nonedgemarked)^2\in\SemCone^\sigma$
+    so we have
+    $\llbracket (\edgemarked-\nonedgemarked)^2\rrbracket \in\SemCone^\emptyset$.
+    We can compute that
+    $\llbracket (\edgemarked-\nonedgemarked)^2\rrbracket= -\frac{1}{3}\triangletwoedge-\frac{1}{3}\triangleoneedge+\triangleempty$.
+
+    Therefore as $\SemCone^\emptyset$ is a convex cone we have
+    $\frac{1}{2}(-\frac{1}{3}\triangletwoedge-\frac{1}{3}\triangleoneedge+\triangleempty) + \frac{1}{3}\triangletwoedge \geq 0$
+    which does simplify to exactly
+    $-\frac{1}{6}\triangletwoedge + \frac{1}{6}\triangleoneedge + \frac{1}{2}\triangleempty$.
+    In one line this is:
+    \[\phi(\edge) \leq \phi(\edge + \llbracket (\edgemarked - \nonedgemarked)^2\rrbracket + \frac{1}{3}\triangleoneedge) = \phi(\frac{1}{2}(\triangletwoedge + \triangleoneedge + \triangleempty))=\frac{1}{2}.\]
+\end{example}
+
+\section{The Semidefinite Method}
+
+We saw in the previous section that we can derive new true statements about densities
+by finding elements of the semantic cone
+$\SemCone^\emptyset$, and that taking convex combinations of known
+"axiomatic" positive elements is a good way to do that. In general to prove
+$\phi(f) \leq \lambda$ we need to show $\lambda\emptyset - f \geq_{\Acl^\emptyset} 0$. It also
+suffices to find $\lambda\emptyset - (f + r) \geq 0$ for some $r \geq 0$.
+
+Given some fixed $f\in\Acl^\sigma$ then we want to solve
+$\min\{\lambda\colon \lambda\emptyset - f \in \SemCone^\emptyset\}$.
+
+\subsection{Linear Programming}
+
+One direct way to approach this is to take some fixed set of known positive elements
+$v_1, \dots, v_k\in\Acl^\emptyset$ and try to minimise our objective over non-negative linear
+combinations of these vectors. This corresponds to a method called \textit{linear programming (LP)}.
+
+Fix our \textit{objective vector} $f\in\Acl^\sigma$. WLOG $f$ has no $\emptyset$ component.
+
+Take some finite list of flags $F_1, \dots, F_\ell$ such that $v_1, \dots, v_k$ and $f$
+can be expressed in the basis $\Bcl = (F_1, \dots, F_l, \emptyset).$ We can then
+write each $v_i$ as a column vector $v_i=[\alpha_{i,1}, \dots, \alpha_{i,\ell},\beta_i]^T$
+and $f=[f_1, \dots, f_\ell, 0]^T$.
+Then if $c=[c_1, \dots, c_k]^T$ is elementwise non-negative $\sum_{i=1}^kc_iv_i$ is
+$\in\SemCone^\emptyset$. We want this to equal some $\lambda\emptyset - (f+r)$ where
+$r\in\SemCone^\emptyset$. Each element of the basis is in the cone so it suffices
+to find $c_1, \dots, c_k$ such that $\coef_j(\sum_{i=1}^kc_i v_i) \leq -f_j\ \forall\ j\in[\ell]$.
+Then our $\lambda$ is given by $\sum_{i=1}^kc_i\beta_i.$
+If we construct a matrix $A$ as
+\[
+    A :=
+    \begin{bmatrix}
+    \alpha_{1,1} & \alpha_{1, 2} & \dots & \alpha_{1,\ell}\\
+    \alpha_{2,1} & \alpha_{2, 2} & \dots & \alpha_{2,\ell}\\
+    \vdots & \vdots & & \vdots\\
+    \alpha_{k,1} & \alpha_{k, 2} & \dots & \alpha_{k,\ell}\\
+    \end{bmatrix}
+\]
+and let $\beta=[\beta_i, \dots, \beta_k]^T$ then our problem can be expressed as:
+\[
+    \begin{split}
+    \min_{c\in\R^k} &\ \ \  c^T\beta\\
+    \text{such that} &\ \ \  c^T(-A) \geq [f_1, \dots, f_\ell]^T\\
+                     &\ \ \  c \geq 0.
+    \end{split}
+\]
+This is the standard form of a linear programming problem. Many fast solvers exist to find
+good solutions.
+
+\begin{example}[Proving Mantel's theorem via LP]
+    Our objective vector is $f=\frac{2}{3}\triangletwoedge + \frac{1}{3}\triangleoneedge$.
+    We can use two known elements of the semantic cone:
+    $v_1 = \llbracket (\edgemarked - \nonedgemarked)^2 \rrbracket=\triangleempty - \frac{1}{3}\triangletwoedge - \frac{1}{3}\triangletwoedge$
+    and
+    $v_2 = \triangleoneedge$.
+    We choose $\Bcl=(\triangleoneedge, \triangletwoedge, \emptyset)$ and use the fact that
+    $\emptyset = \triangleempty + \triangleoneedge + \triangletwoedge$ to write
+    $v_1 = \emptyset - \frac{4}{3}\triangleoneedge - \frac{4}{3}\triangletwoedge$.
+    Then in vector notation $f=[\frac{1}{3}, \frac{2}{3}, 0]^T$,
+    $v_1 = [-\frac{4}{3}, -\frac{4}{3}, 1]^T$ and
+    $v_2 = [1, 0, 0]^T$.
+    Then we find
+    \[
+        A = \begin{bmatrix}
+            -\frac{4}{3} & -\frac{4}{3}\\
+            1 & 0
+        \end{bmatrix}
+    \]
+    Hence we want to find $c=[c_1, c_2] \geq 0$ such that
+    $c(-A) \geq [\frac{1}{3}, \frac{2}{3}]^T$ minimising $c^T[1, 0]^T$.
+    It can be found that an optimal solution is $c=[\frac{1}{2}, \frac{1}{3}]^T$
+    giving value $\frac{1}{2}$. Hence $\edge \leq \frac{1}{2}$ as expected.
+\end{example}
+
+The powerful thing about linear programming is duality. We can convert our minimisation
+problem above into a dual maximisation problem which asks us to maximise
+$f^Tx$ over $x \in \R^\ell$ such that $x \geq 0$ and $(-A)x \leq \beta$.
+By weak duality of linear programming
+we know that any solution to this problem is a lower bound to any possible solution to
+our original (primal) problem.
+
+We can interpret this maximisation problem in a useful way. We can think of this dual
+problem as being a relaxation of the search over possible limit functionals $\phi$.
+Take the search vector $x\in\R^\ell$ and construct a linear functional $\phi_x$ on the
+space $\spanop\Bcl$ by defining $\phi_x(F_i) := x_i$ and $\phi_x(\emptyset) = 1$, then
+linearly extending. We can then see that $x \geq 0$ means $\phi(F_i) \geq 0\ \forall\ i \in[\ell]$
+which is a requirement of true limit functionals. Similarly the requirement
+that $(-A)x \leq \beta$ corresponds to requiring that $\phi(v_i) \geq 0\ \forall\ i\in[k]$,
+meaning our known elements of the semantic cone must have positive value as expected.
+Finally then $\max_{x\in\R^\ell} f^Tx$ corresponds to $\max \phi_x(f)$.
+
+Hence the dual problem attempts to maximise some hypothetical $\phi_x(f)$ on the
+constraints that $\phi_x$ must behave like a true limit functional. This interpretation
+makes it clear that our fixed known elements of the semantic cone correspond to constraints
+on the possible space of linear functionals; Adding new positive elements to the list
+may exclude previous possible limit functionals and get us closer to a true answer.
+
+But how do we generate more elements of the semantic cone?
+
+\subsection{Semidefinite Programming}
+
+We know that $\llbracket f^2 \rrbracket \geq 0\ \forall\ f\in\Acl^\sigma$. Dually
+we would require of any possible linear functional $\phi_x$ that
+$\phi_x(\llbracket f^2 \rrbracket) \geq 0\ \forall f\in\Acl^\sigma$.
+How do we encode this into our optimisation problem?
