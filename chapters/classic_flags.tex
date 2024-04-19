@@ -335,19 +335,19 @@ We make this precise in the next section.
 
 \begin{example}
     Returning to our example with $\sigma=\vertex$ and $F=\edgemarked$ we can compute that (choosing representative of cosets etc) we have
-    $\edgemarked^2 = \trianglemarked + \triangletwoedgemarked.$ Let $G$ be a $\vertex$-flag
+    $\edgemarked^2 = \trianglemarked + \triangletwoedgemarkedcentre.$ Let $G$ be a $\vertex$-flag
     with labelled vertex $v$. Then we know $c(\edgemarked; G) = \deg v$ from before.
-    Then we can see that $c(\trianglemarked; G) + c(\triangletwoedgemarked)$ counts
+    Then we can see that $c(\trianglemarked; G) + c(\triangletwoedgemarkedcentre)$ counts
     all possible ways of choosing pairs from the neighbourhood of $v$ hence
-    $c\left(\trianglemarked; G\right) + c\left(\triangletwoedgemarked; G\right) = \binom{\deg v}{2}$.
+    $c\left(\trianglemarked; G\right) + c\left(\triangletwoedgemarkedcentre; G\right) = \binom{\deg v}{2}$.
     Therefore:
     \[
     \begin{split}
         p(\edgemarked; G)^2 - p(\edgemarked^2; G)
         &= \left(\frac{c(\edgemarked; G)}{|G|-1}\right)^2
-            - p(\trianglemarked; G) - p(\triangletwoedgemarked; G)\\
+            - p(\trianglemarked; G) - p(\triangletwoedgemarkedcentre; G)\\
         &= \left(\frac{\deg v}{|G|-1}\right)^2
-            - \frac{c(\trianglemarked; G) + c(\triangletwoedgemarked; G)}{\binom{|G|-1}{2}}\\
+            - \frac{c(\trianglemarked; G) + c(\triangletwoedgemarkedcentre; G)}{\binom{|G|-1}{2}}\\
         &= \left(\frac{\deg v}{|G|-1}\right)^2
             - \frac{\binom{\deg(v)}{2}}{\binom{|G|-1}{2}}\\
         &= \frac{\deg v}{(|G|-1)^2(|G|-2)}
@@ -536,7 +536,8 @@ We saw in the previous section that we can derive new true statements about dens
 by finding elements of the semantic cone
 $\SemCone^\emptyset$, and that taking convex combinations of known
 "axiomatic" positive elements is a good way to do that. In general to prove
-$\phi(f) \leq \lambda$ we need to show $\lambda\emptyset - f \geq_{\Acl^\emptyset} 0$. It also
+$\phi(f) \leq \lambda\ \forall\ \phi\in\Phi^\emptyset$
+we need to show $\lambda\emptyset - f \geq_{\Acl^\emptyset} 0$. It also
 suffices to find $\lambda\emptyset - (f + r) \geq 0$ for some $r \geq 0$.
 
 Given some fixed $f\in\Acl^\sigma$ then we want to solve
@@ -548,32 +549,38 @@ One direct way to approach this is to take some fixed set of known positive elem
 $v_1, \dots, v_k\in\Acl^\emptyset$ and try to minimise our objective over non-negative linear
 combinations of these vectors. This corresponds to a method called \textit{linear programming (LP)}.
 
-Fix our \textit{objective vector} $f\in\Acl^\sigma$. WLOG $f$ has no $\emptyset$ component.
+Fix our \textit{objective vector} $f\in\Acl^\sigma$.
 
 Take some finite list of flags $F_1, \dots, F_\ell$ such that $v_1, \dots, v_k$ and $f$
-can be expressed in the basis $\Bcl = (F_1, \dots, F_l, \emptyset).$ We can then
-write each $v_i$ as a column vector $v_i=[\alpha_{i,1}, \dots, \alpha_{i,\ell},\beta_i]^T$
-and $f=[f_1, \dots, f_\ell, 0]^T$.
-Then if $c=[c_1, \dots, c_k]^T$ is elementwise non-negative $\sum_{i=1}^kc_iv_i$ is
-$\in\SemCone^\emptyset$. We want this to equal some $\lambda\emptyset - (f+r)$ where
-$r\in\SemCone^\emptyset$. Each element of the basis is in the cone so it suffices
-to find $c_1, \dots, c_k$ such that $\coef_j(\sum_{i=1}^kc_i v_i) \leq -f_j\ \forall\ j\in[\ell]$.
-Then our $\lambda$ is given by $\sum_{i=1}^kc_i\beta_i.$
-If we construct a matrix $A$ as
+can be expressed in the basis $\Bcl = (F_1, \dots, F_l, \emptyset).$
+This gives us a notion of a coefficient function $\coef_i$ for each $i\in[\ell]$ and
+$\coef_\emptyset$. WLOG $f$ has no $\emptyset$ coefficient.
+
+Then if $c=[c_1, \dots, c_k]^T\in\R^k$ is elementwise non-negative
+$\sum_{i=1}^kc_iv_i$ is $\in\SemCone^\emptyset$. We want this to equal some
+$\lambda\emptyset - (f+r)$ where $r\in\SemCone^\emptyset$.
+Each element of the basis is in the cone so it suffices
+to find $c_1, \dots, c_k$ such that $\coef_j(\sum_{i=1}^kc_i v_i) \leq -\coef_j(f)\ \forall\ j\in[\ell]$.
+Then our $\lambda$ is given by $\coef_\emptyset(\sum_{i=1}^kc_iv_i)$. We can express
+this as an optimisation problem over real matrices.
+
+Construct a matrix $A$ as
 \[
     A :=
     \begin{bmatrix}
-    \alpha_{1,1} & \alpha_{1, 2} & \dots & \alpha_{1,\ell}\\
-    \alpha_{2,1} & \alpha_{2, 2} & \dots & \alpha_{2,\ell}\\
+    \coef_1(v_1) & \coef_2(v_1) & \dots & \coef_\ell(v_1)\\
+    \coef_1(v_2) & \coef_2(v_2) & \dots & \coef_\ell(v_2)\\
     \vdots & \vdots & & \vdots\\
-    \alpha_{k,1} & \alpha_{k, 2} & \dots & \alpha_{k,\ell}\\
+    \coef_1(v_k) & \coef_2(v_k) & \dots & \coef_\ell(v_k)\\
     \end{bmatrix}
 \]
-and let $\beta=[\beta_i, \dots, \beta_k]^T$ then our problem can be expressed as:
+and let $\beta=[\coef_\emptyset(v_1), \dots, \coef_\emptyset(v_k)]^T\in\R^k$. WLOG
+$f$ has no $\emptyset$ component so we write
+$f=[\coef_1(f), \dots, \coef_\ell(f)]^T\in\R^\ell$. Then our problem is expressed as:
 \[
     \begin{split}
     \min_{c\in\R^k} &\ \ \  c^T\beta\\
-    \text{such that} &\ \ \  c^T(-A) \geq [f_1, \dots, f_\ell]^T\\
+    \text{such that} &\ \ \  c^T(-A) \geq f\\
                      &\ \ \  c \geq 0.
     \end{split}
 \]
@@ -605,6 +612,184 @@ good solutions.
     giving value $\frac{1}{2}$. Hence $\edge \leq \frac{1}{2}$ as expected.
 \end{example}
 
+This method works when we have a fixed list of known elements of
+$\SemCone^\emptyset$ but how can we incorporate an entire space of these elements?
+
+\subsection{Semidefinite Programming}
+
+TODO REMINDER WHAT IS SEMIDEFINITE MATRIX
+
+We know that $\llbracket \nu^2 \rrbracket \in\SemCone^\emptyset\ \forall\ \nu\in\Acl^\sigma$.
+How do we encode this into our optimisation problem?
+One way to do this would be to add a search variable for $\nu\in\Acl^\sigma$
+and consider $\llbracket \nu^2 \rrbracket$ as one of our known elements of the semantic cone.
+i.e. take our list of known positive elements $v_1, \dots, v_k$ then try to
+minimise $\sum_{i=1}^kc_i\coef_\emptyset(v_i) + \coef_\emptyset(\llbracket\nu^2\rrbracket)$
+over $c\in\R^k, \nu\in\Acl^\sigma$
+such that
+$c \geq_{\R^k} 0$ and $\sum_{i=1}^k c_i \coef_j(v_i) + \coef_j(\llbracket\nu^2\rrbracket) \leq -\coef_j(f)\ \forall\ j \in[\ell]$.
+We can express this in the language of matrices and column vectors.
+
+Assume as before we have a basis $\Bcl = (F_1, \dots, F_\ell, \emptyset)$
+of a subspace of $\Acl^\emptyset$ as above. Then for a type $\sigma$ consider some basis
+$\Bcl^\sigma=(F_1^\sigma, \dots, F_m^\sigma)$ of $\Acl^\sigma$ such
+that $\llbracket \nu^2 \rrbracket \in \spanop\Bcl\ \forall\ \nu\in\spanop\Bcl^\sigma$.
+
+It can be shown then that, as $\llbracket\cdot\rrbracket$ is a linear function and
+writing $\nu=\sum_{i=1}^m a_i F_i^\sigma$ we have the following for all $k\in[\ell]$
+and similarly for $\coef_\emptyset$.
+\[
+    \coef_k(\llbracket \nu^2 \rrbracket) = \sum_{i=1}^m\sum_{j=1}^m
+    a_ia_j\coef_k(\llbracket F_i^\sigma\cdot F_j^\sigma\rrbracket).
+\]
+meaning we can define matrices $C^\sigma_i$ for each $i\in[\ell]$ and $C^\sigma_\emptyset$ as
+as
+\[
+    C^\sigma_i :=
+    \begin{bmatrix}
+    \coef_i(\llbracket (F_1^\sigma)^2 \rrbracket)
+    & \coef_i(\llbracket F_1^\sigma F_2^\sigma \rrbracket))
+    & \dots
+    & \coef_i(\llbracket F_1^\sigma F_m^\sigma \rrbracket)\\
+    \coef_i(\llbracket F_2^\sigma F_1^\sigma \rrbracket)
+    & \coef_i(\llbracket (F_2^\sigma)^2 \rrbracket))
+    & \dots
+    & \coef_i(\llbracket F_2^\sigma F_m^\sigma \rrbracket)\\
+    \vdots & \vdots & & \vdots\\
+    \coef_i(\llbracket F_m^\sigma F_1^\sigma \rrbracket)
+    & \coef_i(\llbracket F_m^\sigma F_2^\sigma \rrbracket))
+    & \dots
+    & \coef_i(\llbracket (F_m^\sigma)^2 \rrbracket)\\
+    \end{bmatrix}
+\]
+and find that $\coef_i(\llbracket \nu^2 \rrbracket) = \nu^T C^\sigma_i \nu$ where
+$\nu$ is considered a column vector over $\Bcl^\sigma$. By cyclicity
+of the trace we have
+$\nu^TC^\sigma_i\nu = \trace(\nu\nu^TC^\sigma_i)=\langle \nu\nu^T, C^\sigma_i\rangle$
+where $\langle \cdot \rangle$ is the standard inner product on real symmetric matrices.
+
+The collection of matrices $C^\sigma_i$ are fixed by choice of $\Bcl^\sigma$ so we now know how
+to compute
+the coefficients of $\llbracket \nu^2\rrbracket$ over $\Bcl$ as the inner product of
+$\nu\nu^T$ with some $C^\sigma_i$. The power of this is now we can do better than just searching
+over a single vector $\nu$. If we search instead over the space of positive semidefinite (PSD)
+matrices then any such $P$ has spectral decomposition $P=\sum_{i=1}^\lambda \nu_i\nu_i^T.$
+Then
+\[
+    \langle P, C^\sigma_i \rangle = \sum_{j=1}^\lambda \langle \nu_j\nu_j^T, C_i^\sigma\rangle
+    = \sum_{j=1}^\lambda \coef_i(\llbracket \nu_j^2\rrbracket).
+\]
+Hence searching over PSD matrices allows us to search over several vectors $\nu_i$ at the
+same time. This gives us a new optimisation problem: Given our objective vector
+$f\in\Acl^\emptyset$, known elements of the semidefinite cone $v_1, \dots, v_k$,
+basis $\Bcl=(F_1, \dots, F_\ell, \emptyset)$ such that $v_1, \dots, v_k, f\in\spanop\Bcl$,
+type $\sigma$ and basis $\Bcl^\sigma=(F_1^\sigma, \dots, F_m^\sigma)$ such that
+$\llbracket \nu^2\rrbracket\in\spanop\Bcl\ \forall\ \nu\in\spanop\Bcl$ we precompute
+the matrices $C_i^\sigma$ for $i\in[\ell]$ and $C_\emptyset$ and then try to solve:
+\[
+    \begin{split}
+    \min_{c\in\R^k, P \in \R^{m\times m}}
+        &\ \ \sum_{i=1}^kc_i\coef_\emptyset(v_i) + \langle P, C_\emptyset^\sigma\rangle\\
+    \text{such that} &\ \ \sum_{i=1}^kc_i\coef_j(v_i) +
+        \langle P, C_j^\sigma\rangle = -f_j
+        \ \forall\ j \in [\ell]\\
+        &\ \ c_i \geq 0\ \forall\ i\in[k]\\
+        &\ \ P \succ 0.
+    \end{split}
+\]
+This is a semidefinite program. It can easily be converted to a more standard form. It
+can also easily be extended to more than a single type $\sigma$.
+
+Now we can see how we could have used this approach to prove Mantel's theorem,
+showing how optimising over $P$ allows us to discover the vector
+$\llbracket (\edgemarked - \nonedgemarked)^2\rrbracket$.
+
+\begin{example}[Proving Mantel's theorem via SDP]
+    Let $\sigma=\vertex$ and take the bases
+    \[
+        \Bcl = (\triangleoneedge, \triangletwoedge, \emptyset)
+        \ \ \ \Bcl^\sigma = (\edgemarked, \nonedgemarked)
+    \]
+    Then we can compute the matrix of all $\llbracket F, G\rrbracket$ for $F, G \in\Bcl^\sigma$:
+    \[
+    \begin{split}
+        \begin{bmatrix}
+            \left\llbracket (\edgemarked)^2\right\rrbracket
+            & \left\llbracket (\edgemarked)(\nonedgemarked)\right\rrbracket\\
+            \left\llbracket (\edgemarked)(\nonedgemarked)\right\rrbracket
+            & \left\llbracket (\nonedgemarked)^2\right\rrbracket
+        \end{bmatrix}
+        & = \begin{bmatrix}
+            \left\llbracket \triangletwoedgemarkedcentre\right\rrbracket
+            & \left\llbracket \frac{1}{2}\triangleoneedgemarkedleft
+            +\frac{1}{2}\triangletwoedgemarkedleft\right\rrbracket\\
+            \left\llbracket \frac{1}{2}\triangleoneedgemarkedleft
+            +\frac{1}{2}\triangletwoedgemarkedleft\right\rrbracket
+            & \left\llbracket \triangleemptymarked + \triangleoneedgemarkedtop\right\rrbracket
+        \end{bmatrix}\\
+        & = \begin{bmatrix}
+            \frac{1}{3}\triangletwoedge
+            & \frac{1}{3}\triangleoneedge
+            +\frac{1}{3}\triangletwoedge\\
+            \frac{1}{3}\triangleoneedge
+            +\frac{1}{3}\triangletwoedge
+            & \triangleempty + \frac{1}{3}\triangleoneedge
+        \end{bmatrix}\\
+        & = \begin{bmatrix}
+            \frac{1}{3}\triangletwoedge
+            & \frac{1}{3}\triangleoneedge
+            +\frac{1}{3}\triangletwoedge\\
+            \frac{1}{3}\triangleoneedge
+            +\frac{1}{3}\triangletwoedge
+            & \emptyset-\frac{2}{3}\triangleoneedge-\triangletwoedge
+        \end{bmatrix}.
+    \end{split}
+    \]
+    giving us the coefficient matrices
+    \[
+        C^\sigma_1 = 
+        \begin{bmatrix}
+            0 & \frac{1}{3}\\
+            \frac{1}{3} & -\frac{2}{3}
+        \end{bmatrix}
+        \ C^\sigma_1 = 
+        \begin{bmatrix}
+            \frac{1}{3} & \frac{1}{3}\\
+            \frac{1}{3} & -1
+        \end{bmatrix}
+        \ C^\sigma_\emptyset = 
+        \begin{bmatrix}
+            0 & 0\\
+            0 & 1
+        \end{bmatrix}.
+    \]
+    We bring in then a single known element of the semantic cone $v_1 = \triangleoneedge$
+    and remembering that our objective vector is
+    $f=\frac{2}{3}\triangletwoedge+\frac{1}{3}\triangleoneedge$ we compose the SDP problem
+    as outlined above and can use a solver to output $c_1=\frac{1}{3}$ and
+    $P=\frac{1}{2}\left(\begin{smallmatrix}1 & -1\\ -1 & 1\end{smallmatrix}\right)\succ 0$.
+    Then we can verify that
+    $\lambda=c_1\coef_\emptyset(v_1) + \langle P, C_\emptyset^\sigma=\frac{1}{2}$
+    as expected and we do satisfy the constraints that
+    $c_1\coef_1(v_1) + \langle P, C_1^\sigma \rangle = \frac{1}{3} = -\coef_1(f)$
+    and
+    $c_2\coef_1(v_1) + \langle P, C_2^\sigma \rangle = \frac{2}{3} = -\coef_2(f)$
+    as required.
+    Therefore $\frac{1}{2}\emptyset - f \in \SemCone^\emptyset\implies\phi(f)\leq\frac{1}{2}\ \forall\ \phi\in\Phi^\emptyset$ as required.
+
+    This value of $P$ shouldn't be surprising as $P = \nu\nu^T$ where
+    $\nu = [1, -1]^T = \edgemarked - \nonedgemarked$ so the "discovered" element of
+    the semantic cone was the expected $\llbracket (\edgemarked - \nonedgemarked)^2 \rrbracket$.
+\end{example}
+
+\subsection{Duality}
+
+Consider again our linear program: Minimise $\coef_\emptyset(\sum_ic_iv_i)$ over
+$c\in\R^k_{\geq 0}$ such that $\coef_j(\sum_ic_iv_i)\leq -\coef_j(f)\ \forall\ j\in[\ell]$
+which we expressed as a matrix problem:
+Minimise $c^T\beta$ over $c\in\R^k$ such that
+$c^T(-A) \geq f$ and $c\geq 0$.
+
 The powerful thing about linear programming is duality. We can convert our minimisation
 problem above into a dual maximisation problem which asks us to maximise
 $f^Tx$ over $x \in \R^\ell$ such that $x \geq 0$ and $(-A)x \leq \beta$.
@@ -628,11 +813,26 @@ makes it clear that our fixed known elements of the semantic cone correspond to 
 on the possible space of linear functionals; Adding new positive elements to the list
 may exclude previous possible limit functionals and get us closer to a true answer.
 
-But how do we generate more elements of the semantic cone?
+We expanded our linear program into a semidefinite program. Luckily for us semidefinite
+programs also have duality. The dual version of the SDP above asks us to
+maximise $\sum_{x\in\R^\ell}f^Tx$ such that
+$\sum_{j=1}^\ell x_j\coef_j(v_i) + \coef_\emptyset(v_i) \geq 0\ \forall\ i\in[k]$ and
+$\sum_{j=1}^\ell x_jC_j^\sigma + C_\emptyset^\sigma \succ 0$.
 
-\subsection{Semidefinite Programming}
+We can again interpret this dual program in the same way, where we take $x\in\R^\ell$,
+interpret it as a linear functional $\phi_x$ on $\Bcl$ with $\phi_x(F_i) := x_i$ and
+$\phi_x(\emptyset)=1$. Then the dual problem is to maximise $\phi_x(f)$ such that
+$\phi(v_i) \geq 0\ \forall\ i\in[k]$ but now we have the additional constraint that
+the matrix $Q = \sum_{i=1}^\ell\phi(F_j)C_j^\sigma + C_\emptyset^\sigma$ is positive semidefinite.
+But this exactly means that $\nu^T Q \nu \geq 0$ for all $\nu$ which means
+$\phi_x(\llbracket \nu^2 \rrbracket) \geq 0\ \forall \nu$. Hence our extension from linear
+to semidefinite programming has had the effect on our dual problem of adding the
+requirement that $\phi_x(\llbracket \nu^2 \rrbracket) \geq 0$ for all $\nu\in\spanop\Bcl^\sigma$.
 
-We know that $\llbracket f^2 \rrbracket \geq 0\ \forall\ f\in\Acl^\sigma$. Dually
-we would require of any possible linear functional $\phi_x$ that
-$\phi_x(\llbracket f^2 \rrbracket) \geq 0\ \forall f\in\Acl^\sigma$.
-How do we encode this into our optimisation problem?
+This gives us our overall strategy then for using flag algebras and semidefinite programming.
+If you want to prove an upper bound on some density function, express it as $\phi(f)$ for
+some vector $f$, then generate as many linear constraints on the space of linear functionals
+$\phi_x$ as possible and finally add the requirement that $\phi_x(\llbracket \nu^2\rrbracket)\geq 0$
+for all $\nu$ in some subspace. Then the problem of maximising $\phi_x(f)$ can be
+converted rigorously to a dual problem of finding convex combinations of elements of the
+semantic cone, proving true upper bounds on $\phi(f)\forall\phi\in\Phi^\emptyset$.
