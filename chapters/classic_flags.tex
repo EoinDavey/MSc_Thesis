@@ -1,13 +1,19 @@
 \chapter{Background: Classic Flag Algebras}
 \label{chap:classic_flags}
 
-In the first section we will briefly introduce Razborov's flag algebras as they apply to
+In section \ref{sec:flag_algebras} we will briefly introduce Razborov's
+flag algebras as they apply to
 graphs. If the reader is already familiar with flag algebras this section can be skipped.
 
-In the second section we will discuss how the semidefinite method is applied to flag algebras.
+In section \ref{sec:semidefinite_method} we will discuss how the semidefinite method is applied
+to flag algebras.
 The method we use is slightly different to the method used in other works
 (e.g. \cite{silvaFlagAlgebrasFirst2016}) but is more easily adapted to our new framework. This
 section may be of interest even to a reader familiar with flag algebras.
+
+Finally in section \ref{sec:coloured_graphs} we will introduce \textit{coloured graphs} as combinatorial
+objects with their own structure. These will help us unlock the full potential of
+our local flags in section TODO.
 
 \section{Flag Algebras}
 \label{sec:flag_algebras}
@@ -145,9 +151,10 @@ disjoint copies of $F_1, \dots, F_t$ leading us to the following definition.
     just a graph with a specific distinguished vertex (the unique labelled vertex).
 
     Consider then the $\sigma$-flag $F=\edgemarked$, an edge with a single labelled vertex.
-    For any $G$ with distinguished vertex $v$ we have $c(\edgemarked; G) = \deg_G(v)$.
+    For any $G$ with distinguished vertex $v$ we have $c(\edgemarked; G^v) = \deg_G(v)$.
+    \footnote{$G^v$ is the $\vertex$-flag $(G,\theta)$ where $\theta(1)=v$.}
 
-    Similarly, $c(\edgemarked, \edgemarked; G) = \binom{\deg(v)}{2}.$ This is as
+    Similarly, $c(\edgemarked, \edgemarked; G^v) = \binom{\deg(v)}{2}.$ This is as
     we are counting how many distinct pairs of vertices $(a, b)$ are there in $G$ such that
     $G[\{a, v\}] \cong \edgemarked$ and $G[\{b, v\}] \cong \edgemarked$.
     In other words, how many distinct pairs of vertices are there connected to
@@ -214,6 +221,7 @@ This chain rule is one of the crucial properties that we will lose when we defin
 local flags framework.
 
 \subsection{Limit Functionals}
+\label{sec:limit_functionals}
 
 We want to define our algebra such that the results it derives are true for large enough
 flags. How do we make that precise?
@@ -323,6 +331,40 @@ This algebra is then associative, commutative and unital
 with a small number of $p(F, G; H)$ calculations where $F, G, H$ are fixed meaning this
 is computable.
 
+\begin{example}
+    Let $\sigma=\vertex$. Then $(\edgemarked)\cdot(\nonedgemarked)$ is computed by
+    choosing $\ell$ large enough so that $\edgemarked$ and $\nonedgemarked$ fit. We can
+    pick $\ell = 3$. Then
+    $\Gcl^\sigma_3=\{\trianglemarked, \triangletwoedgemarkedcentre, \triangletwoedgemarkedleft, \triangleoneedgemarkedtop, \triangleoneedgemarkedleft, \triangleemptymarked\}$
+    and we can compute $p(\edgemarked, \nonedgemarked, G)$ for each $G\in\Gcl^\sigma_3$
+    and find
+    \[
+        \begin{split}
+            (\edgemarked)\cdot(\nonedgemarked)
+            &= 0\cdot \trianglemarked + 0\cdot \triangletwoedgemarkedcentre
+            + \frac{1}{2}\cdot \triangletwoedgemarkedleft + 0\cdot \triangleoneedgemarkedtop
+            + \frac{1}{2} \cdot \triangleoneedgemarkedleft + 0\cdot \triangleemptymarked\\
+            &= \frac{1}{2}\cdot \triangletwoedgemarkedleft
+            + \frac{1}{2} \cdot \triangleoneedgemarkedleft.
+        \end{split}
+    \]
+    (This isn't technically precise as we should be taking the coset).
+    The product is bilinear so we can similarly compute expressions like:
+    \[
+        \begin{split}
+            ((\edgemarked) - (\nonedgemarked))^2
+            &= (\edgemarked)^2 - 2(\edgemarked)(\nonedgemarked) + (\nonedgemarked)^2\\
+            &= (\trianglemarked + \triangletwoedgemarkedcentre)
+            - 2(\frac{1}{2}\cdot \triangletwoedgemarkedleft
+                + \frac{1}{2} \cdot \triangleoneedgemarkedleft)
+            + (\triangleoneedgemarkedtop + \triangleemptymarked)\\
+            &= \trianglemarked + \triangletwoedgemarkedcentre
+            - \triangletwoedgemarkedleft - \triangleoneedgemarkedleft
+            + \triangleoneedgemarkedtop + \triangleemptymarked
+        \end{split}
+    \]
+\end{example}
+
 Now we see the theorem which tells us why this product is useful:
 \begin{theorem}[Theorem 2 \cite{silvaFlagAlgebrasFirst2016}]
     \label{thm:classic_product_lim}
@@ -340,18 +382,18 @@ We make this precise in the next section.
 \begin{example}
     Returning to our example with $\sigma=\vertex$ and $F=\edgemarked$ we can compute that (choosing representative of cosets etc) we have
     $\edgemarked^2 = \trianglemarked + \triangletwoedgemarkedcentre.$ Let $G$ be a $\vertex$-flag
-    with labelled vertex $v$. Then we know $c(\edgemarked; G) = \deg v$ from before.
-    Then we can see that $c(\trianglemarked; G) + c(\triangletwoedgemarkedcentre)$ counts
+    with labelled vertex $v$. Then we know $c(\edgemarked; G^v) = \deg v$ from before.
+    Then we can see that $c(\trianglemarked; G^v) + c(\triangletwoedgemarkedcentre; G^v)$ counts
     all possible ways of choosing pairs from the neighbourhood of $v$ hence
-    $c\left(\trianglemarked; G\right) + c\left(\triangletwoedgemarkedcentre; G\right) = \binom{\deg v}{2}$.
+    $c\left(\trianglemarked; G^v\right) + c\left(\triangletwoedgemarkedcentre; G^v\right) = \binom{\deg v}{2}$.
     Therefore:
     \[
     \begin{split}
-        p(\edgemarked; G)^2 - p(\edgemarked^2; G)
-        &= \left(\frac{c(\edgemarked; G)}{|G|-1}\right)^2
-            - p(\trianglemarked; G) - p(\triangletwoedgemarkedcentre; G)\\
+        p(\edgemarked; G^v)^2 - p(\edgemarked^2; G^v)
+        &= \left(\frac{c(\edgemarked; G^v)}{|G|-1}\right)^2
+            - p(\trianglemarked; G^v) - p(\triangletwoedgemarkedcentre; G^v)\\
         &= \left(\frac{\deg v}{|G|-1}\right)^2
-            - \frac{c(\trianglemarked; G) + c(\triangletwoedgemarkedcentre; G)}{\binom{|G|-1}{2}}\\
+            - \frac{c(\trianglemarked; G^v) + c(\triangletwoedgemarkedcentre; G^v)}{\binom{|G|-1}{2}}\\
         &= \left(\frac{\deg v}{|G|-1}\right)^2
             - \frac{\binom{\deg(v)}{2}}{\binom{|G|-1}{2}}\\
         &= \frac{\deg v}{(|G|-1)^2(|G|-2)}
@@ -405,7 +447,7 @@ $f \geq g$ iff $\phi(f) \geq \phi(g)$ for all $\phi\in\Phi^\sigma$.
     The set of positive elements of $\Acl^\sigma$ forms a convex cone, meaning it is
     closed under non-negative linear combination.
 
-    We call this the semantic cone $\SemCone^\sigma$
+    We call this the semantic cone $\SemCone^\sigma$.
 \end{lemma}
 
 Now that we have positivity, and we know that the set of positive elements form a cone we can actually prove some results. In particular we know make formal the simple argument that
@@ -535,6 +577,7 @@ we are now able to prove Mantel's theorem.
 \end{example}
 
 \section{The Semidefinite Method}
+\label{sec:semidefinite_method}
 
 We saw in the previous section that we can derive new true statements about densities
 by finding elements of the semantic cone
@@ -840,3 +883,60 @@ $\phi_x$ as possible and finally add the requirement that $\phi_x(\llbracket \nu
 for all $\nu$ in some subspace. Then the problem of maximising $\phi_x(f)$ can be
 converted rigorously to a dual problem of finding convex combinations of elements of the
 semantic cone, proving true upper bounds on $\phi(f)\forall\phi\in\Phi^\emptyset$.
+
+\section{Coloured Graphs}
+\label{sec:coloured_graphs}
+
+We have already discussed graphs with colourings in the introduction. In that context
+we were considering some underlying graph $G$ and asking questions about what possible
+colourings $G$ can admit under certain constraints. In this section we are going to take
+a very different view of graphs and colourings, we instead consider a graphs with colourings
+as combinatorial objects in their own right.
+
+\begin{definition}[$(c_v, c_e)$-Graph]
+    Given $c_v, c_e \in \N$ where $c_v, c_e \geq 1$ we define a
+    \textbf{$(c_v, c_e)$-graph} to be a simple undirected graph where each edge and
+    each vertex are assigned colours from $[c_v]$ and $[c_e]$ respectively.
+
+    We often call $(k, 1)$-graphs or $(1,k)$-graphs $k$-vertex-colour graphs or
+    $k$-edge-colour graphs respectively.
+\end{definition}
+\begin{note}
+    It's very important to highlight here that we do \textbf{not} require that the colourings
+    are proper: Adjacent vertices and incident edges can have the same colour.
+\end{note}
+\begin{definition}
+    Two $(c_e,c_v)$-graphs $G, G'$ are isomorphic if there is a graph isomorphism
+    $f\colon G \to G'$ which preserves colours.
+\end{definition}
+
+\begin{example}
+    A $(2, 1)$-graph is a graph where each vertex can have 1 of 2 colours, and each edge is fixed
+    to same colour. We usually visually show colour 1 as black and colour 2 as red. See
+    figure \ref{fig:all_2_1_graphs} for all 2-vertex-coloured graphs of size 3.
+\end{example}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.6]{all_2_1_graphs.pdf}
+    \caption{All $(2,1)$-graphs of size 3 up to isomorphism}
+    \label{fig:all_2_1_graphs}
+\end{figure}
+
+\begin{example}
+    The category of $(1,1)$-graphs is equivalent to the category of simple graphs.
+\end{example}
+
+All of what we have seen in the previous sections applies exactly the same to
+coloured graphs as to graphs. We have types and flags and flag algebras in the exact
+same way. The induced count function $c(F; G)$ now counts those $U\subseteq V(G)$ such that
+$G[U] \cong F$ as coloured graphs.
+See figure \ref{fig:coloured_flag_example} for an example expression in $\sigma$-flags derived from
+$(2, 2)$-graphs where $\sigma=\redvertex$, a single red vertex (colour 2).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=1.25]{coloured_flag_example}
+    \caption{An example expression in an $(2,2)$-graph flag algebra}
+    \label{fig:coloured_flag_example}
+\end{figure}

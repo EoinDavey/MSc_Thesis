@@ -1,22 +1,24 @@
 \chapter{Local Flags}
 
 In the previous chapter we saw how to use flag algebras to bound density functions
-asymptotically, but some things are not described by a density function.
+asymptotically, Some things are not described by a density function but still feel
+"density like", leading us to speculate if we can modify the flag algebra method to work
+for these functions.
 
 For example, in chapter TODO we will see a problem we're calling the bounded degree
 Erd\H{o}s' pentagon problem. In approaching that problem we will ask:
-Given a triangle graph $G$ with max degree $\Delta(G)$ and some fixed vertex
+Given a triangle-free graph $G$ with max degree $\Delta(G)$ and some fixed vertex
 $v\in V(G)$, how many pentagons (5-cycles) are there containing $v$?
 We want to upper bound this number of pentagons as a function of $\Delta(G)$. The upper
 bound of $\Delta(G)^4$ is easily seen, but $\frac{1}{2}\Delta(G)^4$ is also easy to prove.
 
-Phrased differently: if $f(G)$ is the number of pentagons in $G$ containing $v$
+Phrased differently: If $f(G)$ is the number of pentagons in $G$ containing $v$ then
 we want to find an asymptotic upper bound on $f(G) / \Delta(G)^4$. If we pick a
 flag $F=\cfivemarked$ which is a pentagon with a single labelled vertex then this
 could be written as $c(F; G^v) / \Delta(G)^4$.
 
 This looks a lot like
-a density function, except that our denominator is of the wrong form, it should
+a density function, except that our denominator is of the wrong form: It should
 be $\in\Theta(|G|^4)$, not $\Delta(G)^4$. It is for this reason that applying classic
 flag algebras directly is not promising: Our function is of the wrong form. We will
 see in section TODO that a few ways we could try and "trick" the density function do not
@@ -151,11 +153,6 @@ $F$'s vertices and continue to get bounded behaviour.
     which is bounded so $F'$ is a local flag. Hence $F=\edgemarked$ is a local flag.
 \end{example}
 
-\begin{note}
-    This second property we require of local flags is not necessarily implied by
-    the first. See TODO.
-\end{note}
-
 We write $\Glocn^\sigma\subseteq\HeredG{}^\sigma_n$ for the set of local $\sigma$-flags
 of size $n$ up to isomorphism, and $\Gloc^\sigma$ for all local $\sigma$-flags. As usual we
 can drop the $\sigma$ superscript if $\sigma=\emptyset$.
@@ -165,3 +162,165 @@ you might expect us to introduce something akin to the chain rule (lemma \ref{le
 Unfortunately no such relation exists in general for local flags. This is the first big
 loss when moving to the new framework: Prima facie it's unclear how one can "project"
 small flags into the space of larger flags.
+
+\begin{note}
+    This second property we require of local flags is not necessarily implied by
+    the first which we show now in lemma \ref{lemma:second_prop_required}.
+\end{note}
+
+\begin{lemma}
+    \label{lemma:second_prop_required}
+    There is a class of graphs $\Gcl$ and $\sigma$-flag $F$ such that
+    $G \mapsto \rho(F; G)$ is a bounded function $\Gcl^\sigma \to \R$ but $F$ is
+    not a local $\sigma$-flag. i.e. $F$ has a labelled extension with unbounded
+    density function.
+\end{lemma}
+\begin{proof}
+    Take $\Gcl$ to be the class of 3-vertex-coloured graphs (black, red and blue) $G$
+    which have a single red vertex and $\Delta(G)^2$ blue vertices\footnote{Implicitly the
+    rest of the vertices are black} such that there are no edges between red and blue
+    vertices.
+
+    Then take $\emptyset$-flag $F=\redbluenonedge$. For any $G\in\Gcl$ we have
+    $c(F; G) = \Delta(G)^2$ as there is 1 choice for the red vertex and $\Delta(G)^2$
+    choices for the blue. Hence $\rho(F;G) = c(F; G) / \binom{\Delta(G)}{2} \leq 2$.
+    Consider then the labelled extension $F' =\redbluenonedgemarked$ of type
+    $\redvertex$. We have $c(F'; G)=\Delta(G)^2$ again for any
+    $G\in\Gcl^\redvertex$ but now $\rho(F'; G) = \Delta(G)^2 / \Delta(G) = \Delta(G)$ which
+    is an unbounded function. Hence $F'$ is not a local $\redvertex$-flag
+    meaning $F$ is not a local $\emptyset$-flag.
+\end{proof}
+
+Intuitively $F$ is a local $\sigma$-flag (relative to our choice of $\Gcl$ and
+$\Delta$) if $\Delta(G)$ bounds the "degree of freedom" for the possible mapping
+of $F$'s unlabelled vertices. Consider the following example.
+
+\begin{example}
+    Let $\Gcl$ be the class of 2-vertex-coloured (black and red) graphs such that
+    each $G\in\Gcl$ has $\leq \Delta(G)$ black vertices where as usual $\Delta(G)$ is the
+    max degree of $G$.
+
+    Take some connected graph $F$. If $F$ contains a black vertex then
+    $F$ is a local $\emptyset$-flag:
+    To see this take one of the black vertices in $F$.
+    It must map to some black vertex in $G$, there are $\Delta(G)$ such choices.
+    Then each vertex in $F$ connected to our black vertex must map into the neighbourhood
+    of its image in $G$, which has size $\leq\Delta(G)$. This logic continues showing
+    each vertex has at most $\Delta(G)$ possible images in $G$ leading to a bound of
+    $c(F; G) \leq \Delta(G)^{|F|}$. The argument is almost identical for any labelled
+    extension of $F$.
+
+    Then in general connected components are independent of each other so we generalise
+    to say that if each connected component of some $F$ contains a black vertex then
+    $F$ is a local $\emptyset$-flag. We will see a more rigorous version of this
+    argument in TODO REF.
+\end{example}
+
+\section{Algebraic Structure}
+
+Now that we have described local $\sigma$-flags $\Gloc$ we can describe their
+algebraic structure. Ideally we would like to construct a product structure
+on $\Gloc$ such that we get a result like theorem \ref{thm:classic_product_lim} but for
+local density function $\rho$. In fact this is exactly what we get: We will get an
+algebraic structure such that $\rho(f; G)\rho(g;G) = \rho(f\cdot g; G) + o(1)$.
+
+First we take the concept of limit functionals (section \ref{sec:limit_functionals})
+from the classic flag algebras with some minor modifications:
+First, we require now that a sequence of graphs $(G_k)_{k\in\N}$ is $\Delta$-increasing:
+\begin{definition}
+    A sequence $(G_k)_{k\in\N}$ is $\Delta$-increasing if the sequence
+    $(\Delta(G))_{k\in\N}$ is strictly increasing\footnote{We required that the codomain of
+    $\Delta$ was $\N$ so strictly increasing implies unbounded. Generalising $\Delta$
+    to a function with codomain $\R$ is likely possible so we would need to add the
+    unbounded requirement here.}.
+\end{definition}
+Then given some $\Delta$-increasing sequence of $\sigma$-flags $(G_k)_{k\in\N}$
+and some local $\sigma$-flag
+$F$ we can look at $\lim_{k\to\infty}\rho(F; G_k)$. As $F$ is a local $\sigma$-flag
+$\rho(F; \cdot)$ is bounded so the image is compact. For this reason (again via Tychonoff's theorem)
+any sequence of $\sigma$-flags $(G_k)_{k\in\N}$ contains a convergent subsequence meaning
+$\lim_{k\to\infty}\rho(F; G_k)$ exists for all $F\in\Gloc^\sigma$.
+Hence we can define a limit functional $\phi\colon\Gloc^\sigma\to\R$
+from such a convergent sequence $(G_k)_{k\in\N}$ as $\phi(F)=\lim_{k\to\infty}\rho(F; G_k)$.
+
+As with the classic case we can take the space of formal linear combinations of
+local flags $\R\Gloc^\sigma$ and linearly extend $\rho$ and $\phi$ to these
+spaces. As before we denote the set of all limit functionals on type $\sigma$ by
+$\Phi^\sigma$.
+
+\begin{note}
+    Unlike in the classic case we will not be quotienting the space $\R\Gloc^\sigma$ by
+    a subspace. This is as we do not have an equivalent relation like the chain rule.
+    The side effect of this is that there may be vectors $f \in \R\Gloc^\sigma$ which
+    are formally non-zero but have $\phi(f) = 0\ \forall\ \phi\in\Phi^\sigma$.
+
+    This doesn't affect the correctness of our arguments, but does mean the semidefinite
+    programs will be larger and therefore may take longer to solve.
+\end{note}
+
+We now define the product on $\R\Gloc^\sigma$ which will turn it into an algebra.
+
+\begin{definition}[Local Flag Product]
+    Let $F, F'\in\Gloc^\sigma$ be given. Let $n=|F|+|F'|-|\sigma|$, the minimum size of
+    a flag which can fit $F$ and $F'$. Then we define:
+    \[
+        F \cdot F' := \sum_{H \in \Glocn^\sigma} p(F, F'; H) \cdot H
+    \]
+    Note: This is the induced density function $p$, not the local density function $\rho$.
+    Extend this product bilinearly to the space $\R\Gloc^\sigma$ to create an algebra
+    $\Lcl^\sigma$.
+\end{definition}
+
+\begin{lemma}
+    The algebra $\Lcl^\sigma$ is associative, commutative and unital.
+\end{lemma}
+
+We will prove this later. First we need to see a key technical lemma which makes this
+product work.
+
+\begin{lemma}
+    Let $F, F' \in \Gloc^\sigma$ be local $\sigma$-flags and $H$ a $\sigma$-flag
+    of size $n=|F|+|F'|-|\sigma|$ such that $p(F, F'; H) > 0$ then $H$ is a local
+    $\sigma$-flag.
+\end{lemma}
+
+\begin{proof}
+    Let $\theta,\theta'$ be the $\sigma$ embeddings for $F, F'$ and $\eta$ the
+    $\sigma$-embedding for $H.$
+
+    To prove $H$ is a local flag we first need to show that $\rho(H; \cdot)$ is a bounded function.
+    i.e. $(G \mapsto c(H; G)) \in O(\Delta(G)^{|H|-|\sigma|}).$
+
+    As $p(F, F'; H) > 0$ there is some $U, U'\subseteq V(H)$ such that $U\cap U'=\im\eta$ and
+    $F \cong H[U] \land F'\cong H[U']$ as $\sigma$ flags. As $|H|=|F|+|F'|-|\sigma$ we
+    have $U \cup U' = V(H)$.
+
+    Let $(G, \zeta)$ be another $\sigma$-flag. If $c(H; G) = 0$ we're done so assume otherwise and
+    let $\im\zeta \subseteq V\subseteq V(G)$ be such that $H \cong G[V]$ as $\sigma$-flags. Let
+    $\phi$ be this isomorphism. Then In particular $\phi$ induces an embedding of $U, U'$ into
+    $V(G)$ such that $\im\zeta = \phi(U) \cap \phi(U')$ and $G[\phi(U)] \cong F\land G[\phi(U')]
+    \cong F'$ as $\sigma$-flags.  Hence any choice of an instance of $G$ in $H$ and choice of
+    instances $U, U'$ of $F, F'$ in $H$ gives rise to a pair of instances of $F$ and $F'$ in $G.$
+    There are at most some constant number $C$ instances of $F, F'$ in $H$ (as the size of $H$ is
+    fixed).
+
+    Note then also that any choice of a pair of instances of $F, F'$ in $G$ can be derived from at
+    most 1 instance of $H$, as the size of $H$ was chosen to be the minimum possible such that both
+    $F,F'$ fit. If the two instances overlap (outside of the required intersection at $\im\zeta$)
+    then they don't correspond to an instance of $H.$ If they don't overlap then their
+    union corresponds to a single \textit{possible} instance of $G.$
+
+    In summary each instance of $H$ gives rise to some non-zero but bounded number of pairs of
+    instances of $F, F'$ in $G$, and each pair of instances is induced by at most 1 instance of $H.$
+    Therefore $c(H; G) \leq \frac{1}{C}\cdot c(F; G)\cdot c(F'; G).$ $c(F; \cdot)$ and
+    $c(F', \cdot)$ are $\in O(\Delta(G)^{|F|-|\sigma|})$ and $\in O(\Delta(G)^{|F'|-|\sigma|})$
+    respectively as $F,F'$ are local flags hence their product is
+    $\in O(\Delta(G)^{|F|+|F'|-2|\sigma|}) = O(\Delta(G)^{|H|-|\sigma|})$ so
+    $c(G, \cdot) \in O(\Delta(G)^{|H|-|\sigma})$ showing $\rho(G, \cdot)$ is a bounded function as
+    required.
+
+    TODO DIAGRAM
+
+    It remains to prove that $H$ still has bounded density after fixing any unlabelled vertices.
+    TODO
+\end{proof}
