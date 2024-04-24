@@ -79,6 +79,7 @@ are represented visually with a partially filled vertex.
 We give the formal definitions:
 
 \begin{definition}[Type]
+    \label{def:type}
     A \textbf{type} $\sigma$ of size $k$ is a graph with vertex set $[k]$. We write
     $|\sigma|$ to denote the size of the underlying graph. We write
     $\emptyset$ to denote the type consisting of the empty graph.
@@ -485,6 +486,7 @@ flag.
 We then define a computable normalising factor $q_\sigma(F)$:
 
 \begin{definition}
+    \label{def:averaging_normalisation}
     For a $\sigma$-flag $F$ define $q_\sigma(F)$ to be the probability that a
     random injective
     $\theta\colon [|\sigma|]\to V(F)$ is such that
@@ -504,6 +506,7 @@ normalising factors.
 Now we can define the averaging operator:
 
 \begin{definition}[Averaging Operator]
+    \label{def:classic_averaging}
     We define the map $\llbracket \cdot \rrbracket\colon \Acl^\sigma \to \Acl^\emptyset$
     as follows. For a fixed $\sigma$-flag $F$ define
     $\llbracket F \rrbracket := q_\sigma(F) \downflag{F}$.

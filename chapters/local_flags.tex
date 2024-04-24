@@ -40,7 +40,6 @@ such that $\Delta(G)\to\infty$ implies $|G|\to\infty.$
 (More formally there is some monotone increasing
 unbounded function $f$ such that for all $G\in\mathcal{G}$ we have $|G|\geq f(\Delta(G))$).
 
-
 \begin{note}
     We almost exclusively use the maximum degree function $\Delta$ so you can effectively always
     interpret $\Delta(G)$ in this way. Clearly $|G|\geq\Delta(G)$. In particular all of
@@ -141,9 +140,8 @@ This is not a circular definition as any label extension of $(F,\theta)$ reduces
 unlabelled vertices
 by 1; We could define inductively starting with those flags with no unlabelled vertices.
 
-What we're trying to capture here is that any "subflag"
-of $F$ is also a local flag, meaning we can pin down
-$F$'s vertices and continue to get bounded behaviour.
+What we're trying to capture here is that any "subflag" of $F$ is also a local flag, meaning we can
+pin down $F$'s vertices and continue to get bounded behaviour.
 
 \begin{example}
     As in the example above $F=\edgemarked$ gives rise to a bounded local
@@ -156,6 +154,11 @@ $F$'s vertices and continue to get bounded behaviour.
 We write $\Glocn^\sigma\subseteq\HeredG{}^\sigma_n$ for the set of local $\sigma$-flags
 of size $n$ up to isomorphism, and $\Gloc^\sigma$ for all local $\sigma$-flags. As usual we
 can drop the $\sigma$ superscript if $\sigma=\emptyset$.
+
+\begin{note}
+    For $\sigma$-flag $F$ the requirement that $\rho(F; G)$ is a bounded function
+    is equivalent to requiring that $c(F; G) \in O(\Delta(G)^{|F|-|\sigma|})$.
+\end{note}
 
 Comparing this section to the classic flag algebra case (section \ref{sec:flag_algebras})
 you might expect us to introduce something akin to the chain rule (lemma \ref{lemma:chain_rule}).
@@ -218,11 +221,11 @@ of $F$'s unlabelled vertices. Consider the following example.
 
 \section{Algebraic Structure}
 
-Now that we have described local $\sigma$-flags $\Gloc$ we can describe their
+Now that we have described local $\sigma$-flags $\Gloc^\sigma$ we can describe their
 algebraic structure. Ideally we would like to construct a product structure
-on $\Gloc$ such that we get a result like theorem \ref{thm:classic_product_lim} but for
-local density function $\rho$. In fact this is exactly what we get: We will get an
-algebraic structure such that $\rho(f; G)\rho(g;G) = \rho(f\cdot g; G) + o(1)$.
+on $\Gloc^\sigma$ such that we get a result like theorem \ref{thm:classic_product_lim} but for
+the local density function $\rho$. In fact this is exactly what we get: An algebraic structure such
+that $\rho(f; G)\rho(g;G) = \rho(f\cdot g; G) + o(1)$ (Theorem \ref{thm:local_product_lim}).
 
 First we take the concept of limit functionals (section \ref{sec:limit_functionals})
 from the classic flag algebras with some minor modifications:
@@ -271,18 +274,31 @@ We now define the product on $\R\Gloc^\sigma$ which will turn it into an algebra
     $\Lcl^\sigma$.
 \end{definition}
 
+This product has the exact limiting behaviour that we need:
+
+\begin{theorem}
+    \label{thm:local_product_lim}
+    For $f, g \in \Lcl^\sigma$ and $\sigma$-flag $G$ we have
+    \[\rho(f; G)\rho(g; G) = \rho(f\cdot g; G) + O\left(\frac{1}{\Delta(G)}\right)\]
+    and in particular any limit functional $\phi\in\Phi^\sigma$ is an algebra
+    homomorphism $\Lcl^\sigma \to \R$.
+\end{theorem}
+
+We also have some nice algebraic properties:
+
 \begin{lemma}
-    The algebra $\Lcl^\sigma$ is associative, commutative and unital.
+    \label{lemma:local_assoc}
+    The algebra $\Lcl^\sigma$ is commutative, associative and unital.
 \end{lemma}
 
-We will prove this later. First we need to see a key technical lemma which makes this
-product work.
+We will prove both of these results after first proving a key technical result which makes this
+product work:
 
-\begin{lemma}
+\begin{theorem}
     Let $F, F' \in \Gloc^\sigma$ be local $\sigma$-flags and $H$ a $\sigma$-flag
     of size $n=|F|+|F'|-|\sigma|$ such that $p(F, F'; H) > 0$ then $H$ is a local
     $\sigma$-flag.
-\end{lemma}
+\end{theorem}
 
 \begin{proof}
     Let $\theta,\theta'$ be the $\sigma$ embeddings for $F, F'$ and $\eta$ the
@@ -299,7 +315,7 @@ product work.
     let $\im\zeta \subseteq V\subseteq V(G)$ be such that $H \cong G[V]$ as $\sigma$-flags. Let
     $\phi$ be this isomorphism. Then In particular $\phi$ induces an embedding of $U, U'$ into
     $V(G)$ such that $\im\zeta = \phi(U) \cap \phi(U')$ and $G[\phi(U)] \cong F\land G[\phi(U')]
-    \cong F'$ as $\sigma$-flags.  Hence any choice of an instance of $G$ in $H$ and choice of
+    \cong F'$ as $\sigma$-flags.  Hence any choice of an instance of $H$ in $G$ and choice of
     instances $U, U'$ of $F, F'$ in $H$ gives rise to a pair of instances of $F$ and $F'$ in $G.$
     There are at most some constant number $C$ instances of $F, F'$ in $H$ (as the size of $H$ is
     fixed).
@@ -308,19 +324,360 @@ product work.
     most 1 instance of $H$, as the size of $H$ was chosen to be the minimum possible such that both
     $F,F'$ fit. If the two instances overlap (outside of the required intersection at $\im\zeta$)
     then they don't correspond to an instance of $H.$ If they don't overlap then their
-    union corresponds to a single \textit{possible} instance of $G.$
+    union corresponds to a single \textit{possible} instance of $H$.
 
     In summary each instance of $H$ gives rise to some non-zero but bounded number of pairs of
-    instances of $F, F'$ in $G$, and each pair of instances is induced by at most 1 instance of $H.$
-    Therefore $c(H; G) \leq \frac{1}{C}\cdot c(F; G)\cdot c(F'; G).$ $c(F; \cdot)$ and
-    $c(F', \cdot)$ are $\in O(\Delta(G)^{|F|-|\sigma|})$ and $\in O(\Delta(G)^{|F'|-|\sigma|})$
-    respectively as $F,F'$ are local flags hence their product is
+    instances of $F, F'$ in $G$, and each pair of instances of $F, F'$ is induced by at most
+    1 instance of $H.$
+    Therefore $c(H; G) \leq \frac{1}{C}\cdot c(F; G)\cdot c(F'; G)$. We use then
+    the fact that $F$ and $F'$ are local $\sigma$-flags so $c(F; \cdot)$ and
+    $c(F'; \cdot)$ are $\in O(\Delta(G)^{|F|-|\sigma|})$ and $\in O(\Delta(G)^{|F'|-|\sigma|})$
+    respectively. Hence their product is
     $\in O(\Delta(G)^{|F|+|F'|-2|\sigma|}) = O(\Delta(G)^{|H|-|\sigma|})$ so
-    $c(G, \cdot) \in O(\Delta(G)^{|H|-|\sigma})$ showing $\rho(G, \cdot)$ is a bounded function as
+    $c(H; \cdot) \in O(\Delta(G)^{|H|-|\sigma|})$ showing $\rho(H; \cdot)$ is a bounded function as
     required.
 
-    TODO DIAGRAM
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=0.25]{local_flag_product_diagram}
+    \end{figure}
 
     It remains to prove that $H$ still has bounded density after fixing any unlabelled vertices.
-    TODO
+    This argument goes almost identically so I just give the high level details. Once again
+    pick $U, U' \subseteq V(H)$ where $U\cap U'=\im\eta$ and $F\cong H[U]$ and $F' \cong H[U']$.
+    Pick some unlabelled vertex $v\in V(H)\setminus \im\eta$.
+    Let $H^v$ be the labelled extension fixing $v$. Then any copy of $H^v$ in $G$ induces
+    via $U, U'$ copies of $F, F'$ in $G$. WLOG $v \in U \setminus \im \eta$ so each copy
+    of $F$ induced by $U$ is also a copy of $F^v$, the labelled extension of $f$ fixing the
+    preimage of $v$. Then as $F$ is local $F^v$ has bounded corresponding density
+    function. Once again we have some constant $C$ number of choices for $U, U'$ so we
+    get
+    $c(H^v; G) \leq \frac{1}{C} c(F^v; G) \cdot c(F'; G) \in
+    O(\Delta(G)^{|F|-(|\sigma|+1)+|F'|-|\sigma|}) = O(\Delta(G)^{|H|-(|\sigma|+1)})$
+    as required.  $\therefore H$ is a local flag.
+\end{proof}
+
+The value of this theorem is that it tells us that our local product definition is
+equivalent to summing over all $\sigma$-flags, not just the local flags:
+
+\begin{corollary}
+    \label{corollary:local_product}
+    For local flags $F, F' \in \Gloc^\sigma$ we have
+    \[
+        F \cdot_{\Lcl^\sigma} F'
+        = \sum_{H\in\Glocn^\sigma}p(F, F'; H)\cdot H
+        = \sum_{H\in\Gcl_n^\sigma}p(F, F'; H)\cdot H
+    \]
+    where $n=|F|+|F'|-|\sigma|$.
+\end{corollary}
+
+This allows us to prove our product limiting result (Theorem \ref{thm:local_product_lim}).
+
+\begin{proof}[Proof of theorem \ref{thm:local_product_lim}]
+    Let $(F,\theta), (F',\theta') \in\Gloc^\sigma$ be local $\sigma$-flags and $(G,\eta)$ a
+    $\sigma$-flag. We compute
+    \[
+        \begin{split}
+            \rho(F; G)\cdot\rho(F';G) -\rho(F\cdot F'; G)
+            &= \rho(F; G)\cdot\rho(F';G)
+                - \left(\sum_{H\in\Glocn^\sigma} p(F, F'; H)\rho(H; G) \right)\\
+            &= \rho(F; G)\cdot\rho(F';G)
+                - \left(\sum_{H\in\Gcl_n^\sigma} p(F, F'; H)\rho(H; G) \right)\\
+            &= \frac{c(F; G)\cdot c(F';G)}{\binom{\Delta(G)}{|F|-k}\binom{\Delta(G)}{|F'|-k}}
+                - \frac{\sum_{H\in\Gcl^\sigma_n} c(F, F'; H)c(H; G)}
+                {\binom{n-k}{|F|-k}\binom{\Delta(G)}{n-k}}
+            \end{split}
+    \]
+    where $k=|\sigma|$ and $n=|F|+|F'|-k$.
+    First we note the denominators are asymptotically equivalent. It is a standard
+    binomial identity that
+    $\binom{\Delta(G)}{n-k}\binom{n-k}{|F|-k} = \binom{\Delta(G)}{|F|-k}\binom{\Delta(G)-(|F|-k)}{|F'|-k}$
+    hence
+    \[
+        \lim_{\Delta(G)\to\infty}
+        \frac{\binom{n-k}{|F|-k}\binom{\Delta(G)}{n-k}}{\binom{\Delta(G)}{|F|-k}\binom{\Delta(G)}{|F'|-k}}
+        = \lim_{\Delta(G)\to\infty}
+        \frac{\binom{\Delta(G)}{|F'|-k}}{\binom{\Delta(G)-(|F|-k)}{|F'|-k}}
+        = 1.
+    \]
+    Both denominators are asymptotically equivalent and $\in\Omega(\Delta(G)^{n-k})$ so we
+    can focus on the numerators:
+    \[
+        c(F;G)c(F';G) - \sum_{H\in\Gcl^\sigma_n}c(F,F';H)c(H;G).
+        \tag{$\dagger$}
+    \]
+    It suffices to show $(\dagger) \in O(\Delta(G)^{n-k-1})$.
+
+    The term $c(F; G)c(F';G)$ counts the number of pairs of subsets
+    $\im\eta \subseteq U, U' \subseteq V(G)$ such that $F \cong G[U]$ and $F'\cong G[U']$.
+    Comparatively the sum $\sum_{H\in\Gcl^\sigma_n} c(F, F'; H)c(H; G)$ counts the number
+    of subsets $\im\eta U, U' \in V(G)$ such that $F\cong G[U]$, $F'\cong G[U']$ \textit{and}
+    $U \cap U' = \im \eta$. This relies on theorem \ref{thm:local_product_lim}
+    which let us sum over all possible flags of size $n$.
+
+    Clearly then ($\dagger$) counts the
+    number of pairs of subsets $\im\eta \subseteq U, U' \subseteq V(G)$ such that
+    $F \cong G[U], F'\cong G[U']$ and $U \cap U' \neq \im \eta$ meaning there is
+    an overlap of the image of the unlabelled vertices of $F, F'$.
+
+    To see intuitively that $(\dagger)\in O(\Delta(G)^{n-k-1})$
+    remember that $F,F'$ being local flags means $\Delta(G)$
+    bounds the degree of freedom of choosing the image of each of their unlabelled vertices.
+    Then $\Delta(G)^{n-k}$ represents the degree
+    of freedom of choosing pairs of embeddings of $F, F'$ with no constraints; Adding
+    the constraint that the embeddings must overlap means reducing the degree of freedom
+    by at least one, giving $\Delta(G)^{n-k-1}$. We show the argument in detail here:
+
+    We calculate an upper bound on ($\dagger$) by summing for each $U$ embedding $F$ into $G$
+    and over each unlabelled $v \in V(F)$ the maximum number of $U'$ embeddings of $F'$ which
+    overlap on the image of $v$.
+
+    Fix $\im\eta\subseteq U \subseteq V(G)$ such that $F \cong G[U]$ and
+    $v\in V(F) \setminus \im\eta$. Call the isomorphism $\phi$. We ask then
+    how many $\im\eta \subseteq U' \subseteq V(G)$ are there such that $\phi(v)\in U'$ and
+    $F' \cong G[U']$? We can upper bound this by summing over each unlabelled
+    $w \in V(F')$ and asking how many $U'$ embeddings are there where the isomorphism
+    maps $w$ to $\phi(v)$.
+    This is exactly what is answered by taking a labelled extension of $F'$ labelling
+    $w$ and extending the label of $G$ to map $w$ to $\phi(v)$. We are guaranteed that
+    $F'$ is a local flag so this labelled extension also has bounded density. In particular
+    $c((F')^w; G^{\phi(v)})\in O(\Delta(G)^{|F'|-(k+1)})$.
+
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=0.25]{local_flag_limit_diagram}
+    \end{figure}
+
+    We have a constant number of choices of $w$ and $v$ and $c(F; G) \in O(\Delta(G)^{|F|-k})$
+    choices for $U$ giving us a total upper bound of
+    $O(\Delta(G)^{|F|-k + |F'|-(k+1)}) = O(\Delta(G)^{n-k-1})$ as required.
+    \[
+        \therefore \rho(F; G)\rho(F'; G) - \rho(F\cdot F'; G)
+        = \frac{O(\Delta(G)^{n-k-1})}{\Omega(\Delta(G)^{n-k})}
+        = O\left(\frac{1}{\Delta(G)}\right).
+    \]
+    This then extends linearly to $\Lcl^\sigma = \R\Gloc^\sigma$ as
+    the vector space only contains finite combinations.
+    This has the immediate corollary of showing that any limit functional
+    $\phi\in\Phi^\sigma$ is an algebra homomorphism $\Lcl^\sigma \to \R$.
+\end{proof}
+
+Finally we can prove lemma \ref{lemma:local_assoc}, showing $\Lcl^\sigma$ to be associative,
+commutative and unital.
+
+\begin{proof}[Proof of Lemma \ref{lemma:local_assoc}]
+    It is clear by definition that the product is commutative.
+
+    To show associativity let $F_1, F_2, F_3$ be local $\sigma$-flags.
+    Then let $k = |\sigma|, \ell = |F_1|+|F_2|-k$ and $n = |F_1|+|F_2|+|F_3|-2k$. Then
+    we can calculate:
+
+    \[
+        \begin{split}
+            (F_1 \cdot F_2) \cdot F_3
+            &= \left(\sum_{H\in\Glocsub{\ell}^\sigma} p(F_1,F_2;H)H\right) \cdot F_3\\
+            &= \left(\sum_{H\in\Gcl_\ell^\sigma} p(F_1,F_2;H)H\right) \cdot F_3\\
+            &= \sum_{H\in\Gcl_\ell^\sigma} p(F_1,F_2;H)(H \cdot F_3)\\
+            &= \sum_{H\in\Gcl_\ell^\sigma} p(F_1,F_2;H)
+                \left(\sum_{G\in\Glocn^\sigma} p(H,F_3;G)G \right)\\
+            &= \sum_{G\in\Glocn^\sigma}
+                \left(\sum_{H\in\Gcl_\ell^\sigma} p(F_1,F_2;H) p(H,F_3;G) \right) G
+        \end{split}
+    \]
+    Then as we used our previous lemma to get a sum over all flags, not just local ones, we can
+    apply the chain rule for induced densities (lemma \ref{lemma:chain_rule})
+    to get:
+    \[
+            (F_1 \cdot F_2) \cdot F_3
+            = \sum_{G\in\Glocn^\sigma} p(F_1, F_2, F_3; G)\cdot G
+    \]
+    This is symmetric in all 3 terms so clearly $(F_1\cdot F_2)\cdot F_3 = F_1 \cdot (F_2\cdot F_3)$
+    so $\Lcl^\sigma$ is associative.
+
+    Finally take the type $\sigma$ and view it as a $\sigma$-flag implicitly. Then
+    $c(\sigma; G)=1$ for any $\sigma$-flag $G$ so $\rho(\sigma; G)=1/\binom{\Delta(G)}{0}=1$
+    showing $\sigma$ is a local $\sigma$-flag $\implies \sigma\in\Lcl^\sigma$.
+    Then it is easy to see that $\sigma$ is a unit in this algebra as for any
+    $F\in\Lcl^\sigma$ we have
+    $F\cdot\sigma = \sum_{H \in \Glocsub{|F|}^\sigma}p(F,\sigma; H)H=F$
+    as the only flag of size $|F|$ which contains a copy of $F$ is $F$ itself.
+\end{proof}
+
+\section{Averaging Local Flags}
+
+So far we have made restrictions no restrictions on what types $\sigma$ we consider, but
+it will prove useful to look at only a select set of types we call \textit{local types}.
+\begin{definition}[Local Type]
+    We say that a type (definition \ref{def:type}) is a \textbf{local type}
+    if $\downflag{F}$ is a local $\emptyset$-flag for all $F\in\Gloc^\sigma$.
+\end{definition}
+
+We also give a useful equivalent condition:
+\begin{lemma}
+    A type $\sigma$ is a local type iff $\sigma$ is itself a local $\emptyset$-flag
+\end{lemma}
+
+\begin{proof}
+    One direction is easy to see. If $\sigma$ is a local type then as $\sigma\in\Gloc^\sigma$
+    we have $\downflag{\sigma}\in\Gloc^\emptyset$ but $\downflag{\sigma}=\sigma$ so
+    $\sigma$ is a local $\emptyset$-flag.
+
+    To show the other direction assume $\sigma$ is itself a local $\emptyset$-flag
+    meaning $c(\sigma; G) \in O(\Delta(G)^{|\sigma|})$. Let $(F, \theta) \in\Gloc^\sigma$ be
+    given, then we also have $c((F, \theta); (G, \eta)) \in O(\Delta(G)^{|F|-|\sigma|})$.
+    Let $C_\sigma$ be the constant such that
+    $c(\sigma; G) \leq C_\sigma \Delta(G)^{|\sigma|}\forall G\in\Gcl$ and
+    $C_F^\sigma$ the constant such that
+    $c((F, \theta); (G, \eta)) \leq C_F^\sigma\Delta(G)^{|F|-|\sigma|}\forall
+    (G,\eta)\in\Gcl^\sigma$. For fixed $\sigma$ and $U \subseteq V(G)$ there is
+    a finite number of possible embeddings $\eta$ such that $(G,\eta)$ is a
+    $\sigma$-embedding and $\im\eta=U$, namely the size of the automorphism group of $\sigma$
+    $|\mathrm{Aut}(\sigma)|$.
+
+    We want to show that $\downflag{(F,\theta)}=F$ is a local $\emptyset$-flag so first need to show
+    $c(F; G) \in O(\Delta(G)^{|F|})$.
+    Given any embedding $(G,\eta)$ and $\im\eta \subseteq U \subseteq V(G)$ such that
+    $(F,\theta) \cong (G[U],\eta)$ we must have $F \cong G[U]$ as $\emptyset$-graphs.
+    This gives us a map into copies of $F$ in $G$ which is just forgetting the labels
+    in both $(G,\eta)$ and $(F,\theta)$.
+    Conversely consider some copy of $F$ in $G$ $U \subseteq V(G)$ ($F \cong G[U]$ as
+    $\emptyset$-flags). Then as $(F,\theta)$ is a $\sigma$-flag there is some $V\subseteq U$ such
+    that $\sigma \cong G[V]$. We can then construct a $\sigma$-flag $(G,\eta)$ where
+    $\im\eta=V$ such that $(F, \theta) \cong (G[U], \eta)$ as $\sigma$-flags.
+    This shows us that the previous map must be surjective.
+    Hence
+    \[
+        \begin{split}
+            c(F; G)
+            &\leq \left|\{ ((G, \eta), U)\colon
+                \im\eta \subseteq U \subseteq V(G)\ \text{such that}\ (F,\theta) \cong (G[U],\eta)
+                \}\right|\\
+            &\leq \sum_{(G,\eta)\in\Gcl^\sigma}
+                \left|\{ U\colon
+                \im\eta \subseteq U \subseteq V(G)\ \text{such that}\ (F,\theta) \cong (G[U],\eta)
+                \}\right|\\
+            &\leq \sum_{(G,\eta)\in\Gcl^\sigma} c((F,\theta), (G,\eta))\\
+            &\leq \sum_{(G,\eta)\in\Gcl^\sigma} C_F^\sigma\Delta(G)^{|F|-|\sigma|}\\
+            &\leq |\mathrm{Aut}(\sigma)|c(\sigma; G) C_F^\sigma\Delta(G)^{|F|-|\sigma|}\\
+            &\leq |\mathrm{Aut}(\sigma)|C_\sigma\Delta(G)^{|\sigma|} C_F^\sigma\Delta(G)^{|F|-|\sigma|}\\
+            &\in O(\Delta(G)^{|F|})
+        \end{split}
+    \]
+    as required. It remains to show that any labelled extension of $\downflag{F}$
+    also has bounded density function. $\downflag{F}$ is an $\emptyset$-flag so
+    a labelled extension $F'$ of $\downflag{F}$ is just $F$ with a single labelled vertex.
+    There are 2 cases but they both proceed similarly. If this labelled
+    vertex is in $\im\theta\subseteq V(F)$ then as $\sigma$ is a local $\emptyset$-flag
+    by an almost identical argument to the previous we get a bound of
+    $c(F'; G^v) \in O(\Delta(G)^{|F|-1})$. The other case is that the newly labelled
+    vertex of $\downflag{F}$ is one of the unlabelled vertices in $F$, in which case
+    we use that $F$ is a local $\sigma$-flag to again bound
+    $c(F'; G^v) \in O(\Delta(G)^{|F|-1})$ as required.
+    Therefore $\downflag{F}$ is a local $\emptyset$-flag.
+\end{proof}
+
+We adopt this definition of local type because we would like to introduce an averaging
+operator $\llbracket \cdot \rrbracket \colon \Lcl^\sigma \to \Lcl^\emptyset$ akin
+to definition \ref{def:classic_averaging} but we cannot just apply this map directly
+as we don't generally have a guarantee that $\llbracket f \rrbracket \in \Lcl^\emptyset$ even
+if $f\in\Lcl^\sigma$. By our definition above this map is well
+defined if $\sigma$ is local type.
+
+\begin{definition}[Averaging operator]
+    As a reminder we have a normalisation function $q_\sigma\colon\Gcl^\sigma\to[0, 1]$
+    given in definition \ref{def:averaging_normalisation}.
+    Define the \textbf{averaging operator}
+    $\llbracket \cdot \rrbracket\colon \R\Gcl^\sigma \to \R\Gcl^\emptyset$
+    as before by defining
+    $\llbracket F \rrbracket = q_\sigma(F)\downflag{F}$ for $F\in\Gcl^\sigma$ and
+    extend linearly.
+
+    If $\sigma$ is a local type and we restrict the domain to $\R\Gloc^\sigma = \Lcl^\sigma$
+    we get a map
+    $\llbracket \cdot\rrbracket\colon \Lcl^\sigma \to \Lcl^\emptyset$.
+\end{definition}
+
+We have a very nice result (lemma \ref{lemma:classic_exp_flags}) in the classic case where this
+operator represents an average in a very concrete way:
+$\E_\theta[p(F; (G,\theta))] = \frac{p(\llbracket F \rrbracket; G)}{p(\llbracket\sigma\rrbracket;
+G)}$
+We do not get quite such a neat relation for local densities, but we do get the relation
+in the limit:
+
+\begin{lemma}
+    For $\sigma$-flag $F$ and graph ($\emptyset$-flag) $G\in\Gcl$ we have
+    \[
+        \E_\theta[\rho(F; (G,\theta))] \sim
+        \frac{\rho(\llbracket F\rrbracket; G)}{\rho(\llbracket \sigma\rrbracket; G)}
+        \ \text{as}\ \Delta(G) \to \infty
+    \]
+    where $\theta$ is a uniformly random $\sigma$-embedding into $G$.
+\end{lemma}
+
+\begin{proof}
+    This proof uses the fact that this relation holds for induced densities
+    (lemma \ref{lemma:classic_exp_flags}) and the following relation between
+    induced and local densities:
+    For any $\sigma$-flags $H$ and $G$ we have
+    \[
+        \rho(H; G)
+        = \frac{c(H; G)}{\binom{\Delta(G)}{|H|-|\sigma|}}
+        = \frac{\binom{|G|-|\sigma|}{|H|-|\sigma|}c(H;
+        G)}{\binom{|G|-|\sigma|}{|H|-|\sigma|}\binom{\Delta(G)}{|H|-|\sigma|}}
+        =
+        \frac{\binom{|G|-|\sigma|}{|H|-|\sigma|}}{\binom{\Delta(G)}{|H|-|\sigma|}}\frac{c(H;G)}{\binom{|G|-|\sigma|}{|H|-|\sigma|}}
+        = \frac{\binom{|G|-|\sigma|}{|H|-|\sigma|}}{\binom{\Delta(G)}{|H|-|\sigma|}}p(H;G)
+    \]
+    Therefore
+    \[
+        \frac{\rho(\llbracket F\rrbracket; G)}
+        {\rho(\llbracket \sigma\rrbracket; G)}
+        =
+        \frac{p(\llbracket F\rrbracket; G)}
+        {p(\llbracket \sigma\rrbracket; G)}
+        \frac{\binom{|G|}{|F|}}{\binom{\Delta(G)}{|F|}}
+        \frac{\binom{\Delta(G)}{|\sigma|}}{\binom{|G|}{|\sigma|}}.
+    \]
+    Now we use lemma \ref{lemma:classic_exp_flags} to show
+    \[
+        \begin{split}
+            \frac{\rho(\llbracket F\rrbracket; G)}
+            {\rho(\llbracket \sigma\rrbracket; G)}
+            &= \E_\theta[p(F; (G,\theta))]
+            \frac{\binom{|G|}{|F|}}{\binom{\Delta(G)}{|F|}}
+            \frac{\binom{\Delta(G)}{|\sigma|}}{\binom{|G|}{|\sigma|}}\\
+            &= \E_\theta[\rho(F; (G,\theta))]
+            \frac{\binom{\Delta(G)}{|F|-|\sigma|}}{\binom{|G|-|\sigma|}{|F|-|\sigma|}}
+            \frac{\binom{|G|}{|F|}}{\binom{\Delta(G)}{|F|}}
+            \frac{\binom{\Delta(G)}{|\sigma|}}{\binom{|G|}{|\sigma|}}\\
+            &= \E_\theta[\rho(F; (G,\theta))]
+            \frac{\binom{\Delta(G)}{|F|-|\sigma|}\binom{\Delta(G)}{|\sigma|}}
+            {\binom{\Delta(G)}{|F|}}
+            \frac{\binom{|G|}{|F|}}
+            {\binom{|G|-|\sigma|}{|F|-|\sigma|}\binom{|G|}{|\sigma|}}
+        \end{split}
+    \]
+    We can use standard binomial relations to reduce this to
+    \[
+        \frac{\rho(\llbracket F\rrbracket; G)}
+        {\rho(\llbracket \sigma\rrbracket; G)}
+        = \E_\theta[\rho(F; (G,\theta))]
+        \frac{\binom{\Delta(G)}{|F|-|\sigma|}\binom{\Delta(G)}{|\sigma|}}
+        {\binom{\Delta(G)}{|F|}\binom{|F|}{|\sigma|}}
+        = \E_\theta[\rho(F; (G,\theta))]
+        \frac{\binom{\Delta(G)}{|F|-|\sigma|}}
+        {\binom{\Delta(G)-|\sigma||}{|F|-|\sigma|}}
+    \]
+    Then
+    $\lim_{\Delta(G)\to\infty}\binom{\Delta(G)}{|F|-|\sigma|}/\binom{\Delta(G)-|\sigma|}{|F|-|\sigma|}
+    = 1$ so we do indeed get
+    \[
+        \frac{\rho(\llbracket F\rrbracket; G)}
+        {\rho(\llbracket \sigma\rrbracket; G)}
+        = (1+o(1)) \E_\theta[\rho(F; (G,\theta))]
+        \implies
+        \frac{\rho(\llbracket F\rrbracket; G)}
+        {\rho(\llbracket \sigma\rrbracket; G)}
+        \sim \E_\theta[\rho(F; (G,\theta))]
+    \]
 \end{proof}
