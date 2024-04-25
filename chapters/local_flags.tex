@@ -1,8 +1,9 @@
 \chapter{Local Flags}
+\label{chap:local_flags}
 
 In the previous chapter we saw how to use flag algebras to bound density functions
 asymptotically, Some things are not described by a density function but still feel
-"density like", leading us to speculate if we can modify the flag algebra method to work
+"density like" which might lead us to speculate if we can modify the flag algebra method to work
 for these functions.
 
 For example, in chapter TODO we will see a problem we're calling the bounded degree
@@ -24,10 +25,9 @@ flag algebras directly is not promising: Our function is of the wrong form. We w
 see in section TODO that a few ways we could try and "trick" the density function do not
 work out.
 
-It turns out though that we can define a new type of "density function" which
+It turns out that we can define a new type of "density function" which
 can be used to bound functions like $c(F; G^v) / \Delta(G)^4$. These density functions
-then also have a rich (but notably limited) algebraic structure which we can exploit.
-
+then also have a rich (but limited) algebraic structure which we can exploit.
 In the following sections we introduce our new local density function and then go on to
 define local versions of many of the same structures that exist in the classic flag
 algebra. We then prove the algebraic structure these \textit{local flags} possess.
@@ -503,6 +503,18 @@ commutative and unital.
     as the only flag of size $|F|$ which contains a copy of $F$ is $F$ itself.
 \end{proof}
 
+\section{Positivity}
+
+We previously adopted the idea of limit functionals almost directly from the
+classic flag algebra, we now do the same with positivity. 
+\begin{definition}[Positive Element]
+    We say $f\in\Lcl^\sigma$ is a positive element, denoted $f \geq_{\Lcl^\sigma} 0$ or
+    just $f\geq 0$, if $\phi(f) \geq 0\ \forall \phi\in\Phi^\sigma$.
+\end{definition} 
+
+We then denote the convex cone of all positive elements of $\Lcl^\sigma$ by
+$\SemCone^\sigma$. We again call this the (local) semantic cone.
+
 \section{Averaging Local Flags}
 
 So far we have made restrictions no restrictions on what types $\sigma$ we consider, but
@@ -605,6 +617,7 @@ We do not get quite such a neat relation for local densities, but we do get the 
 in the limit:
 
 \begin{lemma}
+    \label{lemma:local_averaging_exp}
     For $\sigma$-flag $F$ and graph ($\emptyset$-flag) $G\in\Gcl$ we have
     \[
         \E_\theta[\rho(F; (G,\theta))] \sim
@@ -678,6 +691,63 @@ in the limit:
         \implies
         \frac{\rho(\llbracket F\rrbracket; G)}
         {\rho(\llbracket \sigma\rrbracket; G)}
-        \sim \E_\theta[\rho(F; (G,\theta))]
+        \sim \E_\theta[\rho(F; (G,\theta))].
     \]
+\end{proof}
+
+Now we can show that the averaging operator preserves positivity as in the
+classic case (lemma \ref{lemma:classic_pos_preserve}). We only get this
+behaviour if $\sigma$ is a local type.
+
+\begin{lemma}
+    Let $\sigma$ be a local type. Then the averaging operator preserves positive
+    elements of $\Lcl^\sigma$:
+    $\llbracket \SemCone^\sigma \rrbracket \subseteq  \SemCone^\emptyset$.
+
+    In particular as with the classic case we have $\llbracket f^2 \rrbracket \geq 0$
+    for all $f\in\Lcl^\sigma$.
+\end{lemma}
+
+\begin{proof}
+    As $\sigma$ is a local type we have that
+    $\llbracket \SemCone^\sigma \rrbracket \subseteq \Lcl^\emptyset$.
+
+    Let $f\in\SemCone^\sigma$ be given and assume for sake of contradiction that
+    $\llbracket f \rrbracket \notin\SemCone^\emptyset$. Then there must exist
+    some limit functional $\phi\in\Phi^\emptyset$ such that $\phi(f)<0$. Equivalently
+    there is some $\Delta$-convergent sequence of graphs $(G_k)_{k\in\N}$
+    such that $\lim_{k\to\infty}\rho(f; G_k) < 0$.
+
+    By lemma \ref{lemma:local_averaging_exp} we know that
+    \[
+        \rho(\llbracket f\rrbracket; G_k) = (1+o(1)) \rho(\llbracket \sigma \rrbracket; G_k)
+        \E_\theta[\rho(f; (G_k,\theta))]
+    \]
+    where $o(1)$ is as $k \to \infty$.
+    In particular this means we must have
+    \[
+        \lim_{k\to\infty} \rho(\llbracket \sigma \rrbracket; G_k)
+        \E_\theta[\rho(f; (G_k,\theta))] < 0.
+    \]
+    Then as $\sigma$ is a local type $\sigma$ is a local $\emptyset$-flag so has bounded
+    density: $\exists$ a constant $C$ such that $C \geq \rho(\llbracket\sigma\rrbracket; G_k) \geq
+    0\forall k\in\N$. In particular then we must have
+    \[
+        \lim_{k\to\infty} \E_\theta[\rho(f; (G_k,\theta))] < 0.
+    \]
+    Therefore there is some $k_0$ large enough such that
+    $\E_\theta[\rho(f; (G_k, \theta))] < 0\ \forall\ k \geq k_0$. In particular then
+    for each $k \geq k_0$ by the properties of the expected value there must exist
+    some $\sigma$-embedding $\theta_k$ such that
+    $\rho(f; (G_k, \theta_k)) \leq \E_\theta[\rho(f; (G_k,\theta))] < 0$. This gives
+    us a $\Delta$-increasing sequence of $\sigma$-flags which must contain a convergent
+    subsequence $(G'_k, \theta'_k)_{k\in\N}$
+    which in turn gives us a limit functional $\phi\in\Phi^\sigma$. This limit functional
+    then must have the property that
+    \[
+        \phi(f) = \lim_{k\to\infty}\rho(f; (G'_k, \theta'_k)
+        \leq \lim_{k\to\infty} \E_\theta[\rho(f; (G'_k, \theta)] < 0
+    \]
+    but by assumption we have $\phi(f) \geq 0\ \forall \phi\in\Phi^\sigma$ so this is
+    a contradiction. Therefore $\llbracket f \rrbracket \in\SemCone^\emptyset$.
 \end{proof}

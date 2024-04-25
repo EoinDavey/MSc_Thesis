@@ -59,10 +59,10 @@ For $\Delta(G)$ large enough we have the following theorems:
 \end{enumerate}
 
 In this thesis we will show how we brought this bound down even further to $1.73\Delta(G)^2$:
-\begin{theorem}
+\begin{knowntheorem}
     For $\Delta(G)$ large enough we have
     $\chi'_s(G) \leq 1.73\Delta(G)^2$.
-\end{theorem}
+\end{knowntheorem}
 
 The 1997 paper by Molloy \& Reed introduced a method for strong edge colouring we call the
 \textit{2 step strategy}:
@@ -176,7 +176,7 @@ also easily proved with flag algebras, which is seen in chapter TODO.
 
 \subsection*{Computer Search}
 
-One of the most (if not \textbf{the most}) important, aspects of flag algebras is that
+One of the most (if not \textit{the most}) important aspects of flag algebras is that
 they lend themselves very well to computer search methods.
 
 The flag algebras allow us to prove results using only simple symbol manipulation in a very
@@ -198,7 +198,6 @@ the dual solutions in a more human understandable way.
 
 One might be tempted to try to apply these flag algebras directly to our strong neighbourhood
 density problem but in practice this problem doesn't fit well into the flag algebra model.
-
 In particular, Razborov's flag algebras are constructed to work well with density functions
 like the induced density function $p(F; G) = c(F; G)/\binom{|G|}{|F|}$ which have a
 denominator which is $\Theta(|G|^{|F|})$. This is convenient if we are trying to prove
@@ -211,21 +210,18 @@ to the same methods.
 
 Instead, we can define a new "density" function which instead normalises our induced
 count by a different denominator, one which captures the graph parameter we want to measure
-our count "relative to". What happens when we do this?
+our count "relative to". The idea to build a new algebra from a modified density function was
+originally explored by de Verclos in 2020\footnote{In unpublished notes}; He theorised what this
+algebra could look like in a specific case and modified some classic flag algebra\footnote{An
+implementation he wrote himself: \url{https://crates.io/crates/flag-algebra}} software to show that this method likely could improve on the
+Erd\H{o}s and Nešetřil conjecture. This thesis evolves and formalises this idea and
+then applies it concretely.
 
-One immediate consequence is that we no longer necessarily have output $\in [0,1]$. In
-fact our range becomes $\R_{\geq 0}$. This has the clear effect of destroying our nice
-probabilistic interpretation, but it also means many of the nice properties that make
-the classic flag algebras work so well are gone.
-
-However, it turns out it is still possible to work without these nice properties.
-This thesis introduces a novel framework which is a modification of the classic flag algebra
-method which is still capable of proving strong bounds on these new modified density functions.
-
-In particular in chapter TODO we introduce a
+In particular in chapter \ref{chap:local_flags} we introduce a
 new \textit{local density function} and a concept we call a \textit{local flag}.
 We show that, under certain conditions, these local flags also form a nice algebra
-with which we can apply the semidefinite method to prove bounds.
+with which we can apply the semidefinite method to prove bounds. We then apply this new
+method to several problems, including conjecture \ref{conj:erdos-nesetril}.
 
 \section*{Results}
 \addcontentsline{toc}{section}{Results}
