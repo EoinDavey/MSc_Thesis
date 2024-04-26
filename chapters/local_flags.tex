@@ -745,9 +745,26 @@ behaviour if $\sigma$ is a local type.
     which in turn gives us a limit functional $\phi\in\Phi^\sigma$. This limit functional
     then must have the property that
     \[
-        \phi(f) = \lim_{k\to\infty}\rho(f; (G'_k, \theta'_k)
+        \phi(f) = \lim_{k\to\infty}\rho(f; (G'_k, \theta'_k))
         \leq \lim_{k\to\infty} \E_\theta[\rho(f; (G'_k, \theta)] < 0
     \]
     but by assumption we have $\phi(f) \geq 0\ \forall \phi\in\Phi^\sigma$ so this is
     a contradiction. Therefore $\llbracket f \rrbracket \in\SemCone^\emptyset$.
 \end{proof}
+
+\section{The Semidefinite Method}
+
+We can adopt the semidefinite method as outlined in section \ref{sec:semidefinite_method}
+almost identically. Once again we have a concept of a semantic cone and can prove
+asymptotic bounds of the form $\phi(f) \leq \lambda$ by finding elements of the cone of
+the form $\lambda\emptyset - f$.
+
+One key difference is that we that we can only use constraints of the form
+$\llbracket f^2 \rrbracket \geq 0\ \forall f \in \Lcl^\sigma$ if $\sigma$ is a
+local type, so our set of types under consideration is slightly limited.
+
+In practical terms the lack of the chain rule and its corresponding quotient sets means that
+expressing our combinatorial questions in the form of $\sup_\phi \phi(f)$ for $f\in\Lcl^\sigma$ is
+more difficult; We will see in the next section a "warmup" application which shows how we can
+exploit regularity to give us a wide set of constraints and allow us to project small
+flags into a basis of larger flags.
