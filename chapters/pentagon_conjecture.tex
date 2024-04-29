@@ -76,19 +76,24 @@ following lemma:
     follows: To construct $G_{i+1}$ take two copies of $G_i$ then for each vertex $v\in V(G_i)$
     with $\deg v < \Delta(G_i)$ add an edge to $G_{i+1}$ between the two copies of $v$.
 
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=1.75]{wlog_regular_pentagon}
+    \end{figure}
+
     We show by induction that each $G_i$ is triangle free, $\Delta(G_i)=\Delta(G_0)\ \forall i\in\N$
     and $P(G_i) > \frac{|G_i|}{5}\frac{\Delta(G)}{8}$. $G_0$ satisfies these conditions
     by assumption; Assume they hold for $G_i$. First we argue that $G_{i+1}$ has no
     triangles. Clearly each copy of $G_i$ has no triangles so we need to show the
-    addition of edges between two 2 copies of $G_i$. Each edge we add is between
-    two copies of a vertex $v\in V(G_i)$. This means
+    addition of edges between two 2 copies of $G_i$ doesn't induce any triangles.
+    Each edge we add is between two copies of a vertex $v\in V(G_i)$. This means
     each vertex in $G_{i+1}$ has at most 1 neighbour outside of its own copy of $G_i$.
-    This means adding an edge between two copies of some $v$ cannot induce a cycle
-    as the neighbourhoods of each copy of $v$ will be disjoint. Therefore $G_{i+1}$ is
+    Therefore adding an edge between two copies of some $v$ cannot induce a 3-cycle
+    as the neighbourhoods of each copy of $v$ will be disjoint so $G_{i+1}$ is
     triangle free. Next we show $\Delta(G_{i+1})=\Delta(G_i)=\Delta(G_0)$; This is
-    clear as we add edges only to vertices $v$ which have $\deg v < \Delta(G_i)=\Delta(G_0)$
+    clear as we add an edge only to vertices $v$ which have $\deg v < \Delta(G_i)=\Delta(G_0)$
     meaning we do not increase the maximum degree.
-    Finally we show that $P(G_{i+1}) > \frac{|G_{i+1}|}{5}\frac{\Delta(G)}{8}$;
+    Finally we show that $P(G_{i+1}) > \frac{|G_{i+1}|}{5}\frac{\Delta(G_{i+1})}{8}$;
     This is also easy as $|G_{i+1}|=2|G_i|$ but $P(G_{i+1}) \geq 2 P(G_i)$ as we take
     two copies of $G_i$.
 
@@ -96,8 +101,8 @@ following lemma:
     graph is non-regular: $\delta(G_i) < \Delta(G_i) \implies \delta(G_{i+1})=\delta(G_i) + 1$.
     Then as $\Delta(G_i)=\Delta(G_0)\forall i\in\N$ this means there can be at most
     $\Delta(G_0)-\delta(G_0) \leq \Delta(G_0)$ iterations until we arrive at a regular
-    $G_k$ which has the following properties: It is triangle free, $\Delta(G_k)=\Delta(G_0)$
-    $P(G_k) > \frac{|G_k|}{5}\frac{\Delta(G_k)}{8}$.
+    $G_k$. We found then a regular graph $G_k$ which is is triangle free, $\Delta(G_k)=\Delta(G_0)$
+    and $P(G_k) > \frac{|G_k|}{5}\frac{\Delta(G_k)}{8}$.
 
     We could do this for any $G_0$ which contradicts our asymptotic bound on the
     class of triangle free regular graphs.
