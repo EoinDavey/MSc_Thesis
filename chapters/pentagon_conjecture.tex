@@ -1,10 +1,11 @@
 \chapter{Application: Erd\H{o}s' Pentagon Conjecture}
 
-In 1983 \cite{erdosProblemsGraphTheory1984} Erd\H{o}s conjectured the following:
+Given a graph $G$ let $P(G)$ denote the number of pentagons (5-cycles)\footnote{Counted as
+subsets: the order does not matter} in $G$.
+In 1983 \cite{erdosProblemsGraphTheory1984} Erd\H{o}s made the following conjecture:
 
 \begin{knownconjecture}
-    The number of pentagons (5-cycles) in a triangle free graph $G$ is at most
-    $\left(\frac{|G|}{5}\right)^5$.
+    If $G$ is triangle free then $P(G) \leq \left(\frac{|G|}{5}\right)^5$.
 \end{knownconjecture}
 
 This conjecture remained open until 2012 when Grzesik
@@ -20,13 +21,9 @@ This leads us to the following \textit{bounded degree pentagon conjecture}:
 
 \begin{conjecture}
     \label{conj:bounded_pentagon}
-    The number of pentagons (5-cycles) in a triangle free graph $G$ is at asymptotically
-    at most $\frac{|G|}{5}\left(\frac{\Delta(G)}{2}\right)^4=\frac{|G|}{5}\frac{\Delta(G)}{16}$.
+    If $G$ is triangle free then 
+    $P(G) \leq \frac{|G|}{5}\left(\frac{\Delta(G)}{2}\right)^4=\frac{|G|}{5}\frac{\Delta(G)}{16}$.
 \end{conjecture}
-
-In this chapter we will show that if this conjecture is true it is tight, and show how we
-used the semidefinite method on local flags to get an upper bound within a $\frac{1}{2}$
-factor, showing an asymptotic upper bound of $\frac{|G|}{5}\frac{\Delta(G)}{8}$.
 
 \begin{lemma}
     If the bounded degree pentagon conjecture is true then it is tight.
@@ -51,28 +48,90 @@ factor, showing an asymptotic upper bound of $\frac{|G|}{5}\frac{\Delta(G)}{8}$.
     the bound. We can do this for any even $k=\Delta(G)$ so this holds asymptotically.
 \end{proof}
 
-We claim then the following theorem:
+We claim then the following theorem which is within a factor of 1/2 of the conjectured
+bound.
+
 \begin{theorem}
-    The number of pentagons in a triangle free graph is
-    $\lesssim \frac{|G|}{5}\frac{\Delta(G)}{8}$
-    as $\Delta(G) \to \infty$.
+    \label{thm:local_pentagon_bound}
+    If $G$ is triangle free then
+    $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)}{8}$.
 \end{theorem}
 
-The rest of this chapter will show how we proved this. First we note the
-following lemma:
+The rest of this chapter will show how we proved this. First we argue that it suffices
+to prove that $P(G) \lesssim \frac{|G|}{5}\frac{\Delta(G)}{8}$ asymptotically.
+We then argue that it suffices to prove this asymptotic bound only for regular $G$.
+Finally then we will use the semidefinite method over local flags to show the
+asymptotic bound. TODO LEMMA REFS.
 
+\section{Reductions}
+
+First we argue that an asymptotic bound suffices. Essentially this is true as any small
+graph with a high pentagon density can be expanded to arbitrary high degree.
 \begin{lemma}
-    It suffices to show the number of pentagons in a triangle free graph
-    $G$ is bounded by $\frac{|G|}{5}\frac{\Delta(G)}{8}$ for regular $G$ only.
+    \label{lemma:pentagon_asymp_suffices}
+    If $P(G) \lesssim \frac{|G|}{5}\frac{\Delta(G)^4}{8}$ as $\Delta(G)\to\infty$ for
+    $G$ triangle free
+    then $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8}$ for all triangle free $G$.
 \end{lemma}
 
 \begin{proof}
-    Let $P(G)$ denote the number of pentagons in a graph $G$.
-    Assume the lemma does not hold, i.e. assume that the bound holds for regular graphs but there
-    exists $G$ with arbitrarily high $\Delta(G)$ which is non-regular such that the number
-    of pentagons is strictly $P(G) > \frac{|G|}{5}\frac{\Delta(G)}{8}$.
+    More precisely our condition states that for any $\Delta$-increasing sequence of
+    triangle free graphs $(G_k)_{k\in\N}$ we have
+    $\lim_{k\to\infty} \frac{P(G_k)}{|G|\Delta(G)^4} \leq \frac{1}{5\cdot 8}$.
 
-    Let $G_0$ be such a triangle free non-regular graph. Construct a sequence $(G_i)_{i\in\N}$ as
+    Assume then for sake of contradiction that there exists $G_0$ triangle free
+    such that $\frac{P(G_0)}{|G_0|\Delta(G_0)^4} > \frac{1}{5\cdot 8}$.
+    Let $\delta := \frac{P(G_0)}{|G_0|\Delta(G_0)^4}$ and consider the following
+    sequence of graphs $(G_k)_{k\in\N}$: Start with $G_0$ and construct
+    $G_{i+1}$ from $G_i$ by doubling every vertex of $G_i$, then for every
+    $u\sim v$ in $G_i$ connect both copies of $u$ to both copies of $v$.
+
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=1.5]{pentagon_asymp_construction}
+    \end{figure}
+
+    Then we have $|G_{i+1}| = 2|G_i|$ and $\Delta(G_i) = 2\Delta(G_{i+1})$ for all
+    $i\in\N$. Note also that $G_i$ triangle free implies $G_{i+1}$ triangle free.
+    To see this consider assume $G_i$ triangle free and $G_{i+1}$ has a triangle
+    $\{u, v, w\}$. As each of $u,v,w$ are connected they must be copies of three
+    different nodes from $G_i$. However such copies are connected iff their originals are
+    connected so there must be a corresponding triangle in $G_i$ which is a contradiction.
+    Hence each $G_i$ is triangle free.
+
+    Take any pentagon in $G_i$. This correspond to $2^5$ pentagons in $G_{i+1}$. Each
+    such pentagon in $G_{i+1}$ we get by expanding a $C_5$ in $G_i$ comes from
+    some unique pentagon in $G_i$ hence $P(G_{i+1}) \geq 2^5P(G_i)$ for all $i\geq 1$.
+    Hence for every $i\in\N$ we have
+    \[
+        \frac{P(G_i)}{|G_i|\Delta(G_i^4)} \geq
+        \frac{(2^5)^i P(G_0)}{2^i|G_0|(2^i\Delta(G_0))^4}
+        = \frac{2^{5i} P(G_0)}{2^{5i}|G_0|\Delta(G_0)^4}
+        = \delta
+    \]
+    and in particular
+    \[
+        \liminf_{k\to\infty}\frac{P(G_k)}{|G_k|\Delta(G_k)^4}
+        \geq \delta > \frac{1}{5\cdot 8}
+    \]
+    but $(G_k)_{k\in\N}$ is a $\Delta$-increasing sequence of triangle free graphs
+    so this contradictions our assumption. Hence no such $G_0$ exists.
+\end{proof}
+
+Now we show not only is it enough to show this bound asymptotically, it also suffices
+to show the bound only for regular graphs.
+
+\begin{lemma}
+    For any triangle free $G$ there exists a regular triangle free $G'$ such that
+    $\Delta(G')=\Delta(G)$ and
+    \[
+        \frac{P(G')}{|G'|\Delta(G')^4} \geq
+        \frac{P(G)}{|G|\Delta(G)^4}
+    \]
+\end{lemma}
+
+\begin{proof}
+    Let $G_0$ be such a triangle free graph. Construct a sequence $(G_k)_{k\in\N}$ as
     follows: To construct $G_{i+1}$ take two copies of $G_i$ then for each vertex $v\in V(G_i)$
     with $\deg v < \Delta(G_i)$ add an edge to $G_{i+1}$ between the two copies of $v$.
 
@@ -82,7 +141,8 @@ following lemma:
     \end{figure}
 
     We show by induction that each $G_i$ is triangle free, $\Delta(G_i)=\Delta(G_0)\ \forall i\in\N$
-    and $P(G_i) > \frac{|G_i|}{5}\frac{\Delta(G)}{8}$. $G_0$ satisfies these conditions
+    and $\frac{P(G_i)}{|G_i|\Delta(G_i)^4} \geq \frac{P(G_0)}{|G_0|\Delta(G_0)^4}$.
+    $G_0$ satisfies these conditions
     by assumption; Assume they hold for $G_i$. First we argue that $G_{i+1}$ has no
     triangles. Clearly each copy of $G_i$ has no triangles so we need to show the
     addition of edges between two 2 copies of $G_i$ doesn't induce any triangles.
@@ -93,7 +153,8 @@ following lemma:
     triangle free. Next we show $\Delta(G_{i+1})=\Delta(G_i)=\Delta(G_0)$; This is
     clear as we add an edge only to vertices $v$ which have $\deg v < \Delta(G_i)=\Delta(G_0)$
     meaning we do not increase the maximum degree.
-    Finally we show that $P(G_{i+1}) > \frac{|G_{i+1}|}{5}\frac{\Delta(G_{i+1})}{8}$;
+    Finally we show that
+    $\frac{P(G_{i+1})}{|G_{i+1}|\Delta(G_{i+1})^4} \geq \frac{P(G_0)}{|G_0|\Delta(G_0)^4}$.
     This is also easy as $|G_{i+1}|=2|G_i|$ but $P(G_{i+1}) \geq 2 P(G_i)$ as we take
     two copies of $G_i$.
 
@@ -101,17 +162,62 @@ following lemma:
     graph is non-regular: $\delta(G_i) < \Delta(G_i) \implies \delta(G_{i+1})=\delta(G_i) + 1$.
     Then as $\Delta(G_i)=\Delta(G_0)\forall i\in\N$ this means there can be at most
     $\Delta(G_0)-\delta(G_0) \leq \Delta(G_0)$ iterations until we arrive at a regular
-    $G_k$. We found then a regular graph $G_k$ which is is triangle free, $\Delta(G_k)=\Delta(G_0)$
-    and $P(G_k) > \frac{|G_k|}{5}\frac{\Delta(G_k)}{8}$.
-
-    We could do this for any $G_0$ which contradicts our asymptotic bound on the
-    class of triangle free regular graphs.
+    $G_k$. We found then a regular graph $G_k$ which satisfies our conditions.
 \end{proof}
 
-We approach the proof in the following way: We're going to prove that any fixed
-$v \in V(G)$ has at most $\frac{\Delta(G)^4}{8}$ 5-cycles containing it, then summing over
-each $v\in V(G)$ will count each pentagon 5 times giving a total bound of
-$\frac{|G|}{5}\frac{\Delta(G)^4}{8}$.
+\begin{corollary}
+    \label{corollary:pentagon_regular_suffices}
+    It suffices to show that $\frac{P(G)}{|G|\Delta(G)^4} \lesssim \frac{1}{5\cdot 8}$
+    only for regular triangle free $G$.
+\end{corollary}
+
+\begin{proof}
+    Assume the bound holds for regular graphs.
+    Assume then for contradiction that
+    there is some triangle free $\Delta$-increasing sequence $(G_k)_{k\in\N}$
+    such that $\lim_{k\to\infty} \frac{P(G_k)}{|G_k|\Delta(G_k)^4} > \frac{1}{5\cdot 8}$.
+    Then by the previous lemma we can construct a sequence
+    $(G_k')_{k\in\N}$ where each $G_k'$ is triangle free and regular
+    such that $\Delta(G_k')=\Delta(G_k)$ and
+    $\frac{P(G_k')}{|G_k'|\Delta(G_k')^4} >\frac{P(G_k)}{|G_k|\Delta(G_k)^4}$
+    for all $k\in\N$. Hence this is a $\Delta$-increasing triangle free regular
+    sequence such that
+    \[
+        \liminf_{k\to\infty} \frac{P(G_k')}{|G_k'|\Delta(G_k')}
+        \geq
+        \lim_{k\to\infty} \frac{P(G_k)}{|G_k|\Delta(G_k)}
+        > \frac{1}{5\cdot 8}
+    \]
+    which is a contradiction.
+\end{proof}
+
+Now we know we only need to prove the bound asymptotically for regular graphs.
+The final reduction step is the following simple lemma
+\begin{lemma}
+    \label{lemma:pentagon_local_count}
+    Let $P(G, v)$ be the number of pentagons in $G$ containing $v$. If we have some
+    $\lambda \in \R$ such that
+    $\frac{P(G, v)}{\Delta(G)^4} \lesssim \lambda$ as $\Delta(G)\to\infty$
+    then
+    $\frac{P(G)}{|G|\Delta(G)^4} \lesssim \frac{1}{5}\lambda$ as $\Delta(G)\to\infty$.
+\end{lemma}
+
+\begin{proof}
+    Note $\sum_{v\in V(G)}P(G, v) = 5P(G)$. Hence
+    \begin{multline*}
+        \frac{P(G)}{|G|\Delta(G)^4}
+        = \frac{\sum_{v\in V(G)} P(G, v)}{5|G|\Delta(G)^4}
+        = \frac{\sum_{v \in V(G)} \lambda\Delta(G)^4 + o(\Delta(G)^4)}{5|G|\Delta(G)^4}\\
+        = \frac{\lambda|G|\Delta(G)^4 + o(|G|\Delta(G)^4)}{5|G|\Delta(G)^4}
+        = \frac{\lambda}{5} + o(1)
+    \end{multline*}
+\end{proof}
+
+Now we see how our proof of theorem \ref{thm:local_pentagon_bound} will go.
+We need only show that for a regular triangle free graphs $G$ and
+$v\in V(G)$ we have an asymptotic bound of $P(G, v) \lesssim \frac{\Delta(G)^4}{8}$.
+This is something that local flags can prove.
+
 Unfortunately we know that this approach cannot be directly improved to show the
 full $\frac{|G|}{5}\frac{\Delta(G)^4}{16}$ bound as this result is tight:
 
@@ -268,36 +374,44 @@ vector. This will be very useful to us.
 \section{Counting Pentagons with Local Flags}
 
 We want to use local flags to show an asymptotic bound that for any regular, triangle free
-graph $G$ we have at most
-$\frac{\Delta(G)^4}{8}$ 5-cycles containing any fixed $v \in V(G)$.
-
+graph $G$ we have
+$P(G, v) \lesssim \frac{\Delta(G)^4}{8}$ for any $v \in V(G)$.
 We first reduce this to a problem on coloured graphs.
 
-\subsection{Reduction}
+Let $\Gcl$ be the class of red-black vertex coloured graphs which are triangle free,
+regular and such that for each $G\in\Gcl$ the number of black vertices
+in $G$ is exactly $\Delta(G)$ and the set of black vertices in $G$ is independent.
+Then we have the following reduction:
 
-Let $G$ be a simple regular triangle free graph and fix some $v\in V(G)$. Then
-$|N(v)| = \Delta(G)$ and the set $N(v)$ is independent.
+\begin{lemma}
+    \label{lemma:brrb_suffices}
+    Let $\brrb$ be the black-red-red-black path. Then for any $\lambda\in\R$
+    $\frac{c(\brrb; G)}{\Delta(G)^4} \lesssim \lambda$ as
+    $\Delta(G) \to \infty$ over $\Gcl$ implies $\frac{P(H, v)}{\Delta(H)^4}\lesssim\lambda$
+    as $\Delta(H)\to\infty$ over the class of regular triangle free graphs.
+\end{lemma}
 
-First we note that as $G$ is triangle free any pentagons in $G$ are induced. Hence it
-suffices to count induced pentagons only.
+\begin{proof}
 
-Any pentagon containing $v$ then must contain 2 vertices of $N(v)$ and 2 vertices
-outside of $N(v)$. In particular if we construct a 3-vertex-coloured graph $H$
-which is a copy of $G$ where $v$ is green, $N(v)$ is black and all others are
-red then we want to count how many pentagons contain 1 green vertex, 2 black vertices
-and 2 red vertices. Then as all black vertices are connected to the green vertex it
-suffices to count how many black-red-red-black paths there are in $H$. In fact
-removing $v$ from $H$ has no effect on this count so WLOG we can remove it.
+    Let $G$ be a simple regular triangle free graph and fix some $v\in V(G)$. Then
+    $|N(v)| = \Delta(G)$ and the set $N(v)$ is independent.
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[scale=1.5]{pentagon_reduction}
-\end{figure}
+    Any pentagon containing $v$ then must contain 2 vertices of $N(v)$ and 2 vertices
+    outside of $N(v)$. In particular if we construct a 3-vertex-coloured graph $H$
+    which is a copy of $G$ where $v$ is green, $N(v)$ is black and all others are
+    red then we want to count how many pentagons contain 1 green vertex, 2 black vertices
+    and 2 red vertices. Then as all black vertices are connected to the green vertex it
+    suffices to count how many black-red-red-black paths there are in $H$. In fact
+    removing $v$ from $H$ has no effect on this count so WLOG we can remove it.
 
-Let $\Gcl$ be the class of red-black vertex coloured graph which are triangle free,
-regular, have $\Delta(G)$ black vertices and such that the set of black vertices is independent.
-We want to find then an asymptotic bound on how many black-red-red-black paths we can have?
-This is a problem that local flags can solve.
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[scale=1.5]{pentagon_reduction}
+    \end{figure}
+
+    This $H$ graph has (up to asymptotically 0 terms) the same max degree as $G$
+    so any bound on $H$ asymptotically applies to $G$.
+\end{proof}
 
 \subsection{Local Flags Setup}
 
@@ -374,8 +488,21 @@ This is a local flag by lemma \ref{lemma:pentagon_local_flags}. We will now use
 the semidefinite method (Section \ref{sec:semidefinite_method}) to find a bound
 $\lambda\in\R$ such that $\phi(\brrb)\leq \lambda\ \forall\ \phi\in\Phi^\sigma$.
 
-For practical purposes we want to use the subspace of $\Lcl^\emptyset$ of flags
-of size 5. For this reason we find a vector $f$ over flags of size 5 such that
+\begin{note}
+    It proves to be more intuitive to describe our problem in terms of maximising
+    $\phi(\brrb)$. We then use duality (section \ref{sec:sdp_duality}) to convert
+    this to a problem of finding some $\lambda\emptyset - \brrb\in\SemCone^\emptyset$
+    which proves the $\lambda$ upper bound rigorously.
+\end{note}
+
+We need to pick a subspace of $\Lcl^\emptyset$ to optimise our objective
+function over. A standard method (e.g. \cite{grzesikFlagAlgebrasExtremal2014},
+\cite{cummingsMonochromaticTrianglesThreecoloured2013}) is picking the subspace spanned by flags
+of some fixed size. In this case it suffices to consider the subspace of flags of
+size 5.\footnote{Picking larger flags intuitively allows the search to find tighter bounds but
+comes at the cost of computation time}.
+
+By our choice of subspace we need to find a vector $f$ over flags of size 5 such that
 bounding $\phi(f)$ gives a bound on $\phi(\brrb)$. To achieve this we view
 $\brrb$ as a $\brrb$-flag in itself: $\brrbmarked$.
 Letting $\sigma=\brrb$ we note that $\sigma$ is a local type and we can compute
@@ -408,7 +535,7 @@ flags of size 5 so we take all such vectors where $|\sigma|=4$.
 
 We know that in any $G\in\Gcl$ the set of black vertices is independent and has size
 $\Delta(G)$. Let $B_k$ be the $\emptyset$-flag consisting of $k$ independent black
-vertices. e.g. $B_1=\vertex, B_2=\nonedge$. Then we know $c(B_k; G) = \binom{\Delta(G)}{k}$
+vertices. e.g. $B_1=\vertex, B_2=\nonedge, B_3=\triangleempty,\dots$. Then we know $c(B_k; G) = \binom{\Delta(G)}{k}$
 for any $G\in\Gcl$ which implies $\phi(B_k)=1\ \forall\ \phi\in\Phi^\emptyset\ \forall\ k\in\N$.
 We would like to add these to the list of constraints. For $k=5$ this is already in
 the subspace of flags of size 5 so we can add it directly. For $k < 5$ we need
@@ -420,7 +547,7 @@ $\llbracket B_k \rrbracket = B_k$ to get
     = \phi\left(\left\llbracket B_k \cdot \left(\ext_1^{B_k}\right)^{5-k}\right\rrbracket\right)
     = \phi\left(\left\llbracket \left(\ext_1^{B_k}\right)^{5-k}\right\rrbracket\right).
 \]
-$\left(\ext_1^{B_k}\right)^{5-k}$ is an expression over flags of size 5 so this is
+$\left(\ext_1^{B_k}\right)^{5-k}$ is a vector over flags of size 5 so this is
 a constraint we can use.
 
 Finally then we want to encode constraints of the form $\phi(\llbracket f^2 \rrbracket) \geq 0$
@@ -430,43 +557,208 @@ Those pairs $(\sigma, n)$ are ($\vertex$, $3$), ($\triangleempty$, $4$), ($\pent
 ($\pentsqtypetwo$, $4$), ($\pentsqtypethree$, $4$), and ($\pentsqtypefour$, $4$).
 
 Let $\Bcl=(F_1, \dots, F_\ell)$ be the basis of all flags of size 5.
-In summary then the dual of our SDP is:
+In summary then our problem is:
 \begin{align*}
     \max_{x\in\R^\ell}\ \ &\ \phi_x(O)\\
     \text{such that}\ \ &\ \phi_x(F_i) \geq 0\ \forall\ i \in [\ell]\\
     &\ \phi_x(\llbracket \ext^\sigma_i - \ext^\sigma_j\rrbracket) = 0\ \forall\
     |\sigma|=4, i, j \in [4]\\
     &\ \phi_x(B_5) = 1\\
-    &\ \phi_x\left(\left\rrbracket\left(\ext_1^{B_k}\right)^{5-k}\right\rrbracket\right) = 1\
+    &\ \phi_x\left(\left\llbracket\left(\ext_1^{B_k}\right)^{5-k}\right\rrbracket\right) = 1\
     \forall\ k \in [4]\\
     &\ \phi_x(\llbracket f^2 \rrbracket) \geq 0 \forall f \in \Glocn^\sigma\ \forall (\sigma, n)
     \ \text{from above list}.
 \end{align*}
 
 We know from section \ref{sec:semidefinite_method} how to construct the corresponding
-SDP problem which finds a convex combination of elements of the semantic cone which solves
-this problem.
+SDP. A solution to this SDP finds a convex combination of elements of the semantic cone
+which prove an upper bound on $\phi(O)\ \forall\ \phi\ \in \Phi^\emptyset$.
 
-Solving this SDP problem gives the upper bound of $\frac{1}{4}$ meaning
-$\phi(O) \leq \frac{1}{4}\ \forall\ \phi\in\Phi^\sigma$.
-We know that $\frac{1}{12}\phi(\brrb)=\phi(O)$ so $\phi(\brrb) \leq 3$.
-Therefore for any $\Delta$-increasing sequence of graphs $(G_k)_{k\in\N}$ we have
-$\lim_{k\to\infty} \frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}} \leq 3$.
-Intuitively then $\binom{\Delta(G_k)}{4}$ is asymptotically $\frac{\Delta(G_k)^4}{4!}$ so
-we get $\lim_{k\to\infty} c(\brrb; G_k) \leq \frac{3}{4!} = \frac{1}{8}$.
-We show this argument more precisely now:
+We use a SDP solver to show the following result:
+\begin{lemma}
+    \label{lemma:pentagon_1_4_bound}
+    \[
+        \frac{1}{4}\emptyset - O \in \SemCone^\emptyset.
+    \]
+\end{lemma}
+In the next section (\ref{sec:pentagon_proof_validation}) we will show how we make this
+SDP solution rigorous. For now we show that this bound suffices to prove theorem
+\ref{thm:local_pentagon_bound}.
 
-We use the fact that
-$\frac{\Delta(G_k)!}{(\Delta(G_k)-4)!} = \Delta(G_k)^4 + o(\Delta(G_k)^4)$
-to show that
+\begin{proof}[Proof of theorem \ref{thm:local_pentagon_bound}]
+    By lemma \ref{lemma:pentagon_1_4_bound} we have that
+    $\phi(O) \leq \frac{1}{4}\ \forall\ \phi\in\Phi^\sigma$.
+    We know that $\frac{1}{12}\phi(\brrb)=\phi(O)$ so $\phi(\brrb) \leq 3$.
+    Therefore for any $\Delta$-increasing sequence of graphs $(G_k)_{k\in\N}$ we have
+    $\lim_{k\to\infty} \frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}} \leq 3$.
+    Intuitively then $\binom{\Delta(G_k)}{4}$ is asymptotically $\frac{\Delta(G_k)^4}{4!}$ so
+    we get $\lim_{k\to\infty} c(\brrb; G_k) \leq \frac{3}{4!} = \frac{1}{8}$.
+    We show this argument more precisely now:
+
+    We use the fact that
+    $\frac{\Delta(G_k)!}{(\Delta(G_k)-4)!} = \Delta(G_k)^4 + o(\Delta(G_k)^4)$
+    to show that
+    \[
+        \begin{split}
+            \lim_{k\to\infty}\frac{c(\brrb; G_k)}{\Delta(G_k)^4}
+            &= \lim_{k\to\infty}\frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}}
+            \frac{\Delta(G_k)!}{4!(\Delta(G_k)-4)!\Delta(G_k)^4}\\
+            &= \lim_{k\to\infty}\frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}}
+            \frac{\Delta(G_k)^4 + o(\Delta(G_k)^4}{4!\Delta(G_k)^4}\\
+            &= \lim_{k\to\infty}(1+o(1))\frac{1}{4!}\frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}}\\
+            &\leq \frac{1}{8}.
+        \end{split}
+    \]
+    Then by lemma \ref{lemma:brrb_suffices}
+    $\frac{P(G, v)}{\Delta(G)^4}\lesssim \frac{1}{8}$ for any regular triangle free
+    $G$ and $v \in V(G)$.
+    Lemma \ref{lemma:pentagon_local_count} tells us then
+    $\frac{P(G)}{|G|\Delta(G)^4}\lesssim \frac{1}{5\cdot 8}$ for any regular triangle
+    free $G$. Corollary \ref{corollary:pentagon_regular_suffices} shows that
+    we can drop the regular requirement.
+    Finally then lemma \ref{lemma:pentagon_asymp_suffices} shows that this
+    asymptotic bound implies the non-amsymptotic bound.
+    \[
+        \therefore P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8}
+        \ \forall\ G\ \text{triangle free}.
+    \]
+\end{proof}
+
+\section{SDP Proof Validation}
+\label{sec:pentagon_proof_validation}
+
+We've shown in the previous section how to express our problem in the form of a
+semidefinite program and we claimed that SDP software found a solution proving a bound
+of $1/8$. Clearly though appealing to a software implementation, no matter how well tested,
+is not rigorous. We saw in section \ref{sec:semidefinite_method} how such an SDP
+solution corresponds to constructing a specific element of the semantic cone by taking
+convex combinations of known elements of the cone. In this section we will show the
+combination of elements that was found by the SDP software, verifying that it is indeed
+a valid proof.
+
+We will defer the specific details of how we converted the SDP solution into the following
+proof to TODO (appendix?).
+
+First, as a reminder we were trying to bound $\phi(O)=\frac{1}{12}\phi(\brrb)$
+where we defined $O$ as an extension of $\sigma_O = \brrb$:
+$O = \llbracket \ext_1^{\sigma_O}\rrbracket.$ We expand this and find that
+\[
+    O = \frac{1}{60}\pentF{9} + \frac{1}{120}\pentF{37} + \frac{1}{60}\pentF{55}
+\]
+For convenience we scale this by 120 to get
+$2\pentF{9} + \pentF{37} + 2\pentF{55}$. Then we prove that
+$120\phi(O) \leq\lambda\ \forall\ \phi\in\Phi^\emptyset$ by showing
+$\lambda\emptyset - 2\pentF{9} + \pentF{37} + 2\pentF{55}\in\SemCone^\emptyset$.
+
+First we take $B_1=\vertex$ as defined above. We know
+$1=\phi(\vertex)=\phi(\llbracket (\ext^\vertex_1)^4 \rrbracket) = \frac{1}{5}\phi(\pentF{6})$
+for all $\phi\in\Phi^\emptyset$ hence 
+\begin{equation}
+    5\emptyset - \pentF{6} \in\SemCone^\emptyset.
+    \label{eq:pent_b1}
+\end{equation}
+
+Next, by corollary \ref{corollary:unlabel_extension} for any local type $\sigma$
+and $i,j \in [|\sigma|]$ and we have
+$\llbracket \ext_i^\sigma - \ext_j^\sigma\rrbracket\in\SemCone^\emptyset$. It also
+proves easier to scale these by $120$ as with $O$.
+We compute some such vectors for the following fixed types:
+$\sigma_1 := \pentsig{1}, \sigma_2 := \pentsig{2}$,
+$\sigma_3 := \pentsig{3}$, $\sigma_4 := \pentsig{4}$
+and $\sigma_5 := \pentsig{5}$.
+\begin{align}
+    120\llbracket \ext_2^{\sigma_1} - \ext_1^{\sigma_1} \rrbracket
+    &=-4\pentF{4} - 6\pentF{5} + 2\pentF{12} + 2\pentF{24} + 4\pentF{32}
+    \in\SemCone^\emptyset.\label{eq:pent_sig_1}\\
+    120\llbracket \ext_1^{\sigma_2} - \ext_2^{\sigma_2} \rrbracket
+    &= 
+    24\pentF{6} - 4\pentF{13} - 4\pentF{15} - 2\pentF{18} - 2\pentF{25} - 12\pentF{33} - 6\pentF{34}
+    \in \SemCone^\emptyset.\label{eq:pent_sig_2}\\
+    120\llbracket \ext_2^{\sigma_3} - \ext_1^{\sigma_3} \rrbracket
+    &=2\pentF{11} + \pentF{12} - 2\pentF{15} + \pentF{22} + 2\pentF{24} - 2\pentF{25}
+    \label{eq:pent_sig_3}.\\
+    120\llbracket \ext_2^{\sigma_4} - \ext_1^{\sigma_4} \rrbracket
+    &= \pentF{8} + \pentF{12} - 2\pentF{15} + 4\pentF{31} + 4\pentF{32} - 6\pentF{34}
+    \label{eq:pent_sig_4}.\\
+    120\llbracket \ext_3^{\sigma_5} - \ext_1^{\sigma_5} \rrbracket
+    &= -2\pentF{16} - \pentF{17} + \pentF{37} + 2\pentF{55}
+    \label{eq:pent_sig_5}.
+\end{align}
+
+Now we can take a convex combination of these elements of the semantic cone to
+get another element of the semantic cone.
+\begin{multline}
+    6\cdot (\ref{eq:pent_b1})
+    + 1\cdot (\ref{eq:pent_sig_1})
+    + \frac{1}{4} \cdot (\ref{eq:pent_sig_2})
+    + 1\cdot (\ref{eq:pent_sig_3})
+    + 1\cdot (\ref{eq:pent_sig_4})
+    + 2\cdot (\ref{eq:pent_sig_5})\\
+    =
+    30\emptyset -4\pentF{4} - 6\pentF{5} + \pentF{8} + 2\pentF{11} + 4\pentF{12} - \pentF{13} -
+        5\pentF{15} - 4\pentF{16} - 2\pentF{17} - \frac{1}{2}\pentF{18}\\
+        + \pentF{22} + 4\pentF{24} - \frac{5}{2}\pentF{25} + 4\pentF{31} + 8\pentF{32} - 3\pentF{33}
+        - \frac{15}{2}\pentF{34} + 2\pentF{37} + 4\pentF{55}.
+    \label{eq:pent_lin_sum}
+\end{multline}
+
+Consider then the type $\sigma_6=\pentsig{6}$ and the following
+vectors $f,g \in \Lcl^{\sigma_6}$.
+\[
+    f = -\pentcf{0}{3} + \frac{1}{4}\pentcf{0}{4} + \frac{1}{4}\pentcf{0}{5}+\frac{1}{2}\pentcf{0}{6}
+    \ \ \ \ g = -\frac{1}{4}\pentcf{0}{4} + \frac{1}{4}\pentcf{0}{5}
+\]
+Then by \ref{lemma:local_pos_preserve} both of the following are elements of the
+semantic cone:
 \[
     \begin{split}
-        \lim_{k\to\infty}\frac{c(\brrb; G_k)}{\Delta(G_k)^4}
-        &= \lim_{k\to\infty}\frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}}
-        \frac{\Delta(G_k)!}{4!(\Delta(G_k)-4)!\Delta(G_k)^4}\\
-        &= \lim_{k\to\infty}\frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}}
-        \frac{\Delta(G_k)^4 + o(\Delta(G_k)^4}{4!\Delta(G_k)^4}\\
-        &= \lim_{k\to\infty}(1+o(1))\frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}}\\
-        &\leq \frac{1}{8}.
+        120 \llbracket f^2 \rrbracket &= 
+    4\pentF{4} - \pentF{8} - 2\pentF{11} + \pentF{13} + \frac{1}{4}\pentF{18} - \pentF{22} -
+        4\pentF{31} + 3\pentF{33} + \frac{1}{4}\pentF{40} + \frac{1}{4}5\pentF{55}\\
+        120 \llbracket g^2 \rrbracket &= 
+        \frac{1}{4}\pentF{18} - \frac{1}{4}\pentF{40} - \frac{1}{4}\pentF{55}
     \end{split}
 \]
+The sum of these two elements gives a new element of the semantic cone
+\begin{equation}
+    4\pentF{4} - \pentF{8} - 2\pentF{11} + \pentF{13} + \frac{1}{2}\pentF{18} - \pentF{22} -
+    4\pentF{31} + 3\pentF{33} \in \SemCone^\emptyset
+    \label{eq:pent_cs_0}
+\end{equation}
+
+We do the same thing with the type $\sigma_7 := \pentsig{7}$: Take the following
+vectors $h, \ell \in \Lcl^{\sigma_7}$.
+\[
+    h = -\frac{1}{2}\pentcf{1}{4} - \pentcf{1}{5} + \frac{1}{2}\pentcf{1}{7}
+    \ \ \ \ \ell = \pentcf{1}{3} - \pentcf{1}{4} + \pentcf{1}{5} - \pentcf{1}{7}
+\]
+Then we can compute
+\[
+    \begin{split}
+        120 \llbracket h^2 \rrbracket &= 
+        -2\pentF{9} + \pentF{15} + 2\pentF{16} + \frac{1}{2}\pentF{25} + \frac{3}{2}\pentF{34} -
+        \pentF{37} - 2\pentF{55}\\
+        120 \llbracket g^2 \rrbracket &= 
+        6\pentF{5} - 4\pentF{12} + 4\pentF{15} + 2\pentF{16} + 2\pentF{17} - 4\pentF{24} + 2\pentF{25} - 8\pentF{32} + 6\pentF{34} - 2\pentF{37} - 4\pentF{55}
+    \end{split}
+\]
+The sum of these two elements of the semantic cone is:
+\begin{equation}
+    6\pentF{5} - 2\pentF{9} - 4\pentF{12} + 5\pentF{15} + 4\pentF{16} + 2\pentF{17} - 4\pentF{24} + \frac{5}{2}\pentF{25} - 8\pentF{32} + \frac{15}{2}\pentF{34} - 3\pentF{37} - 6\pentF{55}
+    \in\SemCone^\emptyset
+    \label{eq:pent_cs_1}
+\end{equation}
+
+Finally then we take the combination of equations \ref{eq:pent_lin_sum}, \ref{eq:pent_cs_0}
+and \ref{eq:pent_cs_1} to get our final element of the cone.
+\[
+    (\ref{eq:pent_lin_sum}) + (\ref{eq:pent_cs_0}) + (\ref{eq:pent_cs_1})
+    = 30\emptyset -2\pentF{9} - \pentF{37} - 2\pentF{55}
+    \in\SemCone^\emptyset
+\]
+We know $120O = 2\pentF{9} + \pentF{37} + 2\pentF{55}$ so
+$30\emptyset - 120O \in \SemCone^\emptyset$. This implies
+$\frac{1}{4}\emptyset - O \in \SemCone^\emptyset$ as required.
+
+This proves lemma \ref{lemma:pentagon_1_4_bound} completing our proof
+of theorem \ref{thm:local_pentagon_bound}.
