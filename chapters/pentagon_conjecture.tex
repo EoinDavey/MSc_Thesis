@@ -1,4 +1,5 @@
 \chapter{Application: Erd\H{o}s' Pentagon Conjecture}
+\label{chap:pentagon_conjecture}
 
 Given a graph $G$ let $P(G)$ denote the number of pentagons (5-cycles)\footnote{Counted as
 subsets: the order does not matter} in $G$.
@@ -372,6 +373,7 @@ $\ext_i^\sigma$ gives a vector over flags which are 1 larger than those in the o
 vector. This will be very useful to us.
 
 \section{Counting Pentagons with Local Flags}
+\label{sec:counting_pentagons}
 
 We want to use local flags to show an asymptotic bound that for any regular, triangle free
 graph $G$ we have
@@ -759,6 +761,5 @@ and \ref{eq:pent_cs_1} to get our final element of the cone.
 We know $120O = 2\pentF{9} + \pentF{37} + 2\pentF{55}$ so
 $30\emptyset - 120O \in \SemCone^\emptyset$. This implies
 $\frac{1}{4}\emptyset - O \in \SemCone^\emptyset$ as required.
-
 This proves lemma \ref{lemma:pentagon_1_4_bound} completing our proof
 of theorem \ref{thm:local_pentagon_bound}.

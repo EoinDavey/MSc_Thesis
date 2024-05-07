@@ -37,6 +37,7 @@
 
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{knownlemma}{Lemma}
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem*{knowntheorem}{Theorem}
 \newtheorem{conjecture}{Conjecture}
@@ -52,6 +53,7 @@
 Scientific abstract (5-10 lines)
 \end{abstract}
 
+\setcounter{tocdepth}{1}
 \tableofcontents
 
 \include{chapters/introduction}
@@ -61,6 +63,8 @@ Scientific abstract (5-10 lines)
 \include{chapters/local_flags}
 
 \include{chapters/pentagon_conjecture}
+
+\include{chapters/strong_edge_colouring}
 
 \chapter*{Popular summary}
 \addcontentsline{toc}{chapter}{Popular summary}

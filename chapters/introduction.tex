@@ -2,20 +2,23 @@
 \addcontentsline{toc}{chapter}{Introduction}
 
 Consider a simple\footnote{An undirected graph with no self loops and at most 1 edge between any two nodes} graph $G$. How many colours do you need to colour each edge such that no edges which touch
-have the same colour? What if no edges which even touch some common edge can have the same colour?
-Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colours, but
+have the same colour? What if no edges which touch some common edge can have the same colour?
+Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colours but
 the best known proof only shows an upper bound of $1.772\Delta(G)^2$ colours. In this thesis
 we show how we can bring this bound down to $1.73\Delta(G)^2$ by introducing a novel framework
-which is a modification of Razborov's flag algebras framework.
+which is a modification of Razborov's flag algebras. We also apply this new framework
+to some other open problems including a bounded-degree version of the
+Erd\H{o}s' pentagon conjecture.
 
 \section*{Strong Edge Colouring}
 \addcontentsline{toc}{section}{Strong Edge Colouring}
+\label{sec:intro_strong_edge_coloring}
 
 An edge colouring of a simple graph $G$ is an assignment $c\colon E(G) \to [k]$
 for some $k\in\N$. Such a colouring is \textit{proper} if no two incident\footnote{Have a vertex in common}
-edges are coloured the same.
-A colouring is \textit{strong} if no edges which share a common incident edge are
-coloured the same. Intuitively strong colouring requires edges at distance 1 to have distinct
+edges have the same colour.
+A colouring is \textit{strong} if no edges which share a common incident edge have
+the same colour. Proper colouring requires edges at distance 1 to have distinct
 colours and strong colouring extends this to distance 2.
 In figure \ref{fig:proper-strong-example} we see an example of a non-proper colouring,
 a proper (but not strong) colouring and a strong colouring of $C_5$.
@@ -38,10 +41,10 @@ the max degree of the graph $\Delta(G)$:
 \end{knowntheorem}
 Erd\H{o}s and Nešetřil conjectured in 1985 that
 the strong chromatic index can also be bounded precisely by a function of the max degree:
-\begin{conjecture}[Erd\H{o}s and Nešetřil \cite{faudreeInducedMatchingsBipartite1989}]
-    \label{conj:erdos-nesetril}
+\begin{knownconjecture}[Erd\H{o}s and Nešetřil \cite{faudreeInducedMatchingsBipartite1989}]
+    \label{conj:intro_erdos_nesetril}
     $\chi'_s(G) \leq \frac{5}{4}\Delta(G)^2$.
-\end{conjecture}
+\end{knownconjecture}
 A greedy argument shows a bound of $\chi'(G) \leq 2\Delta(G)^2 + o(\Delta(G)^2)$ but it wasn't until
 1997 that Molloy and Reed broke the $2\Delta(G)^2$ barrier \cite{molloyBoundStrongChromatic1997}.
 A series of papers have since made progress on bringing this bound down closer to $\frac{5}{4}\Delta(G)^2$.
@@ -102,7 +105,6 @@ chapter \ref{chap:classic_flags}.
 
 As a reminder, for a graph $G$ and subset of vertices $U\subseteq V(G)$ the \textit{induced subgraph}
 $G[U]$ is the subgraph of $G$ consisting of the vertices in $U$ and all edges between them.
-
 We can then define the \textit{induced count} of $F$ in $G$, denoted $c(F; G)$ as
 the number of subsets $U\subseteq V(G)$ such that $G[U] \cong F$. Then we define the
 \textit{induced density} as $p(F; G) := c(F; G) / \binom{|G|}{|F|}$.
@@ -124,7 +126,7 @@ of non-edges in $G$ is precisely 1. Similarly the densities of all possible grap
     + p(\triangleempty; G) &= 1
 \end{align*}
 
-The density of edges is the probability that if we pick a pair of vertices, there is an
+The density of edges is the probability that if we pick a pair of vertices that there is an
 edge between them. We can relate this to the densities of graphs on 3 vertices by remarking
 that sampling a pair of vertices uniformly at random can be done by first sampling a
 triple of vertices at random, and then sampling 2 of those 3 uniformly again. This gives
@@ -172,13 +174,12 @@ as flags are non-negative. This (given all the formal definitions we've deferred
 that $p(\edge; G) \leq \frac{2}{3}$ for any triangle free graph. The best possible result
 says that $p(\edge; G) \leq \frac{1}{2}$ and is known as
 \textit{Mantel's theorem} \cite{Mantel_1910}. This is
-also easily proved with flag algebras, which is seen in chapter TODO.
+also easily proved with flag algebras which is seen in chapter \ref{chap:classic_flags}.
 
 \subsection*{Computer Search}
 
 One of the most (if not \textit{the most}) important aspects of flag algebras is that
 they lend themselves very well to computer search methods.
-
 The flag algebras allow us to prove results using only simple symbol manipulation in a very
 tractable way; All details of the structures at play are abstracted out, only algebraic relations
 between real numbers remains. We then have several tools at our disposal, in particular
@@ -189,9 +190,8 @@ arguments.
 In practice we use the \textit{semidefinite method} to optimise some objective function
 over the algebra, and due to duality this gives us a rigorous proof of an upper bound on our
 function.
-
-We will see in chapter TODO how we construct the semidefinite program, and how we can interpret
-the dual solutions in a more human understandable way.
+We will see in section \ref{sec:semidefinite_method} how we construct the semidefinite program,
+and how we can interpret the dual solutions in a more human understandable way.
 
 \section*{Local Flags}
 \addcontentsline{toc}{section}{Local Flags}
@@ -204,7 +204,7 @@ denominator which is $\Theta(|G|^{|F|})$. This is convenient if we are trying to
 a bound on some function which is polynomial in $|G|$
 (e.g. Mantel's theorem says the number of edges is $\leq \frac{1}{4}|G|^2$). But what if
 we want to prove a bound on a function which is polynomial in some other function
-of $G$? e.g. The \hyperref[conj:erdos-nesetril]{Erd\H{o}s-Nešetřil Conjecture}
+of $G$? e.g. The \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}
 wants to bound $\chi'_s(G)$ with a polynomial in $\Delta(G).$ This does not lend itself
 to the same methods.
 
@@ -221,19 +221,20 @@ In particular in chapter \ref{chap:local_flags} we introduce a
 new \textit{local density function} and a concept we call a \textit{local flag}.
 We show that, under certain conditions, these local flags also form a nice algebra
 with which we can apply the semidefinite method to prove bounds. We then apply this new
-method to several problems, including conjecture \ref{conj:erdos-nesetril}.
+method to several problems, including the 
+\hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}
 
 \section*{Results}
 \addcontentsline{toc}{section}{Results}
 
 Using this new framework we have made progress on several open problems:
 \begin{itemize}
-    \item In chapter TODO we show a "warmup" application of the new framework by making progress on
+    \item In chapter \ref{chap:pentagon_conjecture} we show a "warmup" application of the new framework by making progress on
         a modification of the famous Erd\H{o}s' pentagon conjecture \cite{erdos_pentagon_1984}.
         This problem was chosen as the original conjecture was first proven in 2012 using
         the classic flag algebras \cite{grzesikMaximumNumberFivecycles2012}.
     \item In chapter TODO then we will apply this new framework to make progress on the
-        \hyperref[conj:erdos-nesetril]{Erd\H{o}s-Nešetřil Conjecture}, achieving the best-yet
+        \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}, achieving the best-yet
         bound of $\chi'_s(G) \leq 1.73\Delta(G)^2$.
     \item We continue then in chapter TODO to make the first progress on the bipartite version of
         the same conjecture. TODO WHAT IS THE BOUND.
