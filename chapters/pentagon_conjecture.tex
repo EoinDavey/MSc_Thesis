@@ -273,7 +273,7 @@ We start by defining the extension of a flag:
     Let $\Gcl$ be the class of red-black vertex coloured regular graphs then
     see figure \ref{fig:extension_example} for an example $\sigma$ and two possible
     extensions of $\sigma$ corresponding to extending on vertex 1 or 2.
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
         \includegraphics{extension_example}
         \caption{Example type $\sigma$ with two possible extensions}
@@ -409,7 +409,7 @@ Then we have the following reduction:
 
     \begin{figure}[!ht]
         \centering
-        \includegraphics[scale=1.5]{pentagon_reduction}
+        \includegraphics[scale=1.45]{pentagon_reduction}
     \end{figure}
 
     This $H$ graph has (up to asymptotically 0 terms) the same max degree as $G$
@@ -545,12 +545,12 @@ We would like to add these to the list of constraints. For $k=5$ this is already
 the subspace of flags of size 5 so we can add it directly. For $k < 5$ we need
 to do the same extension trick as with our objective function where we use that
 $\llbracket B_k \rrbracket = B_k$ to get
-\[
+\begin{multline*}
     1 = \phi(B_k)=\phi(\llbracket B_k \rrbracket)
     = \phi(\llbracket B_k \cdot \ext_1^{B_k}\rrbracket)
-    = \phi\left(\left\llbracket B_k \cdot \left(\ext_1^{B_k}\right)^{5-k}\right\rrbracket\right)
+    = \phi\left(\left\llbracket B_k \cdot \left(\ext_1^{B_k}\right)^{5-k}\right\rrbracket\right)\\
     = \phi\left(\left\llbracket \left(\ext_1^{B_k}\right)^{5-k}\right\rrbracket\right).
-\]
+\end{multline*}
 $\left(\ext_1^{B_k}\right)^{5-k}$ is a vector over flags of size 5 so this is
 a constraint we can use.
 
@@ -743,15 +743,17 @@ Then we can compute
         -2\pentF{9} + \pentF{15} + 2\pentF{16} + \frac{1}{2}\pentF{25} + \frac{3}{2}\pentF{34} -
         \pentF{37} - 2\pentF{55}\\
         120 \llbracket g^2 \rrbracket &= 
-        6\pentF{5} - 4\pentF{12} + 4\pentF{15} + 2\pentF{16} + 2\pentF{17} - 4\pentF{24} + 2\pentF{25} - 8\pentF{32} + 6\pentF{34} - 2\pentF{37} - 4\pentF{55}
+        6\pentF{5} - 4\pentF{12} + 4\pentF{15} + 2\pentF{16} + 2\pentF{17} - 4\pentF{24} + 2\pentF{25} - 8\pentF{32}\\
+        &\ \ \ + 6\pentF{34} - 2\pentF{37} - 4\pentF{55}.
     \end{split}
 \]
 The sum of these two elements of the semantic cone is:
-\begin{equation}
-    6\pentF{5} - 2\pentF{9} - 4\pentF{12} + 5\pentF{15} + 4\pentF{16} + 2\pentF{17} - 4\pentF{24} + \frac{5}{2}\pentF{25} - 8\pentF{32} + \frac{15}{2}\pentF{34} - 3\pentF{37} - 6\pentF{55}
+\begin{multline}
+    6\pentF{5} - 2\pentF{9} - 4\pentF{12} + 5\pentF{15} + 4\pentF{16} + 2\pentF{17} - 4\pentF{24} + \frac{5}{2}\pentF{25} - 8\pentF{32}\\
+    + \frac{15}{2}\pentF{34} - 3\pentF{37} - 6\pentF{55}
     \in\SemCone^\emptyset
     \label{eq:pent_cs_1}
-\end{equation}
+\end{multline}
 
 Finally then we take the combination of equations \ref{eq:pent_lin_sum}, \ref{eq:pent_cs_0}
 and \ref{eq:pent_cs_1} to get our final element of the cone.

@@ -32,14 +32,13 @@ upper bound on the strong chromatic index $\chi'_s(G)$, the minimum colours need
 a strong edge colouring.
 
 \begin{conjecture}[Erd\H{o}s, Nešetřil 1989 \cite{faudreeInducedMatchingsBipartite1989}]
-    \[\chi'_s(G) \leq 1.25\Delta(G)^2.\]
+    $\chi'_s(G) \leq 1.25\Delta(G)^2$ for all graphs $G$.
 \end{conjecture}
 
 The bound of $2\Delta(G)^2$ was the best known bound until 1997 when Molloy and Reed
 showed the following.
 \begin{knowntheorem}[Molloy, Reed 1997 \cite{molloyBoundStrongChromatic1997}]
-    If $\Delta(G)$ is sufficiently large then
-    $\chi'_s(G) \leq 1.998\Delta(G)^2$.
+    $\chi'_s(G) \leq 1.998\Delta(G)^2$ for $\Delta(G)$ sufficiently large.
 \end{knowntheorem}
 
 Their proof consisted of colouring $L(G)^2$ with 2 discrete steps:
@@ -62,8 +61,7 @@ using a probabilistic colouring was iterated on through successive papers:
 Bruhn and Joos found an asymptotically tight bound on the strong neighbourhood density
 and improved the colouring lemma.
 \begin{knowntheorem}[Bruhn \& Joos, 2015 \cite{bruhnStrongerBoundStrong2018}]
-    If $\Delta(G)$ is sufficiently large then
-    $\chi'_s(G) \leq 1.93\Delta(G)^2$.
+    $\chi'_s(G) \leq 1.93\Delta(G)^2$ for $\Delta(G)$ sufficiently large.
 \end{knowntheorem}
 Bonamy, Perett and Postle introduced a modification of the method where rather than
 bounding the strong edge neighbourhood density for the entire graph we instead focus
@@ -198,10 +196,10 @@ Note if $\Bcl\subseteq G$ is the set of black edges with at least one black vert
 \]
 We can split $\Bcl$ further into $\Bcl_1$ and $\Bcl_2$, the set of edges with one
 black and one red vertex and the set of edges with two black vertices respectively.
-\[
-    2|E_O(G)| = \sum_{e \in \Bcl_1}|\{e' \in \Bcl \colon e, e'\ \text{have common edge}\}|
+\begin{multline*}
+    2|E_O(G)| = \sum_{e \in \Bcl_1}|\{e' \in \Bcl \colon e, e'\ \text{have common edge}\}|\\
     +  \sum_{e \in \Bcl_2}|\{e' \in \Bcl \colon e, e'\ \text{have common edge}\}|
-\]
+\end{multline*}
 
 The $\sigma_1=\bredge$ is a local type by lemma \ref{lemma:local_type_equiv}. Clearly
 for any $e\in \Bcl_1$ we can view $G$ as a $\sigma_1$-flag where $\sigma_1$ is mapped
@@ -234,8 +232,11 @@ Then by the above $\rho(D(\bredge); G^e) = \frac{|\{e' \in \Bcl\colon e,e'\ \tex
 
 We can then use lemma \ref{lemma:local_averaging_exp} to note that
 \[
-    \rho(\llbracket D(\bredge) \rrbracket; G) \sim \rho(\llbracket \bredge\rrbracket; G) \E_\theta[\rho(D(\bredge), (G,\theta))]
-    = \frac{1}{2}\frac{\sum_{e\in\Bcl_1}|\{e' \in \Bcl\colon e,e'\ \text{have common edge}\}|}{\binom{\Delta(G)}{2}\binom{\Delta(G)}{2}}
+    \begin{split}
+        \rho(\llbracket D(\bredge) \rrbracket; G) 
+        &\sim \rho(\llbracket \bredge\rrbracket; G) \E_\theta[\rho(D(\bredge), (G,\theta))]\\
+        &= \frac{1}{2}\frac{\sum_{e\in\Bcl_1}|\{e' \in \Bcl\colon e,e'\ \text{have common edge}\}|}{\binom{\Delta(G)}{2}\binom{\Delta(G)}{2}}
+    \end{split}
 \]
 
 We can do the exact same construction with $\sigma_2 = \edge$. The only thing we have to note is that for any $e\in \Bcl_2$ there are two ways to embed $\sigma_2$ so defining $D(\edge)$ in
@@ -243,8 +244,11 @@ the same way we get a double count of
 $\rho(D(\edge); G^e) = 2\frac{|\{e' \in \Bcl\colon e,e'\ \text{have common edge}\}}{\binom{\Delta(G)}{2}}$
 hence applying lemma \ref{lemma:local_averaging_exp} again we get
 \[
-    \rho(\llbracket D(\edge) \rrbracket; G) \sim \rho(\llbracket \edge\rrbracket; G) \E_\theta[\rho(D(\bredge), (G,\theta))]
-    = \frac{\sum_{e\in\Bcl_2}|\{e' \in \Bcl\colon e,e'\ \text{have common edge}\}|}{\binom{\Delta(G)}{2}\binom{\Delta(G)}{2}}
+    \begin{split}
+        \rho(\llbracket D(\edge) \rrbracket; G) 
+        &\sim \rho(\llbracket \edge\rrbracket; G) \E_\theta[\rho(D(\bredge), (G,\theta))]\\
+        &= \frac{\sum_{e\in\Bcl_2}|\{e' \in \Bcl\colon e,e'\ \text{have common edge}\}|}{\binom{\Delta(G)}{2}\binom{\Delta(G)}{2}}
+    \end{split}
 \]
 Therefore
 \[
