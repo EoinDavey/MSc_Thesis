@@ -124,6 +124,7 @@ obstacle but means we need to adjust our notation.
 Now we are ready to define our local flags:
 
 \begin{definition}[Local $\sigma$-Flag]
+    \label{def:local_flag}
     Fix some graph class $\Gcl$ and takes its hereditary closure $\HeredG$.
     Let $\sigma$ be a type. Then a $\sigma$-flag $(F, \theta)\in\HeredG{}^\sigma$ is a
     \textbf{local $\sigma$-flag} if we have the following properties:
@@ -274,7 +275,13 @@ We now define the product on $\R\Gloc^\sigma$ which will turn it into an algebra
     $\Lcl^\sigma$.
 \end{definition}
 
-This product has the exact limiting behaviour that we need:
+\begin{note}
+    It will be useful in later chapters to refer to the subspace of $\Lcl^\sigma$
+    spanned by flags of a fixed size $n$. Call this subspace $\Lcl^\sigma_n$.
+\end{note}
+
+This product has the exact limiting behaviour that we need and some nice algebraic
+properties:
 
 \begin{theorem}
     \label{thm:local_product_lim}
@@ -283,8 +290,6 @@ This product has the exact limiting behaviour that we need:
     and in particular any limit functional $\phi\in\Phi^\sigma$ is an algebra
     homomorphism $\Lcl^\sigma \to \R$.
 \end{theorem}
-
-We also have some nice algebraic properties:
 
 \begin{lemma}
     \label{lemma:local_assoc}

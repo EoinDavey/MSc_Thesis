@@ -253,6 +253,7 @@ full $\frac{|G|}{5}\frac{\Delta(G)^4}{16}$ bound as this result is tight:
 \end{proof}
 
 \section{Local Flags for Regular Graphs}
+\label{sec:local_flags_regular_graphs}
 
 We show now why focusing on only regular graphs is so powerful in the context of
 local flags. As we saw in section \ref{sec:semidefinite_method} we want to find
@@ -480,6 +481,7 @@ lemma \ref{lemma:local_type_equiv} we can now formulate our problem as a semidef
 problem.
 
 \section{The Semidefinite Program}
+\label{sec:pentagon_sdp}
 
 We fixed our class of graphs $\Gcl$ to be the class of red-black vertex coloured
 regular triangle-free graphs with $\Delta(G)$ black vertices such that the set of
@@ -568,7 +570,7 @@ In summary then our problem is:
     &\ \phi_x(B_5) = 1\\
     &\ \phi_x\left(\left\llbracket\left(\ext_1^{B_k}\right)^{5-k}\right\rrbracket\right) = 1\
     \forall\ k \in [4]\\
-    &\ \phi_x(\llbracket f^2 \rrbracket) \geq 0 \forall f \in \Glocn^\sigma\ \forall (\sigma, n)
+    &\ \phi_x(\llbracket f^2 \rrbracket) \geq 0 \forall f \in \Lcl_n^\sigma\ \forall (\sigma, n)
     \ \text{from above list}.
 \end{align*}
 
