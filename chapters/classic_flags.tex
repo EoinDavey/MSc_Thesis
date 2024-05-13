@@ -13,7 +13,8 @@ section may be of interest even to a reader familiar with flag algebras.
 
 Finally in section \ref{sec:coloured_graphs} we will introduce \textit{coloured graphs} as combinatorial
 objects with their own structure. These will help us unlock the full potential of
-our local flags in our applications (e.g. chapter \ref{chap:local_flags}).
+our local flags in our applications (e.g. chapters \ref{chap:pentagon_conjecture},
+\ref{chap:strong_edge_colouring}).
 
 \section{Flag Algebras}
 \label{sec:flag_algebras}
@@ -190,12 +191,12 @@ possible number of such non-overlapping $t$-tuples.
 \subsection{Graph Classes}
 
 Often, we want to limit our view to a subset of all possible graphs. For example, we
-will want to consider only triangle-free graphs when proving Mantel's theorem (TODO REF).
+will want to consider only triangle-free graphs when
+\hyperref[example:first_mantels_proof]{proving Mantel's theorem}.
 
 We pick some class of graphs $\Gcl$. For Razborov's flag algebras we assume that
 $\mathcal{G}$ is hereditary, meaning it is closed under taking induced subgraphs. This will change
 when we introduce our new local framework.
-
 Then for any type $\sigma$ we write $\Gcl^\sigma$ for the set of all $\sigma$-flags up to
 isomorphism. We write $\Gcl^\sigma_n$ for the set of all $\sigma$-flags of size $n$.
 We generally assume $\Gcl^\sigma$ is infinite for any type $\sigma\in\mathcal{G}$.
@@ -203,9 +204,9 @@ If $\sigma=\emptyset$ we often skip the superscript and just refer to
 $\Gcl$ or $\Gcl_n$.
 
 From this point all definitions and results are relative to some fixed graph class
-$\mathcal{G}$.
+$\mathcal{G}$. Given some graph class $\mathcal{G}^\sigma$ then we get the very powerful
+\textit{chain rule}.
 
-Given some graph class $\mathcal{G}^\sigma$ then we get the very power \textit{chain rule}.
 \begin{lemma}[The Chain Rule, Lemma 2.2 \cite{razborovFlagAlgebras2007}]
     \label{lemma:chain_rule}
     If $F_1, \dots, F_t \in \Gcl^\sigma$ are $\sigma$-flags which fit in $G\in\Gcl^\sigma$
@@ -556,6 +557,7 @@ This gives us yet another important tool to prove results using this algebra. In
 we are now able to prove Mantel's theorem.
 
 \begin{example}[Proof of Mantel's theorem]
+    \label{example:first_mantels_proof}
     Let $\Gcl$ be the class of triangle free graphs. Mantel's theorem says that
     $\phi(\edge) \leq \frac{1}{2}\ \forall\ \phi\in\Phi^\emptyset$. We prove this
     by showing $\edge \leq \frac{1}{2}$ meaning $\frac{1}{2}\emptyset - \edge \geq 0$.

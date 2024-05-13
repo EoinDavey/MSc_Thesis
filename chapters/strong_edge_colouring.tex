@@ -91,6 +91,7 @@ box we claim the following result.
     If $\Delta(G)$ is sufficiently large then $\chi'_s(G) \leq 1.73\Delta(G)^2$.
 \end{theorem}
 
+The rest of this chapter is the proof of this theorem.
 We will follow the same structure as used in chapter \ref{chap:pentagon_conjecture},
 first reducing the problem to a problem on a certain class of coloured graphs,
 finding a vector $O$ of local flags for which an asymptotic bound on the density of $O$ will allow
@@ -107,7 +108,7 @@ the Bonamy et al. paper which appears in Hurley et al. as follows:
     $\geq (2-\eta)\Delta(G)^2$. Then for any $f\in F$ the number of edges in the subgraph
     $H[N_{H[F]}(f)]$ induced by the neighbourhood of $f$ (in $H[F]$) is at most
     \[
-        \left(\frac{31}{6} - \frac{128}{10-3\eta} - \eta^2\right)\Delta(G)^4
+        \left(\frac{31}{6} - \frac{128}{10-3\eta} - \eta^2\right)\Delta(G)^4.
     \]
 \end{knowntheorem}
 
@@ -126,17 +127,52 @@ that $e, e'$ adjacent in $L(G)^2$.
     as outlined in each of the above papers.
 \end{note}
 
-As we did in section \ref{sec:counting_pentagons} we want to reduce this to a problem
-on coloured graphs.
-Given $G$, $F\subseteq E(H)$, $\eta > 0$ and $f \in F$ as above we can construct a
+We note now that asymptotically it suffices to count only the number of edges
+in $H[N_{H[F]}(f)]$ which correspond to pairs $e, e'\in E(G)$ which are not incident.
+i.e. those $e,e'$ which are adjacent in $L(G)^2$ but not $L(G)$.
+\begin{lemma}
+    \label{lemma:count_non_incident_pairs}
+    Let $G, F, H$ and $f\in F$ be as above. Let $A$ be those pairs $e,e'\in F$
+    such that $e, e'$ adjacent in $L(G)^2$ but not $L(G)$.
+    Then
+    \[
+        |E(H[N_{H[F]}(f)])| = |E(H[N_{H[F]}(f)]) \cap A| + o(\Delta(G)^4).
+    \]
+\end{lemma}
+\begin{proof}
+    We count how many pairs $e, e' \in N_s(f) \cap F$ are adjacent in $L(G)$.
+    Clearly $|N_s(f)| \in O(\Delta(G)^2)$ and each $e \in N_s(f)$ has $O(\Delta)$
+    incident edges leading to a bound of $O(\Delta(G)^3) \subseteq o(\Delta(G)^4)$
+    as required.
+\end{proof}
+
+Similarly, the condition that $\deg_{H[F]}(f) \geq (2-\eta)\Delta(G)^2$ for all
+$f\in F$ is dominated only by non-incident edges.
+\begin{lemma}
+    \label{lemma:sec_degree_non_incident}
+    Let $G, F, H$ and $f\in E(G)$ be as above. Let $B$ be those edges $e\in F$
+    such that $e$ is adjacent to $f$ in $L(G)^2$ but not in $L(G)$.
+    Then
+    \[
+        \deg_{H[F]}(f) = |B| + o(\Delta(G)^2).
+    \]
+\end{lemma}
+\begin{proof}
+    The number of edges incident to a fixed $f$ in $L(G)$ is $O(\Delta)$.
+\end{proof}
+
+As we did in section \ref{sec:counting_pentagons} we want to reduce our problem to a
+problem on coloured graphs.
+Given $G$, $F\subseteq E(G)$, $\eta > 0$ and $f \in F$ as above we can construct a
 new corresponding $(2,2)$-graph (red/black vertices, red/black edges) $G'$ as follows:
 Let $f=\{u, v\}$. Take a copy of $G$ and colour all neighbours of $u$ and $v$ black
 and all other vertices red. Then colour every edge $e \in F$ black and all other
 edges red.
 
 \begin{lemma}
-    Let $G, F, \eta, f$ and $G'$ be as above.
-    Define $E_O(G') \subseteq \binom{E(G')}{2}$ as the set of pairs of edges $e, e'$ in $G'$
+    Let $G, H=L(G)^2, F, \eta, f$ and $G'$ be as above.
+    Define $E_O(G') \subseteq \binom{E(G')}{2}$ as the set of pairs of non-incident
+    edges $e, e'$ in $G'$
     where $e, e'$ are black edges with a common incident edge and
     at least one of the vertices of each edge is black.
     Then the number of edges in $H[N_{H[F]}(f)]$
@@ -144,12 +180,17 @@ edges red.
 \end{lemma}
 
 \begin{proof}
-    Let $G, F, \eta, f$ and $G'$ be as above. Consider some edge $\{e, e'\}$ in
-    $H[N_{H[F]}(f)]$. Both of these $e,e'$ are in $F$ so is coloured black in $G'$.
-    Similarly both are in the strong neighbourhood of $F$ meaning each has a common
+    Let $G$, $H=L(G)^2$, $F, \eta, f$ and $G'$ be as above.
+    By lemma \ref{lemma:count_non_incident_pairs} it suffices to show the result for
+    number of pairs $e,e'$ in $H[N_{H[F]}(f)]$ where $e,e'$ are not incident.
+
+    Consider some edge $\{e, e'\}$ in
+    $H[N_{H[F]}(f)]$ where $e,e'$ are not incident.
+    Both of these $e,e'$ are in $F$ so are coloured black in $G'$.
+    Similarly both are in the strong neighbourhood of $f$ meaning each has a common
     incident edge with $f$. Edges incident to $f$ have both vertices coloured black
     in $G'$ so each of $e, e'$ has at least one black vertex.
-    Hence this edge $\{e, e'\}$ corresponds to a pair of black edges with at least one
+    Hence this edge $\{e, e'\}$ corresponds to a pair of non-incident black edges with at least one
     black vertex each in $G'$ at distance $\leq 2$ from each other.
 
     Consider then some pair $e,e' \in E_O(G')$
@@ -215,17 +256,23 @@ there are. These subgraphs are easily enumerated.
 Define $D(\bredge) \in \Lcl^{\sigma_1}$ to be the vector consisting of the sum of all
 local $\sigma_1$-flags of size 4 with a black edge between the unlabelled vertices and a
 single connected component:
-
-TODO THIS IS MISSING POSSIBLE BLACK-BLACK RED EDGES IN THE MIDDLE NEEDS REGENERATION.
 \[
     \begin{split}
-    D(\bredge) &:= 
-        \secdbr{4in4t2id2} + \secdbr{5in4t2id2} + \secdbr{6in4t2id2} + \secdbr{10in4t2id2} + \secdbr{13in4t2id2} + \secdbr{14in4t2id2} + \secdbr{15in4t2id2} + \secdbr{19in4t2id2} + \secdbr{20in4t2id2}\\
-    &+ \secdbr{21in4t2id2} + \secdbr{25in4t2id2} + \secdbr{28in4t2id2} + \secdbr{29in4t2id2} + \secdbr{31in4t2id2} + \secdbr{32in4t2id2} + \secdbr{39in4t2id2} + \secdbr{40in4t2id2} + \secdbr{45in4t2id2}\\
-    &+ \secdbr{52in4t2id2} + \secdbr{53in4t2id2} + \secdbr{54in4t2id2} + \secdbr{62in4t2id2} + \secdbr{63in4t2id2} + \secdbr{64in4t2id2} + \secdbr{70in4t2id2} + \secdbr{75in4t2id2} + \secdbr{76in4t2id2}\\
-    &+ \secdbr{80in4t2id2} + \secdbr{81in4t2id2} + \secdbr{88in4t2id2} + \secdbr{93in4t2id2} + \secdbr{99in4t2id2} + \secdbr{102in4t2id2} + \secdbr{109in4t2id2} + \secdbr{110in4t2id2} + \secdbr{117in4t2id2}\\
-    &+ \secdbr{118in4t2id2} + \secdbr{119in4t2id2} + \secdbr{125in4t2id2} + \secdbr{130in4t2id2} + \secdbr{131in4t2id2} + \secdbr{135in4t2id2} + \secdbr{136in4t2id2} + \secdbr{143in4t2id2} + \secdbr{144in4t2id2}\\
-    &+ \secdbr{149in4t2id2} + \secdbr{154in4t2id2} + \secdbr{155in4t2id2} + \secdbr{159in4t2id2} + \secdbr{160in4t2id2} + \secdbr{166in4t2id2} + \secdbr{169in4t2id2} + \secdbr{173in4t2id2} + \secdbr{175in4t2id2} + \secdbr{178in4t2id2}
+        D(\bredge) &:= 
+        \secdbr{5in4t2id2} + \secdbr{6in4t2id2} + \secdbr{7in4t2id2} + \secdbr{13in4t2id2} + \secdbr{14in4t2id2} + \secdbr{15in4t2id2} + \secdbr{21in4t2id2} + \secdbr{22in4t2id2} + \secdbr{23in4t2id2}\\
+		& \secdbr{29in4t2id2} + \secdbr{30in4t2id2} + \secdbr{31in4t2id2} + \secdbr{37in4t2id2} + \secdbr{38in4t2id2} + \secdbr{39in4t2id2} + \secdbr{45in4t2id2} + \secdbr{46in4t2id2} + \secdbr{47in4t2id2}\\
+		& \secdbr{53in4t2id2} + \secdbr{54in4t2id2} + \secdbr{55in4t2id2} + \secdbr{61in4t2id2} + \secdbr{62in4t2id2} + \secdbr{63in4t2id2} + \secdbr{74in4t2id2} + \secdbr{75in4t2id2} + \secdbr{84in4t2id2}\\
+		& \secdbr{85in4t2id2} + \secdbr{86in4t2id2} + \secdbr{96in4t2id2} + \secdbr{97in4t2id2} + \secdbr{98in4t2id2} + \secdbr{108in4t2id2} + \secdbr{109in4t2id2} + \secdbr{110in4t2id2} + \secdbr{120in4t2id2}\\
+		& \secdbr{121in4t2id2} + \secdbr{122in4t2id2} + \secdbr{132in4t2id2} + \secdbr{133in4t2id2} + \secdbr{134in4t2id2} + \secdbr{144in4t2id2} + \secdbr{145in4t2id2} + \secdbr{146in4t2id2} + \secdbr{156in4t2id2}\\
+		& \secdbr{157in4t2id2} + \secdbr{158in4t2id2} + \secdbr{169in4t2id2} + \secdbr{170in4t2id2} + \secdbr{179in4t2id2} + \secdbr{180in4t2id2} + \secdbr{181in4t2id2} + \secdbr{191in4t2id2} + \secdbr{192in4t2id2}\\
+		& \secdbr{193in4t2id2} + \secdbr{203in4t2id2} + \secdbr{204in4t2id2} + \secdbr{205in4t2id2} + \secdbr{215in4t2id2} + \secdbr{216in4t2id2} + \secdbr{217in4t2id2} + \secdbr{227in4t2id2} + \secdbr{228in4t2id2}\\
+		& \secdbr{229in4t2id2} + \secdbr{239in4t2id2} + \secdbr{240in4t2id2} + \secdbr{241in4t2id2} + \secdbr{252in4t2id2} + \secdbr{253in4t2id2} + \secdbr{262in4t2id2} + \secdbr{263in4t2id2} + \secdbr{264in4t2id2}\\
+		& \secdbr{274in4t2id2} + \secdbr{275in4t2id2} + \secdbr{276in4t2id2} + \secdbr{286in4t2id2} + \secdbr{287in4t2id2} + \secdbr{288in4t2id2} + \secdbr{298in4t2id2} + \secdbr{299in4t2id2} + \secdbr{300in4t2id2}\\
+		& \secdbr{310in4t2id2} + \secdbr{311in4t2id2} + \secdbr{312in4t2id2} + \secdbr{323in4t2id2} + \secdbr{324in4t2id2} + \secdbr{333in4t2id2} + \secdbr{334in4t2id2} + \secdbr{335in4t2id2} + \secdbr{345in4t2id2}\\
+		& \secdbr{346in4t2id2} + \secdbr{347in4t2id2} + \secdbr{357in4t2id2} + \secdbr{358in4t2id2} + \secdbr{359in4t2id2} + \secdbr{369in4t2id2} + \secdbr{370in4t2id2} + \secdbr{371in4t2id2} + \secdbr{382in4t2id2}\\
+		& \secdbr{383in4t2id2} + \secdbr{392in4t2id2} + \secdbr{393in4t2id2} + \secdbr{394in4t2id2} + \secdbr{404in4t2id2} + \secdbr{405in4t2id2} + \secdbr{406in4t2id2} + \secdbr{416in4t2id2} + \secdbr{417in4t2id2}\\
+		& \secdbr{418in4t2id2} + \secdbr{429in4t2id2} + \secdbr{430in4t2id2} + \secdbr{439in4t2id2} + \secdbr{440in4t2id2} + \secdbr{441in4t2id2} + \secdbr{451in4t2id2} + \secdbr{452in4t2id2} + \secdbr{453in4t2id2}\\
+		& \secdbr{464in4t2id2} + \secdbr{465in4t2id2} + \secdbr{474in4t2id2} + \secdbr{475in4t2id2} + \secdbr{476in4t2id2} + \secdbr{487in4t2id2} + \secdbr{488in4t2id2}
     \end{split}
 \]
 Then by the above $\rho(D(\bredge); G^e) = \frac{|\{e' \in \Bcl\colon e,e'\ \text{have common edge}\}}{\binom{\Delta(G)}{2}}$.
@@ -282,39 +329,26 @@ for some $n\geq 4$ yet to be chosen.
 
 \subsection{Search Constraints}
 
-As in chapter \ref{chap:pentagon_conjecture} we want to collect some known elements of
+As in chapter \ref{chap:pentagon_conjecture}, we want to collect some known elements of
 the semantic cone where each vector consists of local flags of some fixed size $n$.
 (Dually this corresponds with finding linear constraints on limit functionals).
-
 As $\Gcl$ is a class of regular graphs we get the constraints of
 the form $\llbracket \ext^\sigma_i - \ext^\sigma_j\rrbracket$ from corollary
 \ref{corollary:unlabel_extension} as we did in section \ref{sec:pentagon_sdp}.
 
-Let $B_i$ be the vector of all local $\emptyset$-flags of size $i$ of only black vertices:
-$B_1 = \vertex$, $B_2 = \edge + \nonedge + \rededge$ etc. Then if
-$B(G)$ is the number of black vertices in $G$ we have
-\[
-    \rho(B_i; G)
-    =\frac{\binom{B(G)}{i}}{\binom{\Delta(G)}{i}}
-    \leq \frac{\binom{2\Delta(G)}{i}}{\binom{\Delta(G)}{i}}
-    \sim \frac{2^i\binom{\Delta(G)}{i}}{\binom{\Delta(G)}{i}}
-    = 2^i
-\]
-so $\phi(B_i) \leq 2^i\ \forall\ \phi\in\Phi^\emptyset$. In particular $B_n$ is
-a vector of flags of size $n$ so we can add $\phi(B_n) \leq 2^n\ \forall\ \phi\in\Phi^\emptyset$
-to our constraints.
-
-Next we need to add the constraint that the minimum degree of the subgraph of
+First we find some constraints which encode the property
+that the minimum degree of the subgraph of
 $L(G)^2$ induced by black edges is $\geq (2-\eta)\Delta(G)^2$. In other words
 for each black edge $e$ the number of other black edges in $G$ with a common
 incident edge is $\geq (2-\eta)\Delta(G)^2$. Following how we defined $D(\bredge)$ 
 we define $D'(\sigma)$ for $\sigma\in\{\edge,\bredge\}$ as the sum of
 local $\sigma$-flags of size 4 where the unlabelled
 vertices form a black edge. Let $e\in E(G)$ be an edge of the form $\bredge$. Then
+by lemma \ref{lemma:sec_degree_non_incident} we have:
 \[
-    \rho(D'(\bredge); G^e) = \frac{\deg_{H[F]}(e)}{\binom{\Delta(G)}{2}}
-    \geq \frac{2\deg_{H[F]}(e)}{\Delta(G)^2}
-    \geq 2(2-\eta)
+    \rho(D'(\bredge); G^e) = \frac{\deg_{H[F]}(e)}{\binom{\Delta(G)}{2}} - o(1)
+    \geq \frac{2\deg_{H[F]}(e)}{\Delta(G)^2} - o()
+    \geq 2(2-\eta) - o(1)
 \]
 Hence $\phi(D'(\bredge)) \geq 2(2-\eta)\ \forall\ \phi \in \Phi^\bredge$.
 In particular then
@@ -331,36 +365,55 @@ by corollary \ref{corollary:unlabel_extension} and lemma \ref{lemma:local_pos_pr
 giving us another constraint. We could add the same constraint for $\edge$ but in practice
 it suffices to only add this one.
 
-Finally we add a constraint which connects the regularity of $G$ with the bound
-on the number of black vertices. For any type $\sigma$ we can define the
-\textit{black vertex extension vector} $\ext_B^\sigma$ as the sum of all
-local flags of size $|\sigma|+1$ where the extra vertex is a black vertex.
+Next we want to encode the fact that there are at most $2\Delta(G)$ black vertices.
+For any type $\sigma$ we can define the
+\textit{black vertex extension vector of size $k$} $\ext_{B,k}^\sigma$ as the sum of all
+local flags of size $|\sigma|+k$ where the unlabelled vertices are black vertices.
 
 \begin{lemma}
-    For any type $\sigma$ $\phi(\ext_B^\sigma) \leq 2$ for all $\phi\in\Phi^\sigma$.
+    For a graph $G$ let $B(G)$ denote the set of black vertices
+    and $i\in \N$. Consider a $\sigma$-flag $(G, \eta)$ then
+    \[
+        \rho(\ext_{B,i}^\sigma; (G,\eta))
+        = \frac{\binom{|B(G) \setminus \im\eta|}{i}}{\binom{\Delta(G)}{i}}
+        \sim 
+        \left(\frac{|B(G)\setminus\im\eta|}{\Delta(G)}\right)^i
+    \]
 \end{lemma}
 \begin{proof}
-    For a graph $G$ let $B(G)$ denote the set of black vertices.
-    Consider a $\sigma$-flag $(G, \eta)$. We claim
-    $\rho(\ext_B^\sigma; (G,\eta)) =\frac{1}{\Delta(G)}|B(G) \setminus \im\eta|$.
-    Given any black vertex $v\in B(G)\im\eta$ we can induce a subgraph
-    $\im\eta \cup \{v\}$ of size $|\sigma|+1$ which is counted by some local $\sigma$-flag
-    of size $|\sigma|+1$ where the unlabelled vertex is black. Similarly every
-    $U=\im\eta \cup \{v\}$ which is isomorphic to some local $\sigma$-flag where the unlabelled
-    vertex is black implies $v$ is $\in B(G)\setminus\im\eta$. Hence
-    \[\rho(\ext_B^\sigma; (G,\eta)) =  \frac{1}{\Delta(G)}|B(G) \setminus \im\eta|
-    \leq \frac{2\Delta(G)}{\Delta(G)} = 2\]
+    Consider a $\sigma$-flag $(G, \eta)$.
+    Given any set of black vertices $V\subseteq B(G)\im\eta$ of size $i$ we can induce a subgraph
+    $\im\eta \cup V$ of size $|\sigma|+i$ which is counted by some local $\sigma$-flag
+    of size $|\sigma|+i$ where the unlabelled vertices are black. Similarly every
+    $U=\im\eta \cup V$ which is isomorphic to some local $\sigma$-flag where the unlabelled
+    vertices are black implies $V \subseteq B(G)\setminus\im\eta$.
 \end{proof}
-
 \begin{corollary}
-    For any type $\sigma$, $i\in [|\sigma|]$ $\phi(2\ext_i^\sigma - \ext_B^\sigma) \geq 0\ \forall
+    For any type $\sigma$ $\phi(\ext_{B,i}^\sigma) \leq 2^i$ for all $\phi\in\Phi^\sigma$,
+    $i\in\N$.
+\end{corollary}
+\begin{corollary}
+    For any type $\sigma$, $i\in\N$ we have $\phi(\ext_{B,i}^\sigma) = \phi(\ext_{B,1}^\sigma)^i$
+\end{corollary}
+\begin{corollary}
+    For any type $\sigma$, $i\in [|\sigma|]$ $\phi(2\ext_i^\sigma - \ext_{B,1}^\sigma) \geq 0\ \forall
     \phi\in\Phi^\sigma$.
     If $\sigma$ is a local type then
-    $\phi(\llbracket 2\ext_i^\sigma - \ext_B^\sigma\rrbracket) \geq 0\ \forall\
+    $\phi(\llbracket 2\ext_i^\sigma - \ext_{B,1}^\sigma\rrbracket) \geq 0\ \forall\
     \phi\in\Phi^\emptyset$.
 \end{corollary}
 
-We can add such a constraint for all local types of size $n-1$ to our constraints.
+Then we can add the constraint that
+\[\llbracket 2\ext_i^\sigma - \ext_{B,1}^\sigma\rrbracket \geq 0\]
+for all
+local types $\sigma$ of size $n-1$. Similarly for local type $\sigma=\vertex$ we can
+add the constraints
+\[\phi(\llbracket (\ext_{B,1}^k - \ext_{B,k}) \cdot (\ext_1^\sigma)^{n-k-1} \rrbracket) = 0\]
+for all $2 \leq k \leq n-1$ which are all constraints over flags of size $n$.
+
+We then we add the constraint using $\sigma=\vertex$ that
+$\phi(\llbracket \vertex \cdot \ext_1^{n-1}\rrbracket) \leq 2$
+which holds because $\llbracket O \rrbracket = O$.
 
 Finally then we add the constraints of the form
 $\phi(\llbracket f^2 \rrbracket) \geq 0$ for all $f\in\Lcl^\sigma$
@@ -374,13 +427,14 @@ we have the following optimisation problem:
 \begin{align*}
     \max_{x\in\R^\ell}\ \ &\ \phi_x(O)\\
     \text{such that}\ \ &\ \phi_x(F_i) \geq 0\ \forall\ i \in [\ell]\\
-    &\ \phi_x(\llbracket \ext^\sigma_i - \ext^\sigma_j\rrbracket) = 0\ \forall\
-    |\sigma|=n-1, i, j \in [n-1]\\
+    &\ \phi_x(\llbracket \ext^\sigma_i - \ext^\sigma_j\rrbracket) = 0\ \forall
+    \ \text{local} |\sigma|=n-1, i, j \in [n-1]\\
     &\ \phi_x\left( \left\llbracket (D'(\bredge) - 2(2-\eta)(\ext_1^\bredge)^2) \cdot
     \left(\ext_1^\bredge\right)^{n-4}\right\rrbracket\right)\geq 0\\
-    &\ \phi_x(B_n) = 2^n\\
-    &\ \phi_x(\llbracket 2\ext^\sigma_i - \ext_B^\sigma\rrbracket) \geq 0\ \forall\
-    |\sigma|=n-1, i \in [n-1]\\
+    &\ \phi_x(\llbracket 2\ext_1^\sigma - \ext_{B,1}^\sigma\rrbracket) \geq 0\ \forall
+    \ \text{local type}\ |\sigma|=n-1\\
+    &\ \phi_x(\llbracket (\ext_{B,1}^k - \ext_{B,k}) \cdot (\ext_1^\sigma)^{n-k-1} \rrbracket) = 0
+    \ \text{for}\ \sigma=\vertex, \ \forall\ 2 \leq k \leq n-1\\
     &\ \phi_x(\llbracket f^2 \rrbracket) \geq 0 \forall f \in \Lcl_m^\sigma
     \ \forall\ \sigma\ \text{local type}\ \forall\ 2m-|\sigma|=n
 \end{align*}

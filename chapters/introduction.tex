@@ -18,7 +18,7 @@ An edge colouring of a simple graph $G$ is an assignment $c\colon E(G) \to [k]$
 for some $k\in\N$. Such a colouring is \textit{proper} if no two incident\footnote{Have a vertex in common}
 edges have the same colour.
 A colouring is \textit{strong} if no edges which share a common incident edge have
-the same colour. Proper colouring requires edges at distance 1 to have distinct
+the same colour. Put differently, proper colouring requires edges at distance 1 to have distinct
 colours and strong colouring extends this to distance 2.
 In figure \ref{fig:proper-strong-example} we see an example of a non-proper colouring,
 a proper (but not strong) colouring and a strong colouring of $C_5$.
@@ -77,7 +77,7 @@ The 1997 paper by Molloy \& Reed introduced a method for strong edge colouring w
 \end{enumerate}
 This method has been modified by the papers which followed the Molloy \& Reed paper but this
 strategy has remained the core idea. We will look at this strategy in more detail (including
-defining strong neighbourhood density) in chapter TODO.
+defining strong neighbourhood density) in chapter \ref{chap:strong_edge_colouring}.
 For this thesis we focus on the first step, using the second step as a black box. We will
 find a new, lower, upper-bound on the strong neighbourhood density and hence achieve our
 new colouring number.
@@ -89,12 +89,12 @@ Step 1 of the 2-step strategy
 asks us to find an upper bound on the strong neighbourhood density. The strong neighbourhood
 density belongs to a broad family of density functions which ask: How many copies of some
 structure $F$ do we find in some larger structure $G$, expressed as a real number $\in [0,1]$?
-For example the density of edges in some graph $G$ is $|E(G)|/\binom{|G|}{2}$.
+For example, the density of edges in some graph $G$ is $|E(G)|/\binom{|G|}{2}$.
 
 Bounding densities
 is a common problem in combinatorics and in 2007 Razborov \cite{razborovFlagAlgebras2007}
 introduced a framework called \textit{flag algebras}
-which can be used to prove asymptotic results about densities in various combinatorial structures.
+which can be used to prove asymptotic results about densities in various combinatorial settings.
 These flag algebras are defined very generally in terms of finite model theory in \cite{razborovFlagAlgebras2007} but we focus on their use with respect to simple graphs.
 
 We give a brief flavour of flag algebras here but defer a full exposition until
@@ -145,7 +145,7 @@ vertices and then splitting the 4 randomly into two halves tells us:
         + \frac{1}{3}(p(\kfourmtwo; G) + p(\kfourbucket; G) + p(\kfourtwopair; G))
 \]
 
-Simplifying our notation then we might describe a symbolic algebra which has relations
+Simplifying our notation then we might arrive at a symbolic algebra which has relations
 like
 \begin{align*}
     \edge + \nonedge &= 1\\
@@ -233,7 +233,7 @@ Using this new framework we have made progress on several open problems:
         a modification of the famous Erd\H{o}s' pentagon conjecture \cite{erdos_pentagon_1984}.
         This problem was chosen as the original conjecture was first proven in 2012 using
         the classic flag algebras \cite{grzesikMaximumNumberFivecycles2012}.
-    \item In chapter TODO then we will apply this new framework to make progress on the
+    \item In chapter \ref{chap:strong_edge_colouring} then we will apply this new framework to make progress on the
         \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}, achieving the best-yet
         bound of $\chi'_s(G) \leq 1.73\Delta(G)^2$.
     \item We continue then in chapter TODO to make the first progress on the bipartite version of
