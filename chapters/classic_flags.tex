@@ -151,16 +151,15 @@ disjoint copies of $F_1, \dots, F_t$ leading us to the following definition.
 \begin{example}
     Consider the type $\sigma=\vertex$, a single vertex. Any $\sigma$-flag $(G,\eta)$ is
     just a graph with a specific distinguished vertex (the unique labelled vertex).
-
     Consider then the $\sigma$-flag $F=\edgemarked$, an edge with a single labelled vertex.
-    For any $G$ with distinguished vertex $v$ we have $c(\edgemarked; G^v) = \deg_G(v)$.
-    \footnote{$G^v$ is the $\vertex$-flag $(G,\theta)$ where $\theta(1)=v$.}
-
+    For any $G$ with distinguished vertex $v$ we have
+    $c(\edgemarked; G^v) = \deg_G(v)$.\footnote{$G^v$ is the $\vertex$-flag $(G,\theta)$ where
+    $\theta(1)=v$.}
     Similarly, $c(\edgemarked, \edgemarked; G^v) = \binom{\deg(v)}{2}.$ This is as
-    we are counting how many distinct pairs of vertices $(a, b)$ are there in $G$ such that
+    we are counting how many distinct ordered pairs of vertices $(a, b)$ are there in $G$ such that
     $G[\{a, v\}] \cong \edgemarked$ and $G[\{b, v\}] \cong \edgemarked$.
     In other words, how many distinct pairs of vertices are there connected to
-    $v$, which is clearly $\binom{\deg(v)}{2}.$
+    $v$, which is clearly $\deg(v)(\deg(v)-1).$
 \end{example}
 
 Now we can define the induced density by normalising the induced count by the max
@@ -222,6 +221,14 @@ $\mathcal{G}$. Given some graph class $\mathcal{G}^\sigma$ then we get the very 
 This chain rule is one of the crucial properties that we will lose when we define our
 local flags framework.
 
+\begin{example}
+    The chain rule tells us if $\Gcl$ is all graphs then for any $G$ we have
+    \[
+        p(\edge; G) = p(\triangleflag; G) + \frac{2}{3}p(\triangletwoedge; G)
+        + \frac{1}{3}p(\triangleoneedge; G).
+    \]
+\end{example}
+
 \subsection{Limit Functionals}
 \label{sec:limit_functionals}
 
@@ -252,7 +259,7 @@ We write $\Phi^\sigma$ for the collection of all limit functionals for type $\si
 
 \begin{example}
     If we prove that $\phi(\edge) \leq \frac{1}{2}$ for all $\phi\in\Phi^\emptyset$
-    where $\Gcl$ is the class of triangle free graphs, then we will have proved Mantel's theorem
+    where $\Gcl$ is the class of triangle free graphs, then we will have proved Mantel's theorem.
 \end{example}
 
 We will see later that limit functionals give us exactly the interpretation of statements
@@ -260,8 +267,8 @@ in our algebra as asymptotic statements about densities.
 
 \subsection{The Algebra}
 
-We've described flags in detail, understanding a partially labelled flag and
-the density functions they in some way represent. We would like to then formally
+We've described flags in detail and now understand the link between a partially labelled graph and
+the density functions they represent. We would like to then formally
 describe a symbolic structure on these flags such that relations in the structure describe true
 relations about their associated density functions. As a start we want to be able
 to describe linear combinations of flags, e.g. $\edge + \nonedge$ should in some
@@ -338,7 +345,7 @@ is computable.
     choosing $\ell$ large enough so that $\edgemarked$ and $\nonedgemarked$ fit. We can
     pick $\ell = 3$. Then
     $\Gcl^\sigma_3=\{\trianglemarked, \triangletwoedgemarkedcentre, \triangletwoedgemarkedleft, \triangleoneedgemarkedtop, \triangleoneedgemarkedleft, \triangleemptymarked\}$
-    and we can compute $p(\edgemarked, \nonedgemarked, G)$ for each $G\in\Gcl^\sigma_3$
+    and we can compute $p(\edgemarked, \nonedgemarked; G)$ for each $G\in\Gcl^\sigma_3$
     and find
     \[
         \begin{split}
@@ -439,7 +446,7 @@ $f \geq g$ iff $\phi(f) \geq \phi(g)$ for all $\phi\in\Phi^\sigma$.
 
 \begin{note}
     Sometimes we will write something like $\edge \leq \frac{1}{2}$ which is technically
-    not a valid statement. You can make this precise by thinking of $\frac{1}{2}$ as
+    not a valid statement. You can make this precise by replacing $\frac{1}{2}$ by
     $\frac{1}{2}\emptyset$ as the empty graph always has $\phi(\emptyset) = 1$.
     This gives $\edge \leq \frac{1}{2}$ the intended meaning that
     $\phi(\edge) \leq \frac{1}{2}\ \forall\ \phi\in\Phi^\sigma$.
@@ -448,7 +455,6 @@ $f \geq g$ iff $\phi(f) \geq \phi(g)$ for all $\phi\in\Phi^\sigma$.
 \begin{lemma}
     The set of positive elements of $\Acl^\sigma$ forms a convex cone, meaning it is
     closed under non-negative linear combination.
-
     We call this the semantic cone $\SemCone^\sigma$.
 \end{lemma}
 
@@ -458,7 +464,7 @@ from our \hyperref[sec:motivating_example]{motivating example}.
 \begin{example}
     Let $\Gcl$ be the class of triangle free graphs.
 
-    We know that $F \geq 0$ for all flags $F$ ($\Gcl^\emptyset \subseteq \SemCone^\sigma$).
+    We know that $F \geq 0$ for all flags $F$ ($\Gcl^\sigma \subseteq \SemCone^\sigma$).
     We know that $\edge = \frac{2}{3}\triangletwoedge + \frac{1}{3}\triangleoneedge$
     and $\emptyset = \triangletwoedge + \triangleoneedge + \triangleempty$
     as they are in the same cosets (equal mod $\mathcal{K}^\sigma$).
@@ -541,7 +547,8 @@ The following result is the key to linking $\Acl^\sigma \to \Acl^\emptyset$:
     In Razborov's paper he describes (definition 10) a measure theoretic way of constructing
     a random distribution of limit functionals $\psi$ from some fixed limit functional
     $\phi$ in such a way that
-    $\E_\psi[\psi(F)] = \frac{\phi(\llbracket f \rrbracket)}{\phi(\sigma)}$.
+    $\E_\psi[\psi(F)] = \frac{\phi(\llbracket f \rrbracket)}{\phi(\llbracket \sigma\rrbracket)}$.
+    We do not use this construction in this thesis.
 \end{note}
 
 An important corollary of lemma \ref{lemma:classic_exp_flags} is the following:
@@ -579,7 +586,14 @@ we are now able to prove Mantel's theorem.
     which does simplify to exactly
     $-\frac{1}{6}\triangletwoedge + \frac{1}{6}\triangleoneedge + \frac{1}{2}\triangleempty$.
     In one line this is:
-    \[\phi(\edge) \leq \phi(\edge + \llbracket (\edgemarked - \nonedgemarked)^2\rrbracket + \frac{1}{3}\triangleoneedge) = \phi(\frac{1}{2}(\triangletwoedge + \triangleoneedge + \triangleempty))=\frac{1}{2}.\]
+    \[
+        \phi(\edge)
+        \leq \phi\left(\edge + \llbracket (\edgemarked - \nonedgemarked)^2\rrbracket +
+        \frac{1}{3}\triangleoneedge\right)
+        = \phi\left(\frac{1}{2}(\triangletwoedge + \triangleoneedge + \triangleempty)\right)
+        = \phi\left(\frac{1}{2}\emptyset\right)
+        =\frac{1}{2}.
+    \]
 \end{example}
 
 \section{The Semidefinite Method}
@@ -657,7 +671,7 @@ good solutions.
         A = \begin{bmatrix}
             -\frac{4}{3} & -\frac{4}{3}\\
             1 & 0
-        \end{bmatrix}
+        \end{bmatrix}.
     \]
     Hence we want to find $c=[c_1, c_2] \geq 0$ such that
     $c(-A) \geq [\frac{1}{3}, \frac{2}{3}]^T$ minimising $c^T[1, 0]^T$.
@@ -669,8 +683,6 @@ This method works when we have a fixed list of known elements of
 $\SemCone^\emptyset$ but how can we incorporate an entire space of these elements?
 
 \subsection{Semidefinite Programming}
-
-TODO REMINDER WHAT IS SEMIDEFINITE MATRIX
 
 We know that $\llbracket \nu^2 \rrbracket \in\SemCone^\emptyset\ \forall\ \nu\in\Acl^\sigma$.
 How do we encode this into our optimisation problem?
@@ -725,12 +737,21 @@ The collection of matrices $C^\sigma_i$ are fixed by choice of $\Bcl^\sigma$ so 
 to compute
 the coefficients of $\llbracket \nu^2\rrbracket$ over $\Bcl$ as the inner product of
 $\nu\nu^T$ with some $C^\sigma_i$. The power of this is now we can do better than just searching
-over a single vector $\nu$. If we search instead over the space of positive semidefinite (PSD)
-matrices then any such $P$ has spectral decomposition $P=\sum_{i=1}^\lambda \nu_i\nu_i^T.$
+over a single vector $\nu$.
+
+\begin{note}
+    As a reminder, a symmetric matrix $P\in\R^{m\times m}$ is positive semidefinite (PSD) iff
+    $v^TPv \geq 0$ for all $v \in \R^m$. In particular $\nu\nu^T$ is PSD and the
+    collection of PSD matrices is a convex cone. We use the notation $P \succ 0$.
+\end{note}
+
+If we search instead over the space of positive semidefinite (PSD)
+matrices then any such $P$ has spectral decomposition $P=\sum_{i=1}^m \nu_i\nu_i^T$.
 Then
 \[
-    \langle P, C^\sigma_i \rangle = \sum_{j=1}^\lambda \langle \nu_j\nu_j^T, C_i^\sigma\rangle
-    = \sum_{j=1}^\lambda \coef_i(\llbracket \nu_j^2\rrbracket).
+    \langle P, C^\sigma_i \rangle
+    = \sum_{j=1}^m \langle \nu_j\nu_j^T, C_i^\sigma\rangle
+    = \sum_{j=1}^m \coef_i(\llbracket \nu_j^2\rrbracket).
 \]
 Hence searching over PSD matrices allows us to search over several vectors $\nu_i$ at the
 same time. This gives us a new optimisation problem: Given our objective vector
@@ -822,7 +843,7 @@ $\llbracket (\edgemarked - \nonedgemarked)^2\rrbracket$.
     as outlined above and can use a solver to output $c_1=\frac{1}{3}$ and
     $P=\frac{1}{2}\left(\begin{smallmatrix}1 & -1\\ -1 & 1\end{smallmatrix}\right)\succ 0$.
     Then we can verify that
-    $\lambda=c_1\coef_\emptyset(v_1) + \langle P, C_\emptyset^\sigma=\frac{1}{2}$
+    $\lambda=c_1\coef_\emptyset(v_1) + \langle P, C_\emptyset^\sigma\rangle=\frac{1}{2}$
     as expected and we do satisfy the constraints that
     $c_1\coef_1(v_1) + \langle P, C_1^\sigma \rangle = \frac{1}{3} = -\coef_1(f)$
     and

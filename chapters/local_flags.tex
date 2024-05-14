@@ -6,8 +6,8 @@ asymptotically, Some things are not described by a density function but still fe
 "density like" which might lead us to speculate if we can modify the flag algebra method to work
 for these functions.
 
-For example, in chapter TODO we will see a problem we're calling the bounded degree
-Erd\H{o}s' pentagon problem. In approaching that problem we will ask:
+For example, in chapter \ref{chap:pentagon_conjecture} we will see a problem we're calling the
+bounded degree Erd\H{o}s' pentagon problem. In approaching that problem we will ask:
 Given a triangle-free graph $G$ with max degree $\Delta(G)$ and some fixed vertex
 $v\in V(G)$, how many pentagons (5-cycles) are there containing $v$?
 We want to upper bound this number of pentagons as a function of $\Delta(G)$. The upper
@@ -34,15 +34,12 @@ algebra. We then prove the algebraic structure these \textit{local flags} posses
 
 \section{Local Flags}
 
-Let $\Gcl$ be some graph class as before\footnote{We assume here $\Gcl$ is hereditary but we will address later that it may not be}.
-Let $\Delta$ be some graph parameter $\Delta\colon \Gcl \to \N_0$
-such that $\Delta(G)\to\infty$ implies $|G|\to\infty.$
-(More formally there is some monotone increasing
-unbounded function $f$ such that for all $G\in\mathcal{G}$ we have $|G|\geq f(\Delta(G))$).
+Let $\Gcl$ be some graph class as before.
+Let $\Delta$ be some graph parameter $\Delta\colon \Gcl \to \N_0$.
 
 \begin{note}
     We almost exclusively use the maximum degree function $\Delta$ so you can effectively always
-    interpret $\Delta(G)$ in this way. Clearly $|G|\geq\Delta(G)$. In particular all of
+    interpret $\Delta(G)$ in this way. In particular all of
     our examples use the max degree function for $\Delta(G)$.
 \end{note}
 
@@ -53,10 +50,10 @@ classic flag algebras directly.
 
 \begin{definition}[Local Density]
     Let $(F, \theta), (G,\eta)$ be $\sigma$-flags as before. Then\\
-    $c((F,\theta), (G,\eta))$ is
+    $c((F,\theta); (G,\eta))$ is
     the induced count (Definition \ref{def:induced_count}). Define the
     \textbf{local density}\\
-    $\rho((F, \theta), (G, \eta))$ to be
+    $\rho((F, \theta); (G, \eta))$ to be
     \[
         \rho(F; G) := \frac{c(F; G)}{\binom{\Delta(G)}{|F|-|\sigma|}}.
     \]
@@ -199,28 +196,24 @@ small flags into the space of larger flags.
 
 Intuitively $F$ is a local $\sigma$-flag (relative to our choice of $\Gcl$ and
 $\Delta$) if $\Delta(G)$ bounds the "degree of freedom" for the possible mapping
-of $F$'s unlabelled vertices. Consider the following example.
+of $F$'s unlabelled vertices.
 
-\begin{example}
-    Let $\Gcl$ be the class of 2-vertex-coloured (black and red) graphs such that
-    each $G\in\Gcl$ has $\leq \Delta(G)$ black vertices where as usual $\Delta(G)$ is the
-    max degree of $G$.
+\begin{lemma}
+    \label{lemma:local_if_connected}
+    If $\Delta(G)$ is the max degree function then any $\sigma$-flag $F$ is a
+    local $\sigma$-flag if all connected components of $F$ contains a labelled
+    vertex.
+\end{lemma}
 
-    Take some connected graph $F$. If $F$ contains a black vertex then
-    $F$ is a local $\emptyset$-flag:
-    To see this take one of the black vertices in $F$.
-    It must map to some black vertex in $G$, there are $\Delta(G)$ such choices.
-    Then each vertex in $F$ connected to our black vertex must map into the neighbourhood
-    of its image in $G$, which has size $\leq\Delta(G)$. This logic continues showing
-    each vertex has at most $\Delta(G)$ possible images in $G$ leading to a bound of
-    $c(F; G) \leq \Delta(G)^{|F|}$. The argument is almost identical for any labelled
-    extension of $F$.
+\begin{proof}
+    Intuitively the labelled vertices are fixed. The vertices directly connected to
+    labelled vertices have $\Delta(G)$ choices. After mapping those we again have
+    $\Delta(G)$ choices for their unmapped neighbours etc leading to a total
+    bound of $O(\Delta(G)^{|F|-|\sigma|})$ choices.
 
-    Then in general connected components are independent of each other so we generalise
-    to say that if each connected component of some $F$ contains a black vertex then
-    $F$ is a local $\emptyset$-flag. We will see a more rigorous version of this
-    argument in TODO REF.
-\end{example}
+    The full details of the proof can be found in the proof of
+    lemma \ref{lemma:pentagon_local_flags}.
+\end{proof}
 
 \section{Algebraic Structure}
 
@@ -247,7 +240,7 @@ $\rho(F; \cdot)$ is bounded so the image is compact. For this reason (again via 
 any sequence of $\sigma$-flags $(G_k)_{k\in\N}$ contains a convergent subsequence meaning
 $\lim_{k\to\infty}\rho(F; G_k)$ exists for all $F\in\Gloc^\sigma$.
 Hence we can define a limit functional $\phi\colon\Gloc^\sigma\to\R$
-from such a convergent sequence $(G_k)_{k\in\N}$ as $\phi(F)=\lim_{k\to\infty}\rho(F; G_k)$.
+from such a convergent sequence $(G_k)_{k\in\N}$ as $\phi(F):=\lim_{k\to\infty}\rho(F; G_k)$.
 
 As with the classic case we can take the space of formal linear combinations of
 local flags $\R\Gloc^\sigma$ and linearly extend $\rho$ and $\phi$ to these
@@ -256,10 +249,9 @@ $\Phi^\sigma$.
 
 \begin{note}
     Unlike in the classic case we will not be quotienting the space $\R\Gloc^\sigma$ by
-    a subspace. This is as we do not have an equivalent relation like the chain rule.
+    a subspace. This is as we do not have an equivalent relation to the chain rule.
     The side effect of this is that there may be vectors $f \in \R\Gloc^\sigma$ which
     are formally non-zero but have $\phi(f) = 0\ \forall\ \phi\in\Phi^\sigma$.
-
     This doesn't affect the correctness of our arguments, but does mean the semidefinite
     programs will be larger and therefore may take longer to solve.
 \end{note}
@@ -310,7 +302,6 @@ product work:
 \begin{proof}
     Let $\theta,\theta'$ be the $\sigma$ embeddings for $F, F'$ and $\eta$ the
     $\sigma$-embedding for $H.$
-
     To prove $H$ is a local flag we first need to show that $\rho(H; \cdot)$ is a bounded function.
     i.e. $(G \mapsto c(H; G)) \in O(\Delta(G)^{|H|-|\sigma|}).$
 
@@ -688,7 +679,7 @@ in the limit:
         {\binom{\Delta(G)}{|F|}\binom{|F|}{|\sigma|}}
         = \E_\theta[\rho(F; (G,\theta))]
         \frac{\binom{\Delta(G)}{|F|-|\sigma|}}
-        {\binom{\Delta(G)-|\sigma||}{|F|-|\sigma|}}
+        {\binom{\Delta(G)-|\sigma|}{|F|-|\sigma|}}
     \]
     Then
     $\lim_{\Delta(G)\to\infty}\binom{\Delta(G)}{|F|-|\sigma|}/\binom{\Delta(G)-|\sigma|}{|F|-|\sigma|}
@@ -713,7 +704,6 @@ behaviour if $\sigma$ is a local type.
     Let $\sigma$ be a local type. Then the averaging operator preserves positive
     elements of $\Lcl^\sigma$:
     $\llbracket \SemCone^\sigma \rrbracket \subseteq  \SemCone^\emptyset$.
-
     In particular as with the classic case we have $\llbracket f^2 \rrbracket \geq 0$
     for all $f\in\Lcl^\sigma$.
 \end{lemma}
@@ -775,6 +765,6 @@ local type, so our set of types under consideration is slightly limited.
 
 In practical terms the lack of the chain rule and its corresponding quotient sets means that
 expressing our combinatorial questions in the form of $\sup_\phi \phi(f)$ for $f\in\Lcl^\sigma$ is
-more difficult; We will see in the next section a "warmup" application which shows how we can
+more difficult; We will see in the next chapter a "warmup" application which shows how we can
 exploit regularity to give us a wide set of constraints and allow us to project small
 flags into a basis of larger flags.

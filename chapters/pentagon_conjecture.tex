@@ -9,14 +9,14 @@ In 1983 \cite{erdosProblemsGraphTheory1984} Erd\H{o}s made the following conject
     If $G$ is triangle free then $P(G) \leq \left(\frac{|G|}{5}\right)^5$.
 \end{knownconjecture}
 
-TODO FIX CITATION, NOT ONLY PROOF OF THE RESULT.
-This conjecture remained open until 2012 when Grzesik
-\cite{grzesikMaximumNumberFivecycles2012} eventually proved it to be true. Importantly
-for us this paper used the classic flag algebras in a very direct and neat way.
+This conjecture remained open until 2012 when it was proved by both Grzesik
+\cite{grzesikMaximumNumberFivecycles2012} and Hatami, Hladký, Králʼ, Norine and Razborov
+\cite{hatamiNumberPentagonsTrianglefree2013}. 
+Importantly for us both of these papers used the Razborov flag algebras to prove the result.
 
 \section{The Bounded Degree Conjecture}
 
-Inspired by Erd\H{o}s' conjecture and looking for an application of our new framework we ask
+Inspired by Erd\H{o}s' conjecture we ask
 the following question: Can we bound the number of pentagons in a triangle free graph
 as a function of the maximum degree $\Delta(G)$?\footnote{Originally asked by E. Hurley}.
 This leads us to the following \textit{bounded degree pentagon conjecture}:
@@ -24,7 +24,8 @@ This leads us to the following \textit{bounded degree pentagon conjecture}:
 \begin{conjecture}
     \label{conj:bounded_pentagon}
     If $G$ is triangle free then 
-    $P(G) \leq \frac{|G|}{5}\left(\frac{\Delta(G)}{2}\right)^4=\frac{|G|}{5}\frac{\Delta(G)}{16}$.
+    $P(G) \leq \frac{|G|}{5}\left(\frac{\Delta(G)}{2}\right)^4
+    =\frac{|G|\Delta(G)^4}{5\cdot 16}$.
 \end{conjecture}
 
 \begin{lemma}
@@ -50,20 +51,27 @@ This leads us to the following \textit{bounded degree pentagon conjecture}:
     the bound. We can do this for any even $k=\Delta(G)$ so this holds asymptotically.
 \end{proof}
 
-We claim then the following theorem which is within a factor of 1/2 of the conjectured
-bound.
-
+We claim then the following theorem:
 \begin{theorem}
-    \label{thm:local_pentagon_bound}
+    \label{thm:full_pentagon_bound}
     If $G$ is triangle free then
-    $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)}{8}$.
+    $P(G) \leq 0.02073 \cdot |G|\Delta(G)^4 \approx 1.658\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
 \end{theorem}
 
-The rest of this chapter will show how we proved this. First we argue that it suffices
-to prove that $P(G) \lesssim \frac{|G|}{5}\frac{\Delta(G)}{8}$ asymptotically.
+We prove this result using local flags, but the approach is slightly too complex to serve
+as the "warmup" application, so we first first prove this slightly weaker result:
+
+\begin{theorem}
+    \label{thm:simple_pentagon_bound}
+    If $G$ is triangle free then
+    $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8} = 2\cdot\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
+\end{theorem}
+
+We will show how we proved the stronger result at the end of this chapter TODO.
+
+First we argue that proving an asymptotic bound $P(G) \lesssim \lambda|G|\Delta(G)^4$
+proves $P(G) \leq \lambda|G|\Delta(G)^4$ for all $G$.
 We then argue that it suffices to prove this asymptotic bound only for regular $G$.
-Finally then we will use the semidefinite method over local flags to show the
-asymptotic bound. TODO LEMMA REFS.
 
 \section{Reductions}
 
@@ -71,18 +79,18 @@ First we argue that an asymptotic bound suffices. Essentially this is true as an
 graph with a high pentagon density can be expanded to arbitrary high degree.
 \begin{lemma}
     \label{lemma:pentagon_asymp_suffices}
-    If $P(G) \lesssim \frac{|G|}{5}\frac{\Delta(G)^4}{8}$ as $\Delta(G)\to\infty$ for
+    If $P(G) \lesssim \lambda|G|\Delta(G)^4$ as $\Delta(G)\to\infty$ for
     $G$ triangle free
-    then $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8}$ for all triangle free $G$.
+    then $P(G) \leq \lambda|G|\Delta(G)^4$ for all triangle free $G$.
 \end{lemma}
 
 \begin{proof}
     More precisely our condition states that for any $\Delta$-increasing sequence of
     triangle free graphs $(G_k)_{k\in\N}$ we have
-    $\lim_{k\to\infty} \frac{P(G_k)}{|G|\Delta(G)^4} \leq \frac{1}{5\cdot 8}$.
+    $\lim_{k\to\infty} \frac{P(G_k)}{|G|\Delta(G)^4} \leq \lambda$.
 
     Assume then for sake of contradiction that there exists $G_0$ triangle free
-    such that $\frac{P(G_0)}{|G_0|\Delta(G_0)^4} > \frac{1}{5\cdot 8}$.
+    such that $\frac{P(G_0)}{|G_0|\Delta(G_0)^4} > \lambda$.
     Let $\delta := \frac{P(G_0)}{|G_0|\Delta(G_0)^4}$ and consider the following
     sequence of graphs $(G_k)_{k\in\N}$: Start with $G_0$ and construct
     $G_{i+1}$ from $G_i$ by doubling every vertex of $G_i$, then for every
@@ -114,7 +122,7 @@ graph with a high pentagon density can be expanded to arbitrary high degree.
     and in particular
     \[
         \liminf_{k\to\infty}\frac{P(G_k)}{|G_k|\Delta(G_k)^4}
-        \geq \delta > \frac{1}{5\cdot 8}
+        \geq \delta > \lambda
     \]
     but $(G_k)_{k\in\N}$ is a $\Delta$-increasing sequence of triangle free graphs
     so this contradictions our assumption. Hence no such $G_0$ exists.
@@ -169,7 +177,7 @@ to show the bound only for regular graphs.
 
 \begin{corollary}
     \label{corollary:pentagon_regular_suffices}
-    It suffices to show that $\frac{P(G)}{|G|\Delta(G)^4} \lesssim \frac{1}{5\cdot 8}$
+    It suffices to show that $\frac{P(G)}{|G|\Delta(G)^4} \lesssim \lambda$
     only for regular triangle free $G$.
 \end{corollary}
 
@@ -188,7 +196,7 @@ to show the bound only for regular graphs.
         \liminf_{k\to\infty} \frac{P(G_k')}{|G_k'|\Delta(G_k')}
         \geq
         \lim_{k\to\infty} \frac{P(G_k)}{|G_k|\Delta(G_k)}
-        > \frac{1}{5\cdot 8}
+        > \lambda
     \]
     which is a contradiction.
 \end{proof}
@@ -215,7 +223,7 @@ The final reduction step is the following simple lemma
     \end{multline*}
 \end{proof}
 
-Now we see how our proof of theorem \ref{thm:local_pentagon_bound} will go.
+Now we see how our proof of theorem \ref{thm:simple_pentagon_bound} will go.
 We need only show that for a regular triangle free graphs $G$ and
 $v\in V(G)$ we have an asymptotic bound of $P(G, v) \lesssim \frac{\Delta(G)^4}{8}$.
 This is something that local flags can prove.
@@ -269,6 +277,11 @@ We start by defining the extension of a flag:
     \textbf{extension} $\ext^\sigma_i$ as the sum of all $\sigma$ flags of
     size $k+1$ which have an edge between the unlabelled vertex the and vertex labelled $i$.
 \end{definition}
+
+\begin{note}
+    By lemma \ref{lemma:local_if_connected} such flags are all local flags so
+    $\ext^\sigma_i \in \Lcl^\sigma$.
+\end{note}
 
 \begin{example}
     Let $\Gcl$ be the class of red-black vertex coloured regular graphs then
@@ -329,7 +342,7 @@ These extensions are important for the following reason:
     and $\phi(f \cdot \ext_i^\sigma) = \phi(f)$ for all
     $f \in \Lcl^\sigma, i \in [|\sigma|]$.
 
-    In particular $\ext_i^\sigma - \ext_j^\sigma\in\SemCone$,
+    In particular $\ext_i^\sigma - \ext_j^\sigma$,
     $f\cdot \ext_i^\sigma - f$ and $f - f\cdot\ext_i^\sigma$ are all
     elements of the semantic cone $\SemCone^\sigma$.
 \end{corollary}
@@ -439,7 +452,7 @@ the local $\sigma$-flags.
     Otherwise assume $|F|>|\sigma|$. Note then that as each connected component of
     $F$ contains at least one labelled or black vertex each vertex $u$ of $F$ has a
     finite minimum distance $d(u)$ to some labelled or black vertex (where
-    $d(u)=0$ for all black and labelled $u$ and $d(u) > 0$ for all red vertices).
+    $d(u)=0$ for all black and labelled $u$ and $d(u) > 0$ for all unlabelled red vertices).
     Let $v$ be some unlabelled vertex in $F$ with maximum $d(v)$. Consider then removing $v$ from
     $F$: $F' := F[V(F)\setminus \{v\}]$. This $F'$ must not have any connected
     components with no black or labelled vertices because we chose $d(v)$ large as
@@ -588,9 +601,9 @@ We use a SDP solver to show the following result:
 \end{lemma}
 In the next section (\ref{sec:pentagon_proof_validation}) we will show how we make this
 SDP solution rigorous. For now we show that this bound suffices to prove theorem
-\ref{thm:local_pentagon_bound}.
+\ref{thm:simple_pentagon_bound}.
 
-\begin{proof}[Proof of theorem \ref{thm:local_pentagon_bound}]
+\begin{proof}[Proof of theorem \ref{thm:simple_pentagon_bound}]
     By lemma \ref{lemma:pentagon_1_4_bound} we have that
     $\phi(O) \leq \frac{1}{4}\ \forall\ \phi\in\Phi^\sigma$.
     We know that $\frac{1}{12}\phi(\brrb)=\phi(O)$ so $\phi(\brrb) \leq 3$.
@@ -767,4 +780,4 @@ We know $120O = 2\pentF{9} + \pentF{37} + 2\pentF{55}$ so
 $30\emptyset - 120O \in \SemCone^\emptyset$. This implies
 $\frac{1}{4}\emptyset - O \in \SemCone^\emptyset$ as required.
 This proves lemma \ref{lemma:pentagon_1_4_bound} completing our proof
-of theorem \ref{thm:local_pentagon_bound}.
+of theorem \ref{thm:simple_pentagon_bound}.
