@@ -67,7 +67,8 @@ as the "warmup" application, so we first first prove this slightly weaker result
     $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8} = 2\cdot\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
 \end{theorem}
 
-We will show how we proved the stronger result at the end of this chapter TODO.
+We will show how we proved the stronger result at the end in section
+\ref{sec:pentagon_stronger}.
 
 First we argue that proving an asymptotic bound $P(G) \lesssim \lambda|G|\Delta(G)^4$
 proves $P(G) \leq \lambda|G|\Delta(G)^4$ for all $G$.
@@ -781,3 +782,129 @@ $30\emptyset - 120O \in \SemCone^\emptyset$. This implies
 $\frac{1}{4}\emptyset - O \in \SemCone^\emptyset$ as required.
 This proves lemma \ref{lemma:pentagon_1_4_bound} completing our proof
 of theorem \ref{thm:simple_pentagon_bound}.
+
+\section{Proving the stronger result}
+\label{sec:pentagon_stronger}
+
+We can use local flags in a more complex way to get the stronger result
+of theorem \ref{thm:full_pentagon_bound}. This approach is originally an idea from Eoin Hurley.
+
+To prove the bound in theorem \ref{thm:simple_pentagon_bound} we defined
+$P(G,v)$ to be the number of pentagons containing a $v \in G$
+and used local flags find an upper bound.
+To prove the strong result in theorem \ref{thm:full_pentagon_bound}
+we will bound the following function. For fixed $v\in G$ define
+\[
+    Q(G, v) := \Delta(G)P(G, v) 
+    + \sum_{u \in N(v)}P(G, u).
+\]
+
+Then we claim
+\begin{lemma}
+    \label{lemma:pent_q_v}
+    For $G$ triangle free and $v\in V(G)$
+    \[
+        Q(G, v) \lesssim 0.2073 \Delta(G)^5
+        \ \text{as}\ \Delta(G) \to\infty
+    \]
+\end{lemma}
+
+We will prove this lemma now using local flags.
+We use the same class of graphs $\Gcl$ as before, where the black vertices represent
+those in the neighbourhood of $v$ and the others are red.
+We've seen already then how to convert a triangle free regular graph $G$ into
+the corresponding $G' \in \Gcl$ such that $\rho(\brrb, G) = P(G,v)/\binom{\Delta(G)}{4}$.
+
+Note that any pentagon passing through the neighbourhood of $v$ contains at most 2
+such vertices. Therefore
+\[
+    \rho(\pentF{56} + 2\pentF{55}; G')
+    = \frac{\sum_{u \in N(V)} P(G, v)}{\binom{\Delta(G)}{5}}.
+\]
+Now we use the same extensions trick from before to embed our desired vector
+into a space of flags of size $n$ and get the following objective vector
+\[
+    O := \llbracket \brrbmarked \cdot (\ext^{\sigma_1}_1)^{n-4} \rrbracket
+    + \llbracket \pentF{56marked} \cdot (\ext^{\sigma_2}_1)^{n-5} \rrbracket
+    + 2\llbracket \pentF{55marked} \cdot (\ext^{\sigma_3}_1)^{n-5} \rrbracket
+\]
+where $\sigma_1=\brrb, \sigma_2=\pentF{56}, \sigma_3=\pentF{55}$.
+Then using the exact same set of constraints as from section 
+\ref{sec:pentagon_sdp} we can use an SDP solver using flags of size $n=8$ to find:
+\begin{lemma}
+    \[
+        0.4146\emptyset - O \in \SemCone^\emptyset
+    \]
+    hence $\phi(O) \leq 0.4146\ \forall\ \phi\in\Phi^\emptyset$.
+\end{lemma}
+Calculating the normalising factors (definition \ref{def:averaging_normalisation})
+we find this implies
+\[
+    \frac{2}{4!}\phi(\brrb) + \frac{2}{5!}\phi(\pentF{56} + 2\pentF{55}) \leq 0.4146
+\]
+Hence for any convergent $\Delta$-increasing sequence of graphs $(G_k)_{k\in\N}$
+we have
+\[
+    \begin{split}
+        \lim_{k\to\infty}\frac{2}{4!}\rho(\brrb; G_k)
+        + \frac{2}{5!}\rho(\pentF{56}; G_k) + \frac{4}{5!}\rho(\pentF{55}; G_k)
+        \leq 0.4146\\
+        \implies
+        \lim_{k\to\infty}\frac{2}{4!}\frac{c(\brrb; G_k)}{\binom{\Delta(G_k)}{4}}
+        + \frac{2}{5!}\frac{c(\pentF{56}; G_k)}{\binom{\Delta(G_k)}{5}}
+        + \frac{4}{5!}\frac{c(\pentF{55}; G_k)}{\binom{\Delta(G_k)}{5}}
+        \leq 0.4146\\
+        \implies
+        \lim_{k\to\infty}2\frac{c(\brrb; G_k)}{\Delta(G_k)^4}
+        + 2\frac{c(\pentF{56}; G_k)}{\Delta(G_k)^5}
+        + 4\frac{c(\pentF{55}; G_k)}{\Delta(G_k)^5}
+        \leq 0.4146\\
+        \implies
+        \lim_{k\to\infty} \frac{c(\brrb; G_k)}{\Delta(G_k)^4}
+        + \frac{c(\pentF{56}; G_k)}{\Delta(G_k)^5}
+        + 2\frac{c(\pentF{55}; G_k)}{\Delta(G_k)^5}
+        \leq 0.2073
+    \end{split}
+\]
+Therefore
+\[
+    \Delta(G)c(\brrb; G)
+    + c(\pentF{56}; G)
+    + 2c(\pentF{55}; G)
+    \lesssim 0.2073\Delta(G)^5
+\]
+By construction though this proves the same bound holds for the $Q(G,v)$ function
+\[
+    \Delta(G)P(G, v)
+    + \sum_{u \in N(V)}P(G, u)
+    \lesssim 0.2073\Delta(G)^5
+    \implies
+    Q(G, v) \lesssim 0.2073\Delta(G)^5
+\]
+proving lemma \ref{lemma:pent_q_v}.
+
+Now we can prove the full result of theorem \ref{thm:full_pentagon_bound}.
+\begin{proof}[Proof of \ref{thm:full_pentagon_bound}]
+    For a triangle-free regular graph $G$ we sum $Q(G, v)$ over all $v \in V(G)$:
+    \[
+        \begin{split}
+        \sum_{v \in V(G)} Q(G,v)
+            &= \sum_{v \in V(G)} \Delta(G)P(G, v) + \sum_{u \in N(V)}P(G, u)\\
+            &= 5\Delta(G)P(G) + \sum_{v\in V(G)}\sum_{u \in N(V)}P(G, u)
+        \end{split}
+    \]
+    Then as $G$ is regular we this comes out to
+    \[
+        \begin{split}
+            \sum_{v \in V(G)} Q(G,v)
+            &= 5\Delta(G)P(G) + \Delta(G)\sum_{u\in V(G)}P(G, u)\\
+            &= 5\Delta(G)P(G) + 5\Delta(G)P(G)\\
+            &= 10\Delta(G)P(G)
+        \end{split}
+    \]
+    Therefore
+    \[
+        10\Delta(G)P(G) \lesssim 0.2073|G|\Delta(G)^5
+        \implies P(G) \lesssim 0.02073|G|\Delta(G)^4
+    \]
+\end{proof}
