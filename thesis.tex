@@ -13,6 +13,10 @@
 \usepackage{amsthm}
 \usepackage{stmaryrd}
 \usepackage[pdfborder={0 0 0}]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue
+}
 
 \usepackage{csquotes,xpatch} % Recommended by biblatex
 \usepackage[
@@ -80,29 +84,31 @@
 \chapter*{Popular summary}
 \addcontentsline{toc}{chapter}{Popular summary}
 A graph is a set of points (vertices) and lines (edges).
-e.g. \includegraphics[align=c,scale=0.75]{pop_sum_graph}.
+e.g. \includegraphics[align=c,scale=1]{flags/k4} or
+\includegraphics[align=c,scale=0.75]{pop_sum_graph}.
 
-Graph theory is a central area of study in mathematics since Euler studied the bridges of Königsberg
-in 1736. One of the first things we can note
+Graph theory has been a central pillar of mathematics since Euler studied the bridges of
+Königsberg in 1736. One of the first things we can note
 is that graphs can contain other graphs: Take some subset of the vertices
-and look at only those vertices and the edges between them and you have another graph.
-One can then ask, how many copies of a graph $F$ are there in a graph $G$?
-A famous Dutch result in this area is Mantel's theorem which says a graph of size $n$
-which has no triangles $\triangleflag$ has at most $\frac{n^2}{4}$ edges.
+and look at only those vertices and the edges between them and you end up with another graph.
+One can then ask "How many copies of a graph $F$ are there in a graph $G$"?
+A famous Dutch result is Mantel's theorem which says a graph of size $n$
+with no triangles $\triangleflag$ has $\leq \frac{n^2}{4}$ edges.
 
-We can then ask what is the \textit{density} of a graph $F$ in another graph $G$? i.e. How
-many copies of $F$ are there in $G$ divided by by the max possible number of copies.
-There is at most $\binom{n}{2}$ edges in a graph of size $n$ so we can re-write Mantel's
+We can then ask "What is the \textit{density} of a graph $F$ in another graph $G$"? i.e. How
+many copies of $F$ are there in $G$ divided by by the max possible number of copies of $F$.
+There are at most $\binom{n}{2}$ edges in a graph of size $n$, so we can re-write Mantel's
 theorem to say the density of edges in a triangle free graph is at most
 $\frac{n^2}{4}/\binom{n}{2} \approx \frac{1}{2}$. It turns out these densities have some
-nice properties. For example, in any graph $G$ the density of edges (\edge) and non-edges
-(\nonedge) add up to 1. In general the sum of the densities of all graphs of some fixed size
-is always 1. We might like to write this as $\edge + \nonedge = 1$,
+nice properties. For example, in any graph the density of edges (\edge) and non-edges
+(\nonedge) add up to 1 because every pair of vertices either has an edge or doesn't.
+In general, the sum of the densities of all graphs of some fixed size
+is always 1! We might like to write this as $\edge + \nonedge = 1$,
 $\triangleflag + \triangletwoedge + \triangleoneedge + \triangleempty = 1$, etc.
 
-It turns out then we can formally and rigorously create an algebra out of graphs where
+It turns out then that we can formally and rigorously create an algebra out of graphs where
 statements like
-$\edge + \nonedge = 1$ are true. Then any statement we prove in this algebra turns out
+$\edge + \nonedge = 1$ are true. Then, any statement we prove in this algebra turns out
 to be a true statement about densities of graphs. These algebras are called \textit{flag algebras}.
 These algebras are very easily manipulated by computers so we can use them in combination
 with computer search to prove new results about densities.
@@ -110,20 +116,21 @@ with computer search to prove new results about densities.
 In this thesis we create a new type of algebra very similar to flag algebras which we
 use to make progress on some classic graph theory problems, as well as some new problems.
 
-One classic problem we made progress on is the \textit{strong edge colouring conjecture}.
+One classic problem we made progress on is the \textit{strong edge colouring conjecture}:
 Given a graph we can assign a colour to each edge. A \textit{proper} colouring is one where
 no edges which touch (share a vertex) have the same
 colour. A \textit{strong} colouring then also requires edges which touch a common edge
-have different colours. We can ask then what is the minimum colours needed for a
-strong edge colouring.
+have different colours. We can then ask "What is the minimum colours needed for a
+strong edge colouring"?
 Erd\H{o}s and Nešetřil conjectured in 1985 that you only need $1.25\Delta(G)^2$ colours
-where $\Delta(G)$ is the max degree (the max number of edges at any vertex). We prove
-using our local flags that you need at most $1.73\Delta(G)^2$ colours which is the best known bound.
+where $\Delta(G)$ is the max degree (the max number of edges at any vertex). We prove,
+using our local flags, that you need at most $1.73\Delta(G)^2$ colours,
+which is the best known bound.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[scale=1.25]{proper-strong-example}\par
-    Non-proper, proper and strong edge colourings
+    Non-proper, proper and strong edge colourings.
 \end{figure}
 
 \printbibliography{}

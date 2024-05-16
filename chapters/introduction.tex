@@ -87,8 +87,10 @@ new colouring number.
 
 Step 1 of the 2-step strategy
 asks us to find an upper bound on the strong neighbourhood density. The strong neighbourhood
-density belongs to a broad family of density functions which ask: How many copies of some
-structure $F$ do we find in some larger structure $G$, expressed as a real number $\in [0,1]$?
+density belongs to a broad family of density functions which ask: "How many copies of some
+structure $F$ do we find in some larger structure $G$, expressed as a real number $\in [0,1]$"?
+These density functions usually count the number of copies of $F$ in $G$, then normalise by the
+maximum possible number of such copies.
 For example, the density of edges in some graph $G$ is $|E(G)|/\binom{|G|}{2}$.
 
 Bounding densities
@@ -105,7 +107,7 @@ chapter \ref{chap:classic_flags}.
 
 As a reminder, for a graph $G$ and subset of vertices $U\subseteq V(G)$ the \textit{induced subgraph}
 $G[U]$ is the subgraph of $G$ consisting of the vertices in $U$ and all edges between them.
-We can then define the \textit{induced count} of $F$ in $G$, denoted $c(F; G)$ as
+We can then define the \textit{induced count} of $F$ in $G$, denoted $c(F; G)$, as
 the number of subsets $U\subseteq V(G)$ such that $G[U] \cong F$. Then we define the
 \textit{induced density} as $p(F; G) := c(F; G) / \binom{|G|}{|F|}$.
 
@@ -141,8 +143,8 @@ us the following relation:
 A similar thought experiment relating sampling two pairs uniformly at random to sampling 4
 vertices and then splitting the 4 randomly into two halves tells us:
 \[
-    p(\edge; G)^2 \sim p(\kfour; G) + \frac{2}{3}(p(\kfourmone; G) + p(\cfour; G))
-        + \frac{1}{3}(p(\kfourmtwo; G) + p(\kfourbucket; G) + p(\kfourtwopair; G))
+    p(\edge; G)^2 \sim p(\kfour; G) + \frac{2}{3}\left(p(\kfourmone; G) + p(\cfour; G)\right)
+        + \frac{1}{3}\left(p(\kfourmtwo; G) + p(\kfourbucket; G) + p(\kfourtwopair; G)\right)
 \]
 
 Simplifying our notation then we might arrive at a symbolic algebra which has relations
@@ -170,7 +172,8 @@ we would have $\triangleflag = 0$, hence
     \leq \frac{2}{3}(\triangleflag + \triangletwoedge + \triangleoneedge + \triangleempty)
     \leq \frac{2}{3}
 \]
-as flags are non-negative. This (given all the formal definitions we've deferred) is a formal proof
+as flags are non-negative. This (given all the formal definitions and proofs we've deferred)
+is a formal proof
 that $p(\edge; G) \leq \frac{2}{3}$ for any triangle free graph. The best possible result
 says that $p(\edge; G) \leq \frac{1}{2}$ and is known as
 \textit{Mantel's theorem} \cite{Mantel_1910}. This is
@@ -217,12 +220,12 @@ implementation he wrote himself: \url{https://crates.io/crates/flag-algebra}} so
 Erd\H{o}s and Nešetřil conjecture. This thesis evolves and formalises this idea and
 then applies it concretely.
 
-In particular in chapter \ref{chap:local_flags} we introduce a
+In particular, in chapter \ref{chap:local_flags} we introduce a
 new \textit{local density function} and a concept we call a \textit{local flag}.
 We show that, under certain conditions, these local flags also form a nice algebra
 with which we can apply the semidefinite method to prove bounds. We then apply this new
 method to several problems, including the 
-\hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}
+\hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}.
 
 \section*{Results}
 \addcontentsline{toc}{section}{Results}
@@ -230,10 +233,14 @@ method to several problems, including the
 Using this new framework we have made progress on several open problems:
 \begin{itemize}
     \item In chapter \ref{chap:pentagon_conjecture} we show a "warmup" application of the new framework by making progress on
-        a modification of the famous Erd\H{o}s' pentagon conjecture \cite{erdos_pentagon_1984}.
-        This problem was chosen as the original conjecture was first proven in 2012 using
-        the classic flag algebras \cite{grzesikMaximumNumberFivecycles2012}.
-    \item In chapter \ref{chap:strong_edge_colouring} then we will apply this new framework to make progress on the
+        a bounded degree version of the famous Erd\H{o}s pentagon conjecture \cite{erdos_pentagon_1984}.
+        We show how a straightforward application of the local flags method makes non-trivial
+        progress towards proving the conjecture, and show that a slightly more complex application
+        then gets even closer to the full result.
+        This problem was chosen as the original conjecture was first proven using
+        the classic flag algebras (\cite{hatamiNumberPentagonsTrianglefree2013},
+        \cite{grzesikMaximumNumberFivecycles2012}).
+    \item In chapter \ref{chap:strong_edge_colouring} then we apply this new framework to make progress on the
         \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}, achieving the best-yet
         bound of $\chi'_s(G) \leq 1.73\Delta(G)^2$.
     \item We continue then in chapter TODO to make the first progress on the bipartite version of

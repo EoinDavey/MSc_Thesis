@@ -12,7 +12,7 @@ In 1983 \cite{erdosProblemsGraphTheory1984} Erd\H{o}s made the following conject
 This conjecture remained open until 2012 when it was proved by both Grzesik
 \cite{grzesikMaximumNumberFivecycles2012} and Hatami, Hladký, Králʼ, Norine and Razborov
 \cite{hatamiNumberPentagonsTrianglefree2013}. 
-Importantly for us both of these papers used the Razborov flag algebras to prove the result.
+Importantly for us, both of these papers used the Razborov flag algebras to prove the result!
 
 \section{The Bounded Degree Conjecture}
 
@@ -25,7 +25,7 @@ This leads us to the following \textit{bounded degree pentagon conjecture}:
     \label{conj:bounded_pentagon}
     If $G$ is triangle free then 
     $P(G) \leq \frac{|G|}{5}\left(\frac{\Delta(G)}{2}\right)^4
-    =\frac{|G|\Delta(G)^4}{5\cdot 16}$.
+    =\frac{|G|\Delta(G)^4}{5\cdot 16}$!
 \end{conjecture}
 
 \begin{lemma}
@@ -76,7 +76,7 @@ We then argue that it suffices to prove this asymptotic bound only for regular $
 
 \section{Reductions}
 
-First we argue that an asymptotic bound suffices. Essentially this is true as any small
+First we argue that an asymptotic bound suffices. Essentially, this is true as any small
 graph with a high pentagon density can be expanded to arbitrary high degree.
 \begin{lemma}
     \label{lemma:pentagon_asymp_suffices}
@@ -88,7 +88,7 @@ graph with a high pentagon density can be expanded to arbitrary high degree.
 \begin{proof}
     More precisely our condition states that for any $\Delta$-increasing sequence of
     triangle free graphs $(G_k)_{k\in\N}$ we have
-    $\lim_{k\to\infty} \frac{P(G_k)}{|G|\Delta(G)^4} \leq \lambda$.
+    $\limsup_{k\to\infty} \frac{P(G_k)}{|G|\Delta(G)^4} \leq \lambda$.
 
     Assume then for sake of contradiction that there exists $G_0$ triangle free
     such that $\frac{P(G_0)}{|G_0|\Delta(G_0)^4} > \lambda$.
@@ -122,6 +122,7 @@ graph with a high pentagon density can be expanded to arbitrary high degree.
     \]
     and in particular
     \[
+        \limsup_{k\to\infty}\frac{P(G_k)}{|G_k|\Delta(G_k)^4} \geq
         \liminf_{k\to\infty}\frac{P(G_k)}{|G_k|\Delta(G_k)^4}
         \geq \delta > \lambda
     \]
@@ -194,7 +195,7 @@ to show the bound only for regular graphs.
     for all $k\in\N$. Hence this is a $\Delta$-increasing triangle free regular
     sequence such that
     \[
-        \liminf_{k\to\infty} \frac{P(G_k')}{|G_k'|\Delta(G_k')}
+        \limsup_{k\to\infty} \frac{P(G_k')}{|G_k'|\Delta(G_k')}
         \geq
         \lim_{k\to\infty} \frac{P(G_k)}{|G_k|\Delta(G_k)}
         > \lambda
@@ -275,8 +276,8 @@ We start by defining the extension of a flag:
 
 \begin{definition}[Extension]
     Let $\sigma$ be a type of size $k$. Then we define the
-    \textbf{extension} $\ext^\sigma_i$ as the sum of all $\sigma$ flags of
-    size $k+1$ which have an edge between the unlabelled vertex the and vertex labelled $i$.
+    \textbf{extension} $\ext^\sigma_i$ as the sum of all $\sigma$ flags $\in\HeredG{}^\sigma$
+    of size $k+1$ which have an edge between the unlabelled vertex the and vertex labelled $i$.
 \end{definition}
 
 \begin{note}
@@ -399,6 +400,9 @@ We first reduce this to a problem on coloured graphs.
 Let $\Gcl$ be the class of red-black vertex coloured graphs which are triangle free,
 regular and such that for each $G\in\Gcl$ the number of black vertices
 in $G$ is exactly $\Delta(G)$ and the set of black vertices in $G$ is independent.
+Note then that $\HeredG$ is the same class without the regularity as all other
+properties are hereditary.
+
 Then we have the following reduction:
 
 \begin{lemma}

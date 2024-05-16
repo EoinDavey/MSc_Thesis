@@ -2,28 +2,26 @@
 \label{chap:local_flags}
 
 In the previous chapter we saw how to use flag algebras to bound density functions
-asymptotically, Some things are not described by a density function but still feel
+asymptotically. Some things are not described by a density function but still feel
 "density like" which might lead us to speculate if we can modify the flag algebra method to work
 for these functions.
 
 For example, in chapter \ref{chap:pentagon_conjecture} we will see a problem we're calling the
 bounded degree Erd\H{o}s' pentagon problem. In approaching that problem we will ask:
-Given a triangle-free graph $G$ with max degree $\Delta(G)$ and some fixed vertex
-$v\in V(G)$, how many pentagons (5-cycles) are there containing $v$?
+"Given a triangle-free graph $G$ with max degree $\Delta(G)$ and some fixed vertex
+$v\in V(G)$, how many pentagons (5-cycles) are there containing $v$"?
 We want to upper bound this number of pentagons as a function of $\Delta(G)$. The upper
 bound of $\Delta(G)^4$ is easily seen, but $\frac{1}{2}\Delta(G)^4$ is also easy to prove.
 
-Phrased differently: If $f(G)$ is the number of pentagons in $G$ containing $v$ then
-we want to find an asymptotic upper bound on $f(G) / \Delta(G)^4$. If we pick a
+Phrased differently: If $P(G,v)$ is the number of pentagons in $G$ containing $v$ then
+we want to find an asymptotic upper bound on $P(G,v) / \Delta(G)^4$. If we pick a
 flag $F=\cfivemarked$ which is a pentagon with a single labelled vertex then this
 could be written as $c(F; G^v) / \Delta(G)^4$.
 
 This looks a lot like
 a density function, except that our denominator is of the wrong form: It should
 be $\in\Theta(|G|^4)$, not $\Delta(G)^4$. It is for this reason that applying classic
-flag algebras directly is not promising: Our function is of the wrong form. We will
-see in section TODO that a few ways we could try and "trick" the density function do not
-work out.
+flag algebras directly is not promising: Our function is of the wrong form.
 
 It turns out that we can define a new type of "density function" which
 can be used to bound functions like $c(F; G^v) / \Delta(G)^4$. These density functions
@@ -279,7 +277,7 @@ properties:
 
 \begin{theorem}
     \label{thm:local_product_lim}
-    For $f, g \in \Lcl^\sigma$ and $\sigma$-flag $G$ we have
+    For $f, g \in \Lcl^\sigma$ and $\sigma$-flag $G\in\Gcl^\sigma$ we have
     \[\rho(f; G)\rho(g; G) = \rho(f\cdot g; G) + O\left(\frac{1}{\Delta(G)}\right)\]
     and in particular any limit functional $\phi\in\Phi^\sigma$ is an algebra
     homomorphism $\Lcl^\sigma \to \R$.
@@ -295,6 +293,7 @@ product work:
 
 \begin{theorem}
     Let $F, F' \in \Gloc^\sigma$ be local $\sigma$-flags and $H$ a $\sigma$-flag
+    $\in \HeredG^\sigma$
     of size $n=|F|+|F'|-|\sigma|$ such that $p(F, F'; H) > 0$ then $H$ is a local
     $\sigma$-flag.
 \end{theorem}
@@ -364,7 +363,7 @@ equivalent to summing over all $\sigma$-flags, not just the local flags:
     \[
         F \cdot_{\Lcl^\sigma} F'
         = \sum_{H\in\Glocn^\sigma}p(F, F'; H)\cdot H
-        = \sum_{H\in\Gcl_n^\sigma}p(F, F'; H)\cdot H
+        = \sum_{H\in\HeredG{}_n^\sigma}p(F, F'; H)\cdot H
     \]
     where $n=|F|+|F'|-|\sigma|$.
 \end{corollary}
@@ -372,7 +371,8 @@ equivalent to summing over all $\sigma$-flags, not just the local flags:
 This allows us to prove our product limiting result (Theorem \ref{thm:local_product_lim}).
 
 \begin{proof}[Proof of theorem \ref{thm:local_product_lim}]
-    Let $(F,\theta), (F',\theta') \in\Gloc^\sigma$ be local $\sigma$-flags and $(G,\eta)$ a
+    Let $(F,\theta), (F',\theta') \in\Gloc^\sigma$ be local $\sigma$-flags and
+    $(G,\eta) \in \Gcl^\sigma$ a
     $\sigma$-flag. We compute
     \[
         \begin{split}
@@ -380,9 +380,9 @@ This allows us to prove our product limiting result (Theorem \ref{thm:local_prod
             &= \rho(F; G)\cdot\rho(F';G)
                 - \left(\sum_{H\in\Glocn^\sigma} p(F, F'; H)\rho(H; G) \right)\\
             &= \rho(F; G)\cdot\rho(F';G)
-                - \left(\sum_{H\in\Gcl_n^\sigma} p(F, F'; H)\rho(H; G) \right)\\
+                - \left(\sum_{H\in\HeredG{}_n^\sigma} p(F, F'; H)\rho(H; G) \right)\\
             &= \frac{c(F; G)\cdot c(F';G)}{\binom{\Delta(G)}{|F|-k}\binom{\Delta(G)}{|F'|-k}}
-                - \frac{\sum_{H\in\Gcl^\sigma_n} c(F, F'; H)c(H; G)}
+                - \frac{\sum_{H\in\HeredG{}^\sigma_n} c(F, F'; H)c(H; G)}
                 {\binom{n-k}{|F|-k}\binom{\Delta(G)}{n-k}}
             \end{split}
     \]
@@ -401,16 +401,17 @@ This allows us to prove our product limiting result (Theorem \ref{thm:local_prod
     Both denominators are asymptotically equivalent and $\in\Omega(\Delta(G)^{n-k})$ so we
     can focus on the numerators:
     \[
-        c(F;G)c(F';G) - \sum_{H\in\Gcl^\sigma_n}c(F,F';H)c(H;G).
+        c(F;G)c(F';G) - \sum_{H\in\HeredG{}^\sigma_n}c(F,F';H)c(H;G).
         \tag{$\dagger$}
     \]
     It suffices to show $(\dagger) \in O(\Delta(G)^{n-k-1})$.
 
     The term $c(F; G)c(F';G)$ counts the number of pairs of subsets
     $\im\eta \subseteq U, U' \subseteq V(G)$ such that $F \cong G[U]$ and $F'\cong G[U']$.
-    Comparatively the sum $\sum_{H\in\Gcl^\sigma_n} c(F, F'; H)c(H; G)$ counts the number
+    Comparatively the sum $\sum_{H\in\HeredG{}^\sigma_n} c(F, F'; H)c(H; G)$ counts the number
     of subsets $\im\eta U, U' \in V(G)$ such that $F\cong G[U]$, $F'\cong G[U']$ \textit{and}
-    $U \cap U' = \im \eta$. This relies on theorem \ref{thm:local_product_lim}
+    $U \cap U' = \im \eta$. This relies on
+    corollary \ref{corollary:local_product}
     which let us sum over all possible flags of size $n$.
 
     Clearly then ($\dagger$) counts the
@@ -474,15 +475,15 @@ commutative and unital.
         \begin{split}
             (F_1 \cdot F_2) \cdot F_3
             &= \left(\sum_{H\in\Glocsub{\ell}^\sigma} p(F_1,F_2;H)H\right) \cdot F_3\\
-            &= \left(\sum_{H\in\Gcl_\ell^\sigma} p(F_1,F_2;H)H\right) \cdot F_3\\
-            &= \sum_{H\in\Gcl_\ell^\sigma} p(F_1,F_2;H)(H \cdot F_3)\\
-            &= \sum_{H\in\Gcl_\ell^\sigma} p(F_1,F_2;H)
+            &= \left(\sum_{H\in\HeredG{}\ell^\sigma} p(F_1,F_2;H)H\right) \cdot F_3\\
+            &= \sum_{H\in\HeredG{}_\ell^\sigma} p(F_1,F_2;H)(H \cdot F_3)\\
+            &= \sum_{H\in\HeredG{}_\ell^\sigma} p(F_1,F_2;H)
                 \left(\sum_{G\in\Glocn^\sigma} p(H,F_3;G)G \right)\\
             &= \sum_{G\in\Glocn^\sigma}
-                \left(\sum_{H\in\Gcl_\ell^\sigma} p(F_1,F_2;H) p(H,F_3;G) \right) G
+                \left(\sum_{H\in\HeredG{}_\ell^\sigma} p(F_1,F_2;H) p(H,F_3;G) \right) G
         \end{split}
     \]
-    Then as we used our previous lemma to get a sum over all flags, not just local ones, we can
+    Then as we used corollary \ref{corollary:local_product} to get a sum over all flags, not just local ones, we can
     apply the chain rule for induced densities (lemma \ref{lemma:chain_rule})
     to get:
     \[

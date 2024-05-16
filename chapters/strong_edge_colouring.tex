@@ -6,7 +6,7 @@ a strong edge colouring of a graph is an edge colouring where two edges which ar
 common edge must have different colours.
 
 We can view a strong edge colouring of a graph as a proper vertex colour of $L(G)^2$, the
-square of the line graph of $G$ \cite{molloyBoundStrongChromatic1997}.
+square of the line graph of $G$ (see \cite{molloyBoundStrongChromatic1997}).
 The line graph $L(G)$ is a graph with a vertex $v_e$ for
 each $e\in E(G)$ such that $\{v_e, v_f\} \in E(L(G))$ iff $e$ is incident to $f$ in
 $G$. The square of a graph $G^2$ then is a copy of the graph where vertices at distance $\leq 2$
@@ -95,7 +95,8 @@ The rest of this chapter is the proof of this theorem.
 We will follow the same structure as used in chapter \ref{chap:pentagon_conjecture},
 first reducing the problem to a problem on a certain class of coloured graphs,
 finding a vector $O$ of local flags for which an asymptotic bound on the density of $O$ will allow
-us to derive an asymptotic bound on the size of $E_O(G)$. We then enumerate some elements
+us to derive an asymptotic bound on the size of $|E(H[N_{H[F]}(f)])|$.
+We then enumerate some elements
 of the semantic cone and apply the semidefinite method to get a bound on $O$.
 
 \section{Reduction}
@@ -104,7 +105,7 @@ The theorem that we want to improve on is the strong edge neighbourhood theorem 
 the Bonamy et al. paper which appears in Hurley et al. as follows:
 \begin{knowntheorem}[Theorem 3.1 \cite{hurleyImprovedProcedureColouring2022}]
     Fix $\eta \in [0, 0.3]$. For any graph $G$ let $H=L(G)^2$. Let $F$ be a
-    maximum subset of $V(H)$ such that $H[F]$ has minimum degree
+    maximal subset of $V(H)$ such that $H[F]$ has minimum degree
     $\geq (2-\eta)\Delta(G)^2$. Then for any $f\in F$ the number of edges in the subgraph
     $H[N_{H[F]}(f)]$ induced by the neighbourhood of $f$ (in $H[F]$) is at most
     \[
@@ -158,7 +159,7 @@ $f\in F$ is dominated only by non-incident edges.
     \]
 \end{lemma}
 \begin{proof}
-    The number of edges incident to a fixed $f$ in $L(G)$ is $O(\Delta)$.
+    The number of edges incident to a fixed $f$ in $L(G)$ is $O(\Delta(G))$.
 \end{proof}
 
 As we did in section \ref{sec:counting_pentagons} we want to reduce our problem to a
@@ -215,7 +216,8 @@ This is something we can bound with local flags.
 
 \section{Local Flag Setup}
 
-Let $\Gcl$ be the class of graphs described in Corollary \ref{corollary:strong_density_graph_class}.
+Let $\Gcl$ be the class of graphs described in corollary \ref{corollary:strong_density_graph_class}.
+As before the hereditary closure $\HeredG$ only drops the regularity requirement.
 
 \begin{lemma}
     Given the class $\Gcl$ and $\Delta$ as the max-degree function then a
@@ -347,7 +349,7 @@ vertices form a black edge. Let $e\in E(G)$ be an edge of the form $\bredge$. Th
 by lemma \ref{lemma:sec_degree_non_incident} we have:
 \[
     \rho(D'(\bredge); G^e) = \frac{\deg_{H[F]}(e)}{\binom{\Delta(G)}{2}} - o(1)
-    \geq \frac{2\deg_{H[F]}(e)}{\Delta(G)^2} - o()
+    \geq \frac{2\deg_{H[F]}(e)}{\Delta(G)^2} - o(1)
     \geq 2(2-\eta) - o(1)
 \]
 Hence $\phi(D'(\bredge)) \geq 2(2-\eta)\ \forall\ \phi \in \Phi^\bredge$.
@@ -428,11 +430,11 @@ we have the following optimisation problem:
     \max_{x\in\R^\ell}\ \ &\ \phi_x(O)\\
     \text{such that}\ \ &\ \phi_x(F_i) \geq 0\ \forall\ i \in [\ell]\\
     &\ \phi_x(\llbracket \ext^\sigma_i - \ext^\sigma_j\rrbracket) = 0\ \forall
-    \ \text{local} |\sigma|=n-1, i, j \in [n-1]\\
+    \ \text{local types}\ |\sigma|=n-1, i, j \in [n-1]\\
     &\ \phi_x\left( \left\llbracket (D'(\bredge) - 2(2-\eta)(\ext_1^\bredge)^2) \cdot
     \left(\ext_1^\bredge\right)^{n-4}\right\rrbracket\right)\geq 0\\
     &\ \phi_x(\llbracket 2\ext_1^\sigma - \ext_{B,1}^\sigma\rrbracket) \geq 0\ \forall
-    \ \text{local type}\ |\sigma|=n-1\\
+    \ \text{local types}\ |\sigma|=n-1\\
     &\ \phi_x(\llbracket (\ext_{B,1}^k - \ext_{B,k}) \cdot (\ext_1^\sigma)^{n-k-1} \rrbracket) = 0
     \ \text{for}\ \sigma=\vertex, \ \forall\ 2 \leq k \leq n-1\\
     &\ \phi_x(\llbracket f^2 \rrbracket) \geq 0 \forall f \in \Lcl_m^\sigma
@@ -506,10 +508,10 @@ Now we can prove theorem \ref{thm:strong_edge_colouring_bound}.
     Evaluating $\varepsilon(\sigma)$ for $\lambda = 10.643189$ from 
     lemma \ref{lemma:sec_sdp_soln} gives a bound of
     $\chi(H[F]) \leq 1.7297734\Delta(G)^2$
-    Note then $2-\eta = 1.7297 < \chi(H[F])$ so by the proof of Theorem 1.6 in
+    Note then $2-\eta = 1.7297 < 1.73$ so by the proof of Theorem 1.6 in
     \cite{hurleyImprovedProcedureColouring2022}
-    this proves $\chi(H) \leq 1.7297734\Delta(G)^2$ proving
-    $\chi'_s(G) \leq 1.7297734\Delta(G)^2$ for $\Delta(G)$ large enough.
+    this proves $\chi(H) \leq 1.73\Delta(G)^2$ proving
+    $\chi'_s(G) \leq 1.73\Delta(G)^2$ for $\Delta(G)$ large enough.
 
     TODO: I have stated theorem \ref{thm:strong_edge_colouring_bound} as 1.73 to account
     for rounding, floating point in SDP, choice of $\iota$ etc.
