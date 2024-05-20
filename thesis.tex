@@ -24,6 +24,13 @@
 \addbibresource{zotero.bib}
 \addbibresource{manual.bib}
 
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    nohead,
+}
+\usepackage{layout}
+
 \input{macros.sty}
 
 \title{Local Flags: Bounding the Strong Chromatic Index} % Title of your thesis
@@ -51,7 +58,9 @@
 \newtheorem*{example}{Example}
 
 \begin{document}
+\newgeometry{margin=1in}
 \maketitle
+\restoregeometry
 
 \begin{abstract}
     In this thesis we introduce a novel framework inspired by Razborov's flag algebras
@@ -81,34 +90,44 @@
 
 \include{chapters/strong_edge_colouring}
 
+\newgeometry{margin=1in}
+
 \chapter*{Popular summary}
 \addcontentsline{toc}{chapter}{Popular summary}
 A graph is a set of points (vertices) and lines (edges).
 e.g. \includegraphics[align=c,scale=1]{flags/k4} or
 \includegraphics[align=c,scale=0.75]{pop_sum_graph}.
 
-Graph theory has been a central pillar of mathematics since Euler studied the bridges of
-Königsberg in 1736. One of the first things we can note
-is that graphs can contain other graphs: Take some subset of the vertices
+The study of graphs (Graph Theory) has been a central pillar of mathematics since Euler studied the
+bridges of Königsberg in 1736. One of the first things we can study is the fact
+that graphs can contain other graphs: Take some subset of the vertices
 and look at only those vertices and the edges between them and you end up with another graph.
-One can then ask "How many copies of a graph $F$ are there in a graph $G$"?
-A famous Dutch result is Mantel's theorem which says a graph of size $n$
-with no triangles $\triangleflag$ has $\leq \frac{n^2}{4}$ edges.
+One can then ask, "How many copies of a graph $F$ are there in a graph $G$"?
+A famous Dutch result is \textit{Mantel's theorem} which says a graph of size $n$
+with no triangles ($\triangleflag$) has $\leq \frac{n^2}{4}$ edges.
 
-We can then ask "What is the \textit{density} of a graph $F$ in another graph $G$"? i.e. How
+We can then ask, "What is the \textit{density} of a graph $F$ in another graph $G$"? i.e. How
 many copies of $F$ are there in $G$ divided by by the max possible number of copies of $F$.
-There are at most $\binom{n}{2}$ edges in a graph of size $n$, so we can re-write Mantel's
+We call this $p(F; G)$.
+Consider a graph with $n$ vertices and $m$ edges:
+There are at most $\binom{n}{2}$ edges in a graph of size $n$, so we say the \textit{edge
+density} is $p(\edge; G) = m/\binom{n}{2}$.
+We can re-write Mantel's
 theorem to say the density of edges in a triangle free graph is at most
-$\frac{n^2}{4}/\binom{n}{2} \approx \frac{1}{2}$. It turns out these densities have some
+$m/\binom{n}{2} \leq \frac{n^2}{4}/\binom{n}{2} \approx \frac{1}{2}$.
+It turns out these densities have some
 nice properties. For example, in any graph the density of edges (\edge) and non-edges
-(\nonedge) add up to 1 because every pair of vertices either has an edge or doesn't.
-In general, the sum of the densities of all graphs of some fixed size
-is always 1! We might like to write this as $\edge + \nonedge = 1$,
-$\triangleflag + \triangletwoedge + \triangleoneedge + \triangleempty = 1$, etc.
+(\nonedge) always add up to 1. This is as the number of pairs of vertices which don't have
+an edge is $\binom{n}{2} - m$:
+\[p(\edge; G) + p(\nonedge; G) = \frac{m}{\binom{n}{2}}+\frac{\binom{n}{2}-m}{\binom{n}{2}} = 1\]
 
-It turns out then that we can formally and rigorously create an algebra out of graphs where
-statements like
-$\edge + \nonedge = 1$ are true. Then, any statement we prove in this algebra turns out
+In general, the sum of the densities of all graphs of some fixed size
+is always 1! If we wanted to come up with some nice notation to work with we might like to write
+this as $\edge + \nonedge = 1$,
+$\triangleflag + \triangletwoedge + \triangleoneedge + \triangleempty = 1$, etc.
+It turns out then that we can rigorously create this notation (formally an algebra)
+out of graphs where statements like
+$\edge + \nonedge = 1$ are true. Then, any statement we prove with this notation turns out
 to be a true statement about densities of graphs. These algebras are called \textit{flag algebras}.
 These algebras are very easily manipulated by computers so we can use them in combination
 with computer search to prove new results about densities.
@@ -132,6 +151,8 @@ which is the best known bound.
     \includegraphics[scale=1.25]{proper-strong-example}\par
     Non-proper, proper and strong edge colourings.
 \end{figure}
+
+\restoregeometry
 
 \printbibliography{}
 

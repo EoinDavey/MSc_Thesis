@@ -104,8 +104,7 @@ Science Park 105-107, 1098 XG Amsterdam\\
 \vspace{0.5cm}
 \HRule
 
-\vspace{2cm}
- 
+\vspace{1cm}
  
 \begin{tabular}{p{0.45\textwidth} >{\raggedleft\let\newline\\\hspace{0pt}}p{0.45\textwidth}}
 \large\emph{\authortext:} &  \large\emph{\supervisorstext:}  \tabularnewline
@@ -115,7 +114,9 @@ Science Park 105-107, 1098 XG Amsterdam\\
 {\Large \@date} & \raggedleft {\if\@dailysupervisorTitle\relax \else \Large \@dailysupervisorTitle \fi}
 \end{tabular}
 
+\vspace{1cm}
 
+\includegraphics[scale=0.33]{cover_page}
 
 \vspace{\stretch{1}}
 
@@ -131,7 +132,7 @@ Science Park 105-107, 1098 XG Amsterdam\\
 \end{tabular}
 \fi
 
-\vspace{-70pt}
+%\vspace{-70pt}
 
 \end{centering}
 \newpage
