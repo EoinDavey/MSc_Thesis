@@ -107,7 +107,7 @@ A famous Dutch result is \textit{Mantel's theorem} which says a graph of size $n
 with no triangles ($\triangleflag$) has $\leq \frac{n^2}{4}$ edges.
 
 We can then ask, "What is the \textit{density} of a graph $F$ in another graph $G$"? i.e. How
-many copies of $F$ are there in $G$ divided by by the max possible number of copies of $F$.
+many copies of $F$ are there in $G$, divided by by the max possible number of copies of $F$.
 We call this $p(F; G)$.
 Consider a graph with $n$ vertices and $m$ edges:
 There are at most $\binom{n}{2}$ edges in a graph of size $n$, so we say the \textit{edge
@@ -118,7 +118,7 @@ $m/\binom{n}{2} \leq \frac{n^2}{4}/\binom{n}{2} \approx \frac{1}{2}$.
 It turns out these densities have some
 nice properties. For example, in any graph the density of edges (\edge) and non-edges
 (\nonedge) always add up to 1. This is as the number of pairs of vertices which don't have
-an edge is $\binom{n}{2} - m$:
+an edge is $\binom{n}{2} - m$ hence:
 \[p(\edge; G) + p(\nonedge; G) = \frac{m}{\binom{n}{2}}+\frac{\binom{n}{2}-m}{\binom{n}{2}} = 1\]
 
 In general, the sum of the densities of all graphs of some fixed size

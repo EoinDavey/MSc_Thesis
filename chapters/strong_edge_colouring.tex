@@ -25,13 +25,18 @@ are connected. See figure \ref{fig:lg_example} for an example construction.
     $L(G)^2$ (i.e. those which cannot share a colour with $e$ in a strong edge colouring).
 \end{definition}
 
+In this chapter we will first look at a long standing conjecture which claims to bound
+the strong chromatic index and show how we used local flags to get the closest yet bound.
+Then in section \ref{sec:sec_bipartite} we will look at the bipartite version of the
+conjecture and adapt our argument to get an even better bound in that case.
+
 \section{The Erd\H{o}s and Nešetřil conjecture}
 
-Erd\H{o}s and Nešetřil \cite{faudreeInducedMatchingsBipartite1989} conjectured an
+In 1985 Erd\H{o}s and Nešetřil \cite{faudreeInducedMatchingsBipartite1989} conjectured an
 upper bound on the strong chromatic index $\chi'_s(G)$, the minimum colours needed for
 a strong edge colouring.
 
-\begin{conjecture}[Erd\H{o}s, Nešetřil 1989 \cite{faudreeInducedMatchingsBipartite1989}]
+\begin{conjecture}[Erd\H{o}s, Nešetřil 1985 \cite{faudreeInducedMatchingsBipartite1989}]
     $\chi'_s(G) \leq 1.25\Delta(G)^2$ for all graphs $G$.
 \end{conjecture}
 
@@ -100,6 +105,7 @@ We then enumerate some elements
 of the semantic cone and apply the semidefinite method to get a bound on $O$.
 
 \section{Reduction}
+\label{sec:sec_reduction}
 
 The theorem that we want to improve on is the strong edge neighbourhood theorem from
 the Bonamy et al. paper which appears in Hurley et al. as follows:
@@ -171,6 +177,7 @@ and all other vertices red. Then colour every edge $e \in F$ black and all other
 edges red.
 
 \begin{lemma}
+    \label{lemma:sec_black_edge_degree}
     Let $G, H=L(G)^2, F, \eta, f$ and $G'$ be as above.
     Define $E_O(G') \subseteq \binom{E(G')}{2}$ as the set of pairs of non-incident
     edges $e, e'$ in $G'$
@@ -206,7 +213,7 @@ edges red.
 
 \begin{corollary}
     \label{corollary:strong_density_graph_class}
-    It suffices to bound the size of $E_0$
+    It suffices to bound the size of $E_O$
     over the class of all regular $(2,2)$-graphs where there are $\leq 2\Delta(G)^2$ black
     vertices and the subgraph of $L(G)^2$ induced by black edges has minimum
     degree $\geq (2-\eta)\Delta(G)^2$.
@@ -231,6 +238,7 @@ As before the hereditary closure $\HeredG$ only drops the regularity requirement
 \end{proof}
 
 \subsection{Objective Vector}
+\label{sec:sec_obj_vector}
 
 First we want to express the size of $E_O(G)$ as a local flag vector.
 Note if $\Bcl\subseteq G$ is the set of black edges with at least one black vertex then
@@ -330,6 +338,7 @@ for some $n\geq 4$ yet to be chosen.
 \begin{proof}As outlined above\end{proof}
 
 \subsection{Search Constraints}
+\label{sec:sec_search_constraints}
 
 As in chapter \ref{chap:pentagon_conjecture}, we want to collect some known elements of
 the semantic cone where each vector consists of local flags of some fixed size $n$.
@@ -373,6 +382,7 @@ For any type $\sigma$ we can define the
 local flags of size $|\sigma|+k$ where the unlabelled vertices are black vertices.
 
 \begin{lemma}
+    \label{lemma:black_extension_vector}
     For a graph $G$ let $B(G)$ denote the set of black vertices
     and $i\in \N$. Consider a $\sigma$-flag $(G, \eta)$ then
     \[
@@ -507,12 +517,292 @@ Now we can prove theorem \ref{thm:strong_edge_colouring_bound}.
 
     Evaluating $\varepsilon(\sigma)$ for $\lambda = 10.643189$ from 
     lemma \ref{lemma:sec_sdp_soln} gives a bound of
-    $\chi(H[F]) \leq 1.7297734\Delta(G)^2$
+    $\chi(H[F]) \leq (1.7297734 + \iota)\Delta(G)^2$
     Note then $2-\eta = 1.7297 < 1.73$ so by the proof of Theorem 1.6 in
     \cite{hurleyImprovedProcedureColouring2022}
     this proves $\chi(H) \leq 1.73\Delta(G)^2$ proving
     $\chi'_s(G) \leq 1.73\Delta(G)^2$ for $\Delta(G)$ large enough.
+\end{proof}
+\begin{note}
+    A more careful validation of the dual solution from the SDP solver is required,
+    but for the purposes of this thesis we considered it unnecessary as it is is not
+    mathematically interesting. I give a brief discussion of how you can do this in
+    appendix TODO.
+    After such a validation of the floating point error you could in theory get
+    a bound closer to the 1.72977734 result, technically beating 1.73. We don't do this
+    as any such result is negligibly better than 1.73 so not very interesting.
+\end{note}
 
-    TODO: I have stated theorem \ref{thm:strong_edge_colouring_bound} as 1.73 to account
-    for rounding, floating point in SDP, choice of $\iota$ etc.
+\section{The Bipartite Case}
+\label{sec:sec_bipartite}
+
+In 1989 Faudree, Gyárfas, Schelp and Tuza
+made a conjecture that for the special case where $G$ is bipartite we get a tighter
+upper bound on the strong chromatic index.
+
+\begin{knownconjecture}[Faudree, Gyárfas, Schelp, Tuza \cite{faudreeInducedMatchingsBipartite1989}]
+    If $G$ is bipartite then $\chi'_s(G) \leq \Delta(G)^2$.
+\end{knownconjecture}
+
+From what we can find, there are no papers showing a better bound than the general
+bounds for the special case of bipartite graphs. Luckily for us the method of local flags
+is easily specialised to the case of bipartite graphs meaning we can make the first
+progress toward this conjecture. This is a big advantage of the method of local flags,
+the methods used in previous papers to bound the strong neighbourhood density do not seem
+to be so easily adaptable to a special case like this.
+
+We claim the following theorem:
+\begin{theorem}
+    \label{thm:sec_bipartite_bound}
+    If $G$ is bipartite then for $\Delta(G)$ large enough we have
+    $\chi'_s(G) \leq 1.6254\Delta(G)^2$.
+\end{theorem}
+
+The first thing we do is adapt our reduction from section \ref{sec:sec_reduction}. Once
+again we can assume WLOG that $G$ is regular. Assume we are given
+$G$, $F \subseteq E(G)$, $\eta > 0$ and $f\in F$ as before except now $G$ is bipartite.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.75]{bipartite_sec_transform}
+    \caption{Example coloured graph transformation}
+    \label{fig:bipartite_sec_transform}
+\end{figure}
+
+Once again we show how to convert $(G,F,f)$ to an equivalent coloured graph. In this case
+we will use a $(4, 2)$-graph. First we pick some fixed bipartition of the vertices
+of $G$, $V(G) = U \sqcup V$. This is possible as $G$ is bipartite and we can take any
+such partition. Let $f=\{u,v\}$ such that $u\in U$ and $v\in V$.
+
+Colour the neighbours of $u$ red, and the neighbours of $v$ black. Note
+$N(u) \subseteq V$ and $N(v)\subseteq U$. Then colour the remaining vertices of
+$U$ and $V$ blue and green respectively. Finally colour edges black if they are
+$\in F$, otherwise red. See figure \ref{fig:bipartite_sec_transform} for an example.
+
+Now, we can adopt lemmas \ref{lemma:count_non_incident_pairs} and
+\ref{lemma:sec_degree_non_incident} as in the previous section.
+Then we can also use the following lemma which is identical to lemma
+\ref{lemma:sec_black_edge_degree}:
+\begin{lemma}
+    Let $G, H=L(G)^2, F, \eta, f$ and $G'$ be as above.
+    Define $E_O(G') \subseteq \binom{E(G')}{2}$ as the set of pairs of non-incident
+    edges $e, e'$ in $G'$
+    where $e, e'$ are black edges with a common incident edge and
+    at least one of the vertices of each edge is black \textbf{or red}.
+    Then the number of edges in $H[N_{H[F]}(f)]$
+    where $H=L(G)^2$ is equal to $|E_O(G')| + o(\Delta(G)^4)$.
+\end{lemma}
+\begin{proof}
+    Follow the proof of lemma \ref{lemma:sec_black_edge_degree}.
+\end{proof}
+\begin{corollary}
+    \label{corollary:bipartite_strong_density_graph_class}
+    It suffices to bound the size of $E_O(G)$
+    over the class $\Gcl$ of all regular $(4,2)$-graphs where there are $\Delta(G)^2$ black
+    vertices, $\Delta(G)$ red vertices, the subgraph of $L(G)^2$ induced by
+    black edges has minimum degree $\geq (2-\eta)\Delta(G)^2$ and the graph can be
+    bi-partitioned into the components of blue/black vertices and red/green vertices.
+\end{corollary}
+
+We therefore choose our graph class $\Gcl$ as the one from
+corollary \ref{corollary:bipartite_strong_density_graph_class} and as with the
+previous section we get $\HeredG$ as the same class without the regularity requirement
+and the following description of local flags.
+
+\begin{lemma}
+    Given the class $\Gcl$ and $\Delta$ as the maximum degree function a
+    $\sigma$-flag $(F,\theta)\in\HeredG{}^\sigma$ iff each connected component
+    of $F$ contains at least one black, red or labelled vertex.
+\end{lemma}
+\begin{proof}
+    See proof of lemma \ref{lemma:pentagon_local_flags}.
+\end{proof}
+
+\subsection{Objective Vector}
+
+As with section \ref{sec:sec_obj_vector} we'll define $D(\sigma)$ where
+$\sigma \in \{\bredge,\blredge,\bgedge\}$ as the sum of all local $\sigma$-flags
+of size 4 where the unlabelled vertices form a black edge which is connected
+to the labelled vertices and at least one unlabelled vertex is red or black. Then we have:
+\[
+    \rho\left(\llbracket D(\bredge) \rrbracket
+    + \llbracket D(\blredge) \rrbracket
+    + \llbracket D(\bgedge) \rrbracket; G'\right)
+    \sim \frac{|E_O(G)|}{\binom{\Delta(G)}{2}\binom{\Delta(G)}{2}}
+\]
+by the same derivation as in section \ref{sec:sec_obj_vector}. Hence we define
+the objective vector $O$ as
+\[
+    O := \left\llbracket D(\bredge) \cdot \left(\ext^\bredge_1\right)^{n-4} \right\rrbracket
+        + \left\llbracket D(\blredge) \cdot \left(\ext^\blredge_1\right)^{n-4}\right\rrbracket
+        + \left\llbracket D(\bgedge) \cdot \left(\ext^\bgedge_1\right)^{n-4}\right\rrbracket
+\]
+for $n\in\N$ yet to be chosen and get the following result:
+\begin{lemma}
+    \label{lemma:sec_bipartite_objective}
+    \[
+        \rho(O; G) \sim \frac{|E_O(G)|}{\binom{\Delta(G)}{2}^2}.
+    \]
+    as $\Delta(G) \to \infty$ for all $G\in\Gcl$.
+\end{lemma}
+\begin{proof}
+    As above.
+\end{proof}
+
+\subsection{Constraints}
+
+Following the pattern of this thesis we now list some constraints on the space of
+limit functionals and find ways to express them in the basis of flags of fixed size
+$n$. As $\Gcl$ is a regular class we get the constraints of the form
+$\phi(\llbracket \ext^\sigma_i \ext^\sigma_j \rrbracket) = 0$ for all local types
+$\sigma$, $i,j\in[|\sigma|]$. We can add these for all local $\sigma$ of size
+$n-1$.
+
+We then define $D'(\sigma)$ as we did in section
+\ref{sec:sec_search_constraints} for $\sigma\in\{\bredge,\blredge,\bgedge\}$ to be
+the sum of all $\sigma$-flags of size 4 where the unlabelled vertex is a black edge
+connected to the labelled vertices, then again in the same construction
+find that (using lemma \ref{lemma:sec_degree_non_incident})
+\[\rho(D'(\sigma); G^e) \geq 2(2-\eta)-o(1)\]
+for any $G\in\Gcl$, $e\in E(G)$ of type $\sigma$. Then as we did in section
+\ref{sec:sec_search_constraints} we can add the following constraints to our
+list:
+\[
+    \phi\left(\left\llbracket
+    \left(D'(\sigma) - 2(2-\eta)(\ext_1^\sigma)^2\right)\cdot \left(\ext_1^\sigma\right)^{n-4}
+    \right\rrbracket\right)
+    \geq 0\ \forall\ \phi\in\Phi^\emptyset
+\]
+for all $\sigma$ above.
+
+Finally then we add some constraints to add the fact that there are
+$\Delta(G)$ black and red vertices. As we did in section
+\ref{sec:sec_search_constraints} we define the
+\textit{black and red vertex extension vectors of size $k$} denoted
+$\ext_{B,k}^\sigma$ and $\ext_{R,k}^\sigma$ respectively, as the sum of all
+local flags of size $|\sigma|+k$ where the unlabelled vertices are black
+and red respectively.
+Then as with lemma \ref{lemma:black_extension_vector} we get the following result:
+
+\begin{lemma}
+    For a graph $G\in\Gcl$ let $B(G)$ and $R(G)$ denote the set of black vertices and
+    $k\in \N$. Then for a $\sigma$-flag $(G,\eta) \in \Gcl^\sigma$ we have
+    \[
+        \begin{split}
+            \rho\left(\ext_{B,i}^\sigma; (G,\eta)\right)
+            &= \frac{\binom{|B(G) \setminus \im\eta|}{i}}{\binom{\Delta(G)}{i}}
+            \sim 
+            \left(\frac{|B(G)\setminus\im\eta|}{\Delta(G)}\right)^i\\
+            \rho\left(\ext_{R,i}^\sigma; (G,\eta)\right)
+            &= \frac{\binom{|R(G) \setminus \im\eta|}{i}}{\binom{\Delta(G)}{i}}
+            \sim 
+            \left(\frac{|R(G)\setminus\im\eta|}{\Delta(G)}\right)^i.
+        \end{split}
+    \]
+\end{lemma}
+\begin{proof}
+    Same as \ref{lemma:black_extension_vector}.
+\end{proof}
+Then as we always have $\Delta(G)$ black and red vertices we get the following:
+\begin{corollary}
+    For any type $\sigma$, $k\in\N$ we have $\phi(\ext_{B,k})=\phi(\ext_{R,k})=1$
+    for all $\phi\in\Phi^\sigma$.
+\end{corollary}
+\begin{corollary}
+    For any type $\sigma$, $i\in[|\sigma|]$, $k\in\N$ we have
+    $\phi(\ext_1^\sigma - \ext_{B,k}) = \phi(\ext_1^\sigma - \ext_{R,k}) = 0$.
+    Therefore for any local type $\sigma$
+    $\phi(\llbracket \ext_1^\sigma - \ext_{B,k}\rrbracket) = \phi(\llbracket \ext_1^\sigma - \ext_{R,k}\rrbracket) = 0$.
+\end{corollary}
+We can add these constraints for all local types of size $n-1$.
+
+Define $B_k, R_k$ for $k\in\N$ to be the graph of $k$ black vertices and $k$ red vertices
+respectively. Then
+\[
+    c(B_k; G) = c(R_k; G)
+    = \binom{\Delta(G)}{k}
+\]
+as the set of black vertices and set of red vertices are both independent.
+Hence $\phi(B_k) = 1$ for all $k\in\N, \phi\in\Phi^\emptyset$. We can then do the
+usual trick where we use extension vectors to project this equality
+into the space of flags of size $n$.
+
+This leaves us finally with the following optimisation problem where
+$(F_1, \dots, F_\ell)$ is the ordered collection of local flags of size $n$.
+\begin{align*}
+    \max_{x\in\R^\ell}\ \ &\ \phi_x(O)\\
+    \text{such that}\ \ &\ \phi_x(F_i) \geq 0\ \forall\ i \in [\ell]\\
+    &\ \phi_x(\llbracket \ext^\sigma_i - \ext^\sigma_j\rrbracket) = 0\ \forall
+    \ \text{local types}\ |\sigma|=n-1, i, j \in [n-1]\\
+    &\ \phi_x\left( \left\llbracket (D'(\sigma) - 2(2-\eta)(\ext_1^\sigma)^2) \cdot
+    \left(\ext_1^\sigma\right)^{n-4}\right\rrbracket\right)\geq 0\ \forall\ \sigma
+    \in\{\bredge,\blredge,\bgedge\}\\
+    &\ \phi_x(\llbracket \ext_1^\sigma - \ext_{B,1}^\sigma\rrbracket) = 0\ \forall
+    \ \text{local types}\ |\sigma|=n-1\\
+    &\ \phi_x(\llbracket \ext_1^\sigma - \ext_{R,1}^\sigma\rrbracket) = 0\ \forall
+    \ \text{local types}\ |\sigma|=n-1\\
+    &\ \phi_x\left(\left\llbracket B_k \cdot \left(\ext_1^{B_k}\right)^{n-k}\right\rrbracket\right)
+    = 0\ \forall \ 1 \leq k \leq n\\
+    &\ \phi_x(\llbracket f^2 \rrbracket) \geq 0 \forall f \in \Lcl_m^\sigma
+    \ \forall\ \sigma\ \text{local type}\ \forall\ 2m-|\sigma|=n
+\end{align*}
+
+We then use the SDP method as outlined in appendix TODO to find the following
+result:
+
+\begin{lemma}
+    For $\eta=0.3746$ we have
+    $4.0928\emptyset - O \in \SemCone^\emptyset$
+\end{lemma}
+
+Then we can prove theorem \ref{thm:sec_bipartite_bound} exactly as we proved
+theorem \ref{thm:strong_edge_colouring_bound} in the previous section.
+
+\begin{proof}
+    Let $\eta = 0.3746$ and $\lambda\in\R$ be such that we have a bound of
+    $\phi(O) \leq \lambda\ \forall\ \phi\in\Phi^\emptyset$.
+    Then by lemma \ref{lemma:sec_bipartite_objective} we have
+    \[
+        \lim_{\Delta(G) \to \infty}
+        \frac{|E_O(G)|}{\binom{\Delta(G)}{2}^2}
+        \leq \lambda.
+    \]
+    This then implies that
+    \[
+        \lim_{\Delta(G) \to \infty}
+        \frac{|E_O(G)|}{\Delta(G)^4}
+        \leq \frac{\lambda}{4}.
+    \]
+    We use corollary \ref{corollary:bipartite_strong_density_graph_class} to translate from
+    coloured graphs back to simple graphs and get that for any bipartite graph $G$,
+    $H = L(G)^2$, maximal subset $F\subseteq E(G)$ such that $H[F]$ has minimum degree
+    $\geq (2-\eta)\Delta(G)^2$ and some $f\in F$ we have
+    \[
+        \lim_{\Delta(G) \to \infty}
+        \frac{|E(H[N_{H[F]}(f)])| + o(\Delta(G)^4)}{\Delta(G)^4}
+        \leq \frac{\lambda}{4}
+        \implies
+        \lim_{\Delta(G) \to \infty}
+        \frac{|E(H[N_{H[F]}(f)])|}{\Delta(G)^4}
+        \leq \frac{\lambda}{4}.
+    \]
+    In order to apply the colouring lemma from Hurley, de Verclos and Kang
+    \cite{hurleyImprovedProcedureColouring2022} we need to find $\sigma\in\R$ such that
+    $|E(H[N_{H[F]}(f)])| \leq (1-\sigma)\binom{2\Delta(G)^2}{2}$ for $\Delta(G)$ large
+    enough. We can use the fact that
+    $\binom{2\Delta(G)^2}{2} = 2\Delta(G)^4 - o(\Delta(G)^4)$
+    to see that $\sigma = (1-\frac{\lambda}{8})$ suffices.
+
+    Now we can apply Theorem 1.2 from Hurley et al \cite{hurleyImprovedProcedureColouring2022}
+    which states that for any $\iota > 0$ there is some $\Delta_0$ large enough such that
+    $\chi(H[F]) \leq (1-\varepsilon(\sigma) + \iota)2\Delta(G)^2$
+    where $\varepsilon(\sigma) = \sigma/2 - \sigma^{3/2}/6$.
+
+    Evaluating $\varepsilon(\sigma)$ for $\lambda = 4.0928$ from 
+    lemma \ref{lemma:sec_sdp_soln} gives a bound of
+    $\chi(H[F]) \leq (1.62538 + \iota)\Delta(G)^2$
+    Note then $2-\eta = 1.6254$ so by the proof of Theorem 1.6 in
+    \cite{hurleyImprovedProcedureColouring2022}
+    this proves $\chi(H) \leq 1.6254\Delta(G)^2$ proving
+    $\chi'_s(G) \leq 1.6254\Delta(G)^2$ for $\Delta(G)$ large enough.
 \end{proof}
