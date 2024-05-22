@@ -597,7 +597,7 @@ We know from section \ref{sec:semidefinite_method} how to construct the correspo
 SDP. A solution to this SDP finds a convex combination of elements of the semantic cone
 which prove an upper bound on $\phi(O)\ \forall\ \phi\ \in \Phi^\emptyset$.
 
-We use a SDP solver to show the following result:
+We use a SDP solver (see appendix \ref{app:flag_software}) to show the following result:
 \begin{lemma}
     \label{lemma:pentagon_1_4_bound}
     \[
@@ -834,8 +834,10 @@ into a space of flags of size $n$ and get the following objective vector
 \]
 where $\sigma_1=\brrb, \sigma_2=\pentF{56}, \sigma_3=\pentF{55}$.
 Then using the exact same set of constraints as from section 
-\ref{sec:pentagon_sdp} we can use an SDP solver using flags of size $n=8$ to find:
+\ref{sec:pentagon_sdp} we can use an SDP solver (see appendix \ref{app:flag_software})
+using flags of size $n=8$ to find:
 \begin{lemma}
+    \label{lemma:pentagon_stronger_bound}
     \[
         0.4146\emptyset - O \in \SemCone^\emptyset
     \]

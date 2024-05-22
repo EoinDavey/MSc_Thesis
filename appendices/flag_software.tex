@@ -1,0 +1,190 @@
+\chapter{Software Implementation}
+\label{app:flag_software}
+
+Our implementations of the SDP programs are built on the flag software written by
+Rémi de Verclos. In particular there are the following two projects:
+\begin{itemize}
+    \item An implementation of the classic flag algebras based on work done during his
+        PhD (\cite{deverclosApplicationsLimitsCombinatorial2016})
+        \url{https://github.com/avangogo/rust-flag-algebra}.
+    \item A library using the previous implementation written to test if the local flags idea
+        would work in principle: \url{https://github.com/avangogo/local-flags}.
+\end{itemize}
+
+The modifications made to these projects for this thesis can be found in the following forks:
+\url{https://github.com/EoinDavey/rust-flag-algebra} and
+\url{https://github.com/EoinDavey/local-flags}.
+These implementations use Rust (\url{https://www.rust-lang.org/}) to generate SDP programs which are
+then solved using CSDP (\url{https://github.com/coin-or/Csdp/wiki}),
+a standard open source SDP solver
+\cite{borchersCSDPLibrarySemidefinite1999}.
+
+\begin{note}
+    Rust is a good choice of language for this application. It is a strongly, statically typed
+    language with high level constructions meaning we can define concepts such as flags, types
+    etc directly in the code. It is however also extremely fast, meaning the bulk computation
+    of matrices of coefficients over large bases is still extremely fast.
+\end{note}
+
+The implementations for the applications in this thesis can be found at these locations:
+\begin{itemize}
+    \item The "direct" pentagon bounding result, lemma
+        \ref{lemma:pentagon_1_4_bound}:\\
+        \verb|local-flags/examples/bounded_pentagon.rs|.
+    \item The stronger pentagon bounding result, lemma
+        \ref{lemma:pentagon_stronger_bound}:\\
+        \verb|local-flags/examples/bounded_pentagon_alt_approach.rs|.
+    \item The strong edge colouring conjecture bound, lemma
+        \ref{lemma:sec_sdp_soln}:\\
+        \verb|local-flags/examples/strong_density.rs|.
+    \item The bipartite strong edge colouring conjecture bound, lemma
+        \ref{lemma:sec_bipartite_sdp_soln}:\\
+        \verb|local-flags/examples/bipartite_strong_density.rs|.
+\end{itemize}
+
+\noindent At an extremely high level, the local flag algebra programs do the following steps:
+\begin{enumerate}
+    \item Define the class of local $\emptyset$-flags by defining a sub-class of
+        coloured graphs.
+    \item Compute an ordered basis of flags of fixed size $n$.
+    \item Construct the objective vector over this basis.
+    \item Enumerate linear constraint vectors over this basis.
+    \item Calculate all local types $\sigma$ and sizes $k$ such that $f^2$ is a vector
+        of size $n$ if $f \in \Lcl^\sigma_m$. Generate the coefficient matrices
+        $C^\sigma_i$ as described in section \ref{sec:semidefinite_method}.
+    \item Write all these vectors and matrices in standard format (SDPA Sparse) such that it
+        can be used with CSDP.
+    \item Call CSDP as a subroutine to solve the generated SDP problem.
+    \item (Optionally) read the generated SDP solution and generate a HTML report.
+\end{enumerate}
+
+After these programs have completed and found an optimal bound for the SDP
+they will create a \textit{certificate} file containing the optimal (dual and primal)
+solution in SDPA-Sparse format. This certificate contains the linear coefficients
+and PSD matrices needed to extract a rigorous proof that $\lambda\emptyset - O\in\SemCone^\emptyset$
+where $\lambda$ is our optimal bound and $O$ is the objective vector. We give more
+information on recovering the proof in appendix TODO.
+
+\section*{Example}
+
+We show now some of the details of how the proof of lemma \ref{lemma:pentagon_1_4_bound}
+is implemented. I'll skip all boilerplate and show only the code which is of high
+importance:
+
+First we have some code describing the local $\emptyset$-flags which are those
+where each connected component contains a black vertex and there are no
+triangles or edges between black vertices.
+
+\begin{lstlisting}[basicstyle=\scriptsize]
+impl SubFlag<G> for TriangleFreeConnected {
+    const HEREDITARY: bool = false;
+
+    fn is_in_subclass(flag: &G) -> bool {
+        // Each connected component contains a vertex colored 0
+        if !flag.is_connected_to(|i| flag.color[i] == 0) {
+            return false;
+        }
+        // No black-black edges.
+        if flag.content.edges().any(|(u, v)| flag.color[u] == 0 && flag.color[v] == 0) {
+            return false;
+        }
+        // No triangles.
+        let n = flag.content.size();
+        for (u, v, w) in iproduct!(0..n, 0..n, 0..n) {
+            if u == v || u == w || v == w {
+                continue;
+            }
+            if !flag.content.edge(u, v)
+                || !flag.content.edge(u, w)
+                || !flag.content.edge(v, w) {
+                continue;
+            }
+            return false;
+        }
+        true
+    }
+}
+\end{lstlisting}
+
+We then create the basis of flags of size 5 and construct our
+objective vector $O=\llbracket \brrb \cdot \ext_1^\sigma \rrbracket$.
+We use a helper function \verb|Degree::project| to construct the extension vectors.
+
+\begin{lstlisting}[basicstyle=\scriptsize]
+pub fn main() {
+    let n = 5;
+    let basis = Basis::new(n);
+
+    let c5_path: F = Colored::new(
+            Graph::new(4, &[(0, 1), (1, 2), (2, 3)]), vec![0, 1, 1, 0])
+            .into();
+    let obj = Degree::project(&c5_path, n).untype();
+\end{lstlisting}
+
+Then we create a vector of inequalities, which we fill with the inequalities
+meaning $\phi(F) \geq 0$ for all flags, $\phi(\llbracket B_k \cdot \ext^{B_k}_1 \rrbracket) = 1$
+and the regularity constraints
+$\phi(\llbracket \ext_i^\sigma - \ext_j^\sigma\rrbracket) = 0$.
+\begin{lstlisting}[basicstyle=\scriptsize]
+let mut ineqs = vec![flags_are_nonnegative(basis)];
+for i in 1..=n {
+    ineqs.push(ones(n, i).untype().equal(1.));
+}
+
+ineqs.append(&mut Degree::regularity(basis));
+\end{lstlisting}
+
+Finally we construct a \verb|Problem| object with these linear constraints and
+all $\phi(\llbracket f^2\rrbracket) \geq 0$ constraints\footnote{These are referred to
+as Cauchy-Schwarz inequalities in the codebase}.
+We then use the convenience object \verb|FlagSolver| to execute this problem
+and to print a HTML report.
+
+\begin{lstlisting}[basicstyle=\scriptsize]
+let pb = Problem::<N, _> {
+    ineqs,
+    cs: basis.all_cs(),
+    obj: -obj,
+}
+.no_scale(); // Means we don't have to rescale the output.
+
+let mut f = FlagSolver::new(pb, "bounded_pentagon");
+f.init();
+f.print_report(); // Write some informations in report.html
+\end{lstlisting}
+
+Executing this code with \verb|cargo run --release --example bounded_pentagon|
+prints output \verb|Optimal value: 0.25000001| which is $1/4$ up to floating point error
+as expected. The program writes the dual and primal solutions to disk as a file
+\verb|certificate|, and the HTML report as \verb|report.html|.
+
+The report should allow a quick visual check that the flag vectors look as expected.
+This is most useful for small $n$, as for large $n$ the flags vectors are too large.
+
+\begin{note}
+    The programs generate a lot of precomputed data which is stored locally in a
+    directory \verb|data/|. This can be quite a large amount of data, so users should
+    take care to not run flag programs for $n$ too large unchecked, as they could in
+    theory use up all disk space.
+\end{note}
+
+\section*{Notes on Correctness}
+
+There are a few features and properties of the flag-algebra library which are valid
+to use for classic flag algebras, but either are not valid for local flags or
+we did not prove that they were valid.
+\begin{itemize}
+    \item Some operations in the flag-algebra library assume that the sum of flags
+        of a fixed size is always equal to 1, which is not true for local flags.
+        Having \verb|HEREDITARY = false| in the graph class definition should disable
+        these operations.
+    \item The \verb|rust-flag-algebra| library as written by de Verclos has some behaviour where it
+        modifies some of the Cauchy-Schwarz matrices. I could not identify why it does
+        this but I think it was intended to reduce the size of the generated SDP
+        programs by taking advantage of some invariants across flags. As I could not validate what
+        this behaviour was doing I disabled it in my fork of this library. Hence it is important
+        (unless you can identify what these modifications are doing) to use the modified
+        version of the \verb|rust-flag-algebra| library.
+    \item There is a function \verb|multiply_and_unlabel| in the \verb|rust-flag-algebra|
+        library which I did not prove was correct for local flags, but I suspect it is.
+\end{itemize}

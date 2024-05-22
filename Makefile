@@ -1,9 +1,10 @@
 .PHONY: default clean full
 
 CHAPTERS := $(wildcard chapters/*.tex)
+APPS := $(wildcard appendices/*.tex)
 ASSETS := $(shell find assets/)
 
-THESIS_DEPS := thesis.tex uvamath.cls macros.sty zotero.bib manual.bib ${CHAPTERS} ${ASSETS}
+THESIS_DEPS := thesis.tex uvamath.cls macros.sty zotero.bib manual.bib ${CHAPTERS} ${ASSETS} ${APPS}
 
 DOCKER_RUN = docker run \
 			 --rm \

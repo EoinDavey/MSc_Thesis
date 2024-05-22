@@ -7,30 +7,23 @@
 
 \usepackage{graphicx}
 \graphicspath{{assets/}}
+\usepackage{listings}
 \usepackage{graphbox}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{stmaryrd}
 \usepackage[pdfborder={0 0 0}]{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue
-}
+\hypersetup{colorlinks=true, linkcolor=blue}
 
 \usepackage{csquotes,xpatch} % Recommended by biblatex
-\usepackage[
-    style=numeric]{biblatex}
+\usepackage[style=numeric]{biblatex}
 \addbibresource{zotero.bib}
 \addbibresource{manual.bib}
 
-\usepackage{geometry}
-\geometry{
-    a4paper,
-    nohead,
-}
-\usepackage{layout}
+\usepackage[a4paper, nohead]{geometry}
 
+% Load custom macros
 \input{macros.sty}
 
 \title{Local Flags: Bounding the Strong Chromatic Index} % Title of your thesis
@@ -153,6 +146,11 @@ which is the best known bound.
 \end{figure}
 
 \restoregeometry
+
+\appendix
+
+\include{appendices/notation}
+\include{appendices/flag_software}
 
 \printbibliography{}
 

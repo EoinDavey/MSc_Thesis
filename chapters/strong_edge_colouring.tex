@@ -468,7 +468,8 @@ In practice though to prove theorem \ref{thm:strong_edge_colouring_bound}
 we need only to find some "good" value of $\eta$. We found such an $\eta$ using
 a search method described in appendix TODO.
 
-We use standard SDP software and choose $n=5$ to find the following bound:
+We use our SDP software (appendix \ref{app:flag_software}) and choose $n=5$ to find the following
+bound:
 \begin{lemma}
     \label{lemma:sec_sdp_soln}
     For $\eta = 0.2703$ we have
@@ -754,10 +755,11 @@ $(F_1, \dots, F_\ell)$ is the ordered collection of local flags of size $n$.
     \ \forall\ \sigma\ \text{local type}\ \forall\ 2m-|\sigma|=n
 \end{align*}
 
-We then use the SDP method as outlined in appendix TODO to find the following
+We then use the SDP method (appendix \ref{app:flag_software}) again to find the following
 result:
 
 \begin{lemma}
+    \label{lemma:sec_bipartite_sdp_soln}
     For $\eta=0.3746$ we have
     $4.0928\emptyset - O \in \SemCone^\emptyset$
 \end{lemma}
@@ -806,7 +808,7 @@ theorem \ref{thm:strong_edge_colouring_bound} in the previous section.
     where $\varepsilon(\sigma) = \sigma/2 - \sigma^{3/2}/6$.
 
     Evaluating $\varepsilon(\sigma)$ for $\lambda = 4.0928$ from 
-    lemma \ref{lemma:sec_sdp_soln} gives a bound of
+    lemma \ref{lemma:sec_bipartite_sdp_soln} gives a bound of
     $\chi(H[F]) \leq (1.62538 + \iota)\Delta(G)^2$
     Note then $2-\eta = 1.6254$ so by the proof of Theorem 1.6 in
     \cite{hurleyImprovedProcedureColouring2022}

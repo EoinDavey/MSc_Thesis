@@ -17,8 +17,6 @@
 
 \LoadClassWithOptions{scrreprt}
 \setkomafont{disposition}{\bfseries}
-%\RequirePackage[a4paper]{geometry}
-
 
 % Variable text commands
 \def\institute#1{\gdef\@institute{#1}}

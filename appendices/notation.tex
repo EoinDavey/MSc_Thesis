@@ -1,0 +1,28 @@
+\chapter{Notation}
+\begin{itemize}
+    \item $[k]:$ The set $\{1, \dots, k\}\subseteq\N.$ $[0]=\emptyset.$
+    \item $G[U]:$ Induced subgraph.
+    \item $|\sigma|, |F|:$ The type size and flag size (number of vertices) respectively.
+    \item $\cong:$ Isomorphism.
+    \item $N_G(v):$ The neighbourhood of $v$ in $G$ (subscript often omitted).
+    \item $a := b:$ Define $a$ to be equal to $b.$
+    \item $\im f:$ The image of a function $f$.
+    \item $X \succ 0$: $X$ is positive semidefinite.
+    \item $\coef_j$: Coefficient function. Only well defined relative to some ordered basis.
+    \item $G^v$ for $v\in V(G)$ is the $\vertex$-flag where $v$ is labelled.
+    \item $\emptyset$: Can denote the empty set or the empty graph.
+    \item $\binom{X}{k}$: for $X$ a set is the set of $k$-subsets of $X$.
+\end{itemize}
+We use the following asymptotic notation:\footnote{We tend to write $f\in O(g(n))$ where it is more
+customary to write $f = O(g(n))$. This is as we prefer to avoid "one way equalities", this is just
+notational convention.}
+\begin{itemize}
+    \item $f(n) \in O(g(n))$ means $\exists k> 0, \exists N$ such that $f(n) \leq kg(n)\ \forall\
+        n\geq N$. Alternatively $\limsup_{n\to\infty}\frac{f(n)}{g(n)} < \infty$.
+    \item $f(n) \in o(g(n))$ means $\lim_{n\to\infty} \frac{f(n)}{g(n)} = 0$.
+    \item $f(n) \in \Omega(g(n))$ means $\exists k> 0, \exists N$ such that $f(n) \geq kg(n)\ \forall\
+        n\geq N$. Alternatively $\liminf_{n\to\infty}\frac{f(n)}{g(n)} > 0$.
+    \item $f(n) \in \omega(g(n))$ means $\lim_{n\to\infty} \frac{f(n)}{g(n)} = \infty$.
+    \item $f(n) \in \Theta(g(n))$ means $f\in O(g(n))$ and $f\in \Omega(n)$.
+    \item $f(n) \sim g(n)$ means $f=(1+o(1))g(n)$.
+\end{itemize}
