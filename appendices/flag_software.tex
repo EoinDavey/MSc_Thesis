@@ -12,10 +12,10 @@ Rémi de Verclos. In particular there are the following two projects:
 \end{itemize}
 
 The modifications made to these projects for this thesis can be found in the following forks:
-\url{https://github.com/EoinDavey/rust-flag-algebra} and
+\url{https://github.com/EoinDavey/rust-flag-algebra} and\\
 \url{https://github.com/EoinDavey/local-flags}.
-These implementations use Rust (\url{https://www.rust-lang.org/}) to generate SDP programs which are
-then solved using CSDP (\url{https://github.com/coin-or/Csdp/wiki}),
+These implementations use Rust\footnote{\url{https://www.rust-lang.org/}} to generate SDP programs which are
+then solved using CSDP\footnote{\url{https://github.com/coin-or/Csdp/wiki}},
 a standard open source SDP solver
 \cite{borchersCSDPLibrarySemidefinite1999}.
 
@@ -85,7 +85,8 @@ impl SubFlag<G> for TriangleFreeConnected {
             return false;
         }
         // No black-black edges.
-        if flag.content.edges().any(|(u, v)| flag.color[u] == 0 && flag.color[v] == 0) {
+        if flag.content.edges()
+            .any(|(u, v)| flag.color[u] == 0 && flag.color[v] == 0) {
             return false;
         }
         // No triangles.
@@ -153,7 +154,7 @@ f.init();
 f.print_report(); // Write some informations in report.html
 \end{lstlisting}
 
-Executing this code with \verb|cargo run --release --example bounded_pentagon|
+Executing this code with \verb|cargo run --release --example bounded_pentagon|\\
 prints output \verb|Optimal value: 0.25000001| which is $1/4$ up to floating point error
 as expected. The program writes the dual and primal solutions to disk as a file
 \verb|certificate|, and the HTML report as \verb|report.html|.
@@ -176,7 +177,8 @@ we did not prove that they were valid.
 \begin{itemize}
     \item Some operations in the flag-algebra library assume that the sum of flags
         of a fixed size is always equal to 1, which is not true for local flags.
-        Having \verb|HEREDITARY = false| in the graph class definition should disable
+        Having\\
+        \verb|HEREDITARY = false| in the graph class definition should disable
         these operations.
     \item The \verb|rust-flag-algebra| library as written by de Verclos has some behaviour where it
         modifies some of the Cauchy-Schwarz matrices. I could not identify why it does
