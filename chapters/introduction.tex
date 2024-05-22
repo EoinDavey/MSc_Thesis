@@ -1,7 +1,8 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-Consider a simple\footnote{An undirected graph with no self loops and at most 1 edge between any two nodes} graph $G$. How many colours do you need to colour each edge such that no edges which touch
+Consider a simple\footnote{An undirected graph with no self loops and at most 1 edge between any two
+vertices.} graph $G$. How many colours do you need to colour each edge such that no edges which touch
 have the same colour? What if no edges which touch some common edge can have the same colour?
 Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colours but
 the best known proof only shows an upper bound of $1.772\Delta(G)^2$ colours. In this thesis
@@ -213,28 +214,32 @@ to the same methods.
 
 Instead, we can define a new "density" function which instead normalises our induced
 count by a different denominator, one which captures the graph parameter we want to measure
-our count "relative to". The idea to build a new algebra from a modified density function was
-originally explored by de Verclos in 2020\footnote{In unpublished notes}; He theorised what this
-algebra could look like in a specific case and modified some classic flag algebra\footnote{An
-implementation he wrote himself: \url{https://crates.io/crates/flag-algebra}} software to show that this method likely could improve on the
-Erd\H{o}s and Nešetřil conjecture. This thesis evolves and formalises this idea and
-then applies it concretely.
-
-In particular, in chapter \ref{chap:local_flags} we introduce a
+our count "relative to". In particular, in chapter \ref{chap:local_flags} we introduce a
 new \textit{local density function} and a concept we call a \textit{local flag}.
 We show that, under certain conditions, these local flags also form a nice algebra
 with which we can apply the semidefinite method to prove bounds. We then apply this new
 method to several problems, including the 
 \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}.
 
-\section*{Results}
-\addcontentsline{toc}{section}{Results}
+\section*{Contributions}
+\addcontentsline{toc}{section}{Contributions}
+
+The concept for this new framework was originally explored by \textit{de Verclos} in
+2020\footnote{In unpublished notes}.
+They conjectured the structure of the framework, then adapted flag algebra
+software\footnote{\url{https://crates.io/crates/flag-algebra}}
+to test if this framework could in principle improve on existing results.
+This experiment showed that if the framework could be realised formally then it could improve the
+best known bound on the strong chromatic index.
+The contribution of chapter \ref{chap:local_flags} is the concretisation of this idea:
+We give original definitions, results and proofs which make this framework rigorous.
 
 Using this new framework we have made progress on several open problems:
 \begin{itemize}
-    \item In chapter \ref{chap:pentagon_conjecture} we show a "warmup" application of the new framework by making progress on
-        a bounded degree version of the famous Erd\H{o}s pentagon conjecture \cite{erdos_pentagon_1984}.
-        We show how a straightforward application of the local flags method makes non-trivial
+    \item In chapter \ref{chap:pentagon_conjecture} we show a "warmup" application of the new
+        framework. We make a new conjecture which is a bounded degree version of the famous
+        Erd\H{o}s pentagon conjecture \cite{erdos_pentagon_1984}.
+        We show then how a straightforward application of the local flags method makes non-trivial
         progress towards proving the conjecture, and show that a slightly more complex application
         then gets even closer to the full result.
         This problem was chosen as the original conjecture was first proven using
@@ -242,7 +247,8 @@ Using this new framework we have made progress on several open problems:
         \cite{grzesikMaximumNumberFivecycles2012}).
     \item In chapter \ref{chap:strong_edge_colouring} then we apply this new framework to make progress on the
         \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}, achieving the best-yet
-        bound of $\chi'_s(G) \lesssim 1.73\Delta(G)^2$.
+        bound of $\chi'_s(G) \lesssim 1.73\Delta(G)^2$. The approach used here is a modification
+        of the approach conjectured by de Verclos.
     \item At the end of chapter \ref{chap:strong_edge_colouring} we alter the method to make
         the first progress on the special bipartite version of this conjecture, showing that
         if $G$ is bipartite then we have the bound $\chi'_s(G) \lesssim 1.6254\Delta(G)^2$.

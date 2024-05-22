@@ -5,7 +5,6 @@ In the previous chapter we saw how to use flag algebras to bound density functio
 asymptotically. Some things are not described by a density function but still feel
 "density like" which might lead us to speculate if we can modify the flag algebra method to work
 for these functions.
-
 For example, in chapter \ref{chap:pentagon_conjecture} we will see a problem we're calling the
 bounded degree Erd\H{o}s' pentagon problem. In approaching that problem we will ask:
 "Given a triangle-free graph $G$ with max degree $\Delta(G)$ and some fixed vertex
@@ -17,7 +16,6 @@ Phrased differently: If $P(G,v)$ is the number of pentagons in $G$ containing $v
 we want to find an asymptotic upper bound on $P(G,v) / \Delta(G)^4$. If we pick a
 flag $F=\cfivemarked$ which is a pentagon with a single labelled vertex then this
 could be written as $c(F; G^v) / \Delta(G)^4$.
-
 This looks a lot like
 a density function, except that our denominator is of the wrong form: It should
 be $\in\Theta(|G|^4)$, not $\Delta(G)^4$. It is for this reason that applying classic
@@ -161,8 +159,8 @@ can drop the $\sigma$ superscript if $\sigma=\emptyset$.
 Comparing this section to the classic flag algebra case (section \ref{sec:flag_algebras})
 you might expect us to introduce something akin to the chain rule (lemma \ref{lemma:chain_rule}).
 Unfortunately no such relation exists in general for local flags. This is the first big
-loss when moving to the new framework: Prima facie it's unclear how one can "project"
-small flags into the space of larger flags.
+loss when moving to the new framework: Prima facie, it's unclear how one can "project"
+small flags into a space of larger flags.
 
 \begin{note}
     This second property we require of local flags is not necessarily implied by
