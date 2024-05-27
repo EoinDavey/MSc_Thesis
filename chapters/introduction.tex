@@ -4,7 +4,7 @@
 Consider a simple\footnote{An undirected graph with no self loops and at most 1 edge between any two
 vertices.} graph $G$. How many colours do you need to colour each edge such that no edges which touch
 have the same colour? What if no edges which touch some common edge can have the same colour?
-Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colours but
+Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colours, but
 the best known proof only shows an upper bound of $1.772\Delta(G)^2$ colours. In this thesis
 we show how we can bring this bound down to $1.73\Delta(G)^2$ by introducing a novel framework
 which is a modification of Razborov's flag algebras. We also apply this new framework
@@ -114,26 +114,21 @@ the number of subsets $U\subseteq V(G)$ such that $G[U] \cong F$. Then we define
 
 \begin{note}
     $p(F; G)$ is precisely the same as the probability that $G[U] \cong F$ if
-    $U \subseteq V(G)$ is a uniformly random subset of size $|F|$.
+    $U \subseteq V(G)$ is a uniformly random subset of size $|F|$. This is often
+    the more useful way to interpret $p(F;G)$.
 \end{note}
 
 What are some simple algebraic relationships between small subgraphs?
-One thing that seems intuitive is that the density of edges in $G$ plus the density
-of non-edges in $G$ is precisely 1. Similarly the densities of all possible graphs on
-3 vertices is also 1.
-\begin{align*}
-    p(\edge; G) + p(\nonedge; G) &= 1\\
-    p(\triangleflag; G)
-    + p(\triangletwoedge; G)
-    + p(\triangleoneedge; G)
-    + p(\triangleempty; G) &= 1
-\end{align*}
-
-The density of edges is the probability that if we pick a pair of vertices that there is an
-edge between them. We can relate this to the densities of graphs on 3 vertices by remarking
-that sampling a pair of vertices uniformly at random can be done by first sampling a
-triple of vertices at random, and then sampling 2 of those 3 uniformly again. This gives
-us the following relation:
+Consider picking 2 vertices at random, then either they form an edge or they don't.
+Hence $p(\edge; G) + p(\nonedge; G) = 1$. In general, the sum of densities of all
+flags of some size $k$ is always 1. e.g. 
+\[ 
+    p(\triangleflag; G) + p(\triangletwoedge; G) + p(\triangleoneedge; G)
+    + p(\triangleempty; G) = 1
+\]
+Now we note that we can sample 2 vertices uniformly at random by
+first sampling a triple of vertices at random, and then sampling 2 of those 3 uniformly randomly
+again. This lets us derive us the following relation:
 \[
     p(\edge; G) = 
     p(\triangleflag; G)
@@ -150,21 +145,22 @@ vertices and then splitting the 4 randomly into two halves tells us:
 
 Simplifying our notation then we might arrive at a symbolic algebra which has relations
 like
-\begin{align*}
-    \edge + \nonedge &= 1\\
+\begin{gather*}
+    \edge + \nonedge = 1\\
     \triangleflag
     + \triangletwoedge
     + \triangleoneedge
-    + \triangleempty &= 1\\
-    \edge &=
+    + \triangleempty = 1\\
+    \edge =
     \triangleflag
     + \frac{2}{3}\triangletwoedge
     + \frac{1}{3}\triangleoneedge\\
-    \edge^2 &=
+    \edge^2 =
     \kfour + \frac{2}{3}(\kfourmone + \cfour)
         + \frac{1}{3}(\kfourmtwo + \kfourbucket + \kfourtwopair).
-\end{align*}
+\end{gather*}
 
+We call these graph symbols \textit{flags}.
 We can then prove results with simple symbolic manipulation: In a triangle free graph
 we would have $\triangleflag = 0$, hence
 \[
@@ -185,11 +181,7 @@ also easily proved with flag algebras which is seen in chapter \ref{chap:classic
 One of the most (if not \textit{the most}) important aspects of flag algebras is that
 they lend themselves very well to computer search methods.
 The flag algebras allow us to prove results using only simple symbol manipulation in a very
-tractable way; All details of the structures at play are abstracted out, only algebraic relations
-between real numbers remains. We then have several tools at our disposal, in particular
-linear combinations of flag inequalities can capture complex counting arguments, and
-we will see later an operator on the algebra which enables us to use Cauchy-Schwarz style
-arguments.
+tractable way.
 
 In practice we use the \textit{semidefinite method} to optimise some objective function
 over the algebra, and due to duality this gives us a rigorous proof of an upper bound on our
@@ -201,7 +193,7 @@ and how we can interpret the dual solutions in a more human understandable way.
 \addcontentsline{toc}{section}{Local Flags}
 
 One might be tempted to try to apply these flag algebras directly to our strong neighbourhood
-density problem but in practice this problem doesn't fit well into the flag algebra model.
+density problem, but in practice this problem doesn't fit well into the flag algebra model.
 In particular, Razborov's flag algebras are constructed to work well with density functions
 like the induced density function $p(F; G) = c(F; G)/\binom{|G|}{|F|}$ which have a
 denominator which is $\Theta(|G|^{|F|})$. This is convenient if we are trying to prove
@@ -213,31 +205,37 @@ wants to bound $\chi'_s(G)$ with a polynomial in $\Delta(G).$ This does not lend
 to the same methods.
 
 Instead, we can define a new "density" function which instead normalises our induced
-count by a different denominator, one which captures the graph parameter we want to measure
+count by a different denominator: one which captures the graph parameter we want to measure
 our count "relative to". In particular, in chapter \ref{chap:local_flags} we introduce a
 new \textit{local density function} and a concept we call a \textit{local flag}.
 We show that, under certain conditions, these local flags also form a nice algebra
-with which we can apply the semidefinite method to prove bounds. We then apply this new
-method to several problems, including the 
-\hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}.
+with which we can apply the semidefinite method to prove bounds.
 
-\section*{Contributions}
-\addcontentsline{toc}{section}{Contributions}
+\section*{Contributions and Results}
+\addcontentsline{toc}{section}{Contributions and Results}
 
-The concept for this new framework was originally explored by \textit{de Verclos} in
+The work in this thesis was completed with valuable contributions from Rémi de Verclos,
+Eoin Hurley, Jan Volec and my supervisor Ross Kang.
+
+The concept for this new framework was originally explored by Rémi de Verclos in
 2020\footnote{In unpublished notes}.
-They conjectured the structure of the framework, then adapted flag algebra
+He conjectured the structure of the framework, then adapted flag algebra
 software\footnote{\url{https://crates.io/crates/flag-algebra}}
 to test if this framework could in principle improve on existing results.
 This experiment showed that if the framework could be realised formally then it could improve the
 best known bound on the strong chromatic index.
-The contribution of chapter \ref{chap:local_flags} is the concretisation of this idea:
-We give original definitions, results and proofs which make this framework rigorous.
 
-Using this new framework we have made progress on several open problems:
+The conjecture which motivates chapter \ref{chap:pentagon_conjecture}, the
+proof of lemma \ref{lemma:pentagon_1_8_tight} and the definition of $Q(G,v)$ in
+section \ref{sec:pentagon_stronger} were conceived by Eoin Hurley.
+
+\hfill
+
+Using our new framework which is introduced in chapter \ref{chap:local_flags}
+we have made progress on several open problems:
 \begin{itemize}
     \item In chapter \ref{chap:pentagon_conjecture} we show a "warmup" application of the new
-        framework. We make a new conjecture which is a bounded degree version of the famous
+        framework. We state a new conjecture which is a bounded degree version of the famous
         Erd\H{o}s pentagon conjecture \cite{erdos_pentagon_1984}.
         We show then how a straightforward application of the local flags method makes non-trivial
         progress towards proving the conjecture, and show that a slightly more complex application

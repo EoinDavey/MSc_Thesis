@@ -3,7 +3,23 @@
 
 As defined in the \hyperref[sec:intro_strong_edge_coloring]{introduction}
 a strong edge colouring of a graph is an edge colouring where two edges which are incident to some
-common edge must have different colours.
+common edge must have different colours. The minimum colours required for a strong edge colouring of
+$G$ is called the strong chromatic index $\chi'_s(G)$.
+
+In this chapter we will use the semidefinite method on local flags to prove the following
+theorems:
+\begin{knowntheorem}
+    For $\Delta(G)$ large enough we have
+    \[\chi'_s(G) \leq 1.73\Delta(G)^2.\]
+\end{knowntheorem}
+\begin{knowntheorem}
+    If $G$ is bipartite then for $\Delta(G)$ large enough we have
+    \[\chi'_s(G) \leq 1.6254\Delta(G)^2.\]
+\end{knowntheorem}
+Both of these theorems are the best known bounds in their respective cases.
+
+
+\section{Line Graph Equivalence}
 
 We can view a strong edge colouring of a graph as a proper vertex colour of $L(G)^2$, the
 square of the line graph of $G$ (see \cite{molloyBoundStrongChromatic1997}).

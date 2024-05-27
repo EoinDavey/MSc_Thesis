@@ -5,7 +5,7 @@ Given a graph $G$ let $P(G)$ denote the number of pentagons (5-cycles)\footnote{
 subsets: the order does not matter} in $G$.
 In 1983 \cite{erdosProblemsGraphTheory1984} Erd\H{o}s made the following conjecture:
 
-\begin{knownconjecture}
+\begin{knownconjecture}[Erd\H{o}s 1983]
     If $G$ is triangle free then $P(G) \leq \left(\frac{|G|}{5}\right)^5$.
 \end{knownconjecture}
 
@@ -14,19 +14,39 @@ This conjecture remained open until 2012 when it was proved by both Grzesik
 \cite{hatamiNumberPentagonsTrianglefree2013}. 
 Importantly for us, both of these papers used the Razborov flag algebras to prove the result!
 
-\section{The Bounded Degree Conjecture}
-
 Inspired by Erd\H{o}s' conjecture we ask
 the following question: Can we bound the number of pentagons in a triangle free graph
-as a function of the maximum degree $\Delta(G)$?\footnote{Originally asked by E. Hurley}.
+as a function of the maximum degree $\Delta(G)$?
 This leads us to the following \textit{bounded degree pentagon conjecture}:
 
 \begin{conjecture}
     \label{conj:bounded_pentagon}
     If $G$ is triangle free then 
     $P(G) \leq \frac{|G|}{5}\left(\frac{\Delta(G)}{2}\right)^4
-    =\frac{|G|\Delta(G)^4}{5\cdot 16}$!
+    =\frac{|G|\Delta(G)^4}{5\cdot 16}$.
 \end{conjecture}
+
+We claim then the following theorem:
+\begin{theorem}
+    \label{thm:full_pentagon_bound}
+    If $G$ is triangle free then
+    $P(G) \leq 0.02073 \cdot |G|\Delta(G)^4 \approx 1.658\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
+\end{theorem}
+
+We prove this result using local flags, but the approach is slightly too complex to serve
+as the "warmup" application, so we first first prove this slightly weaker result:
+
+\begin{theorem}
+    \label{thm:simple_pentagon_bound}
+    If $G$ is triangle free then
+    $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8} = 2\cdot\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
+\end{theorem}
+
+We will focus initially on proving this weaker result, then in section
+\ref{sec:pentagon_stronger} we will adapt the method to prove the stronger
+result.
+
+\section{Tightness}
 
 \begin{lemma}
     If the bounded degree pentagon conjecture is true then it is tight.
@@ -51,28 +71,6 @@ This leads us to the following \textit{bounded degree pentagon conjecture}:
     the bound. We can do this for any even $k=\Delta(G)$ so this holds asymptotically.
 \end{proof}
 
-We claim then the following theorem:
-\begin{theorem}
-    \label{thm:full_pentagon_bound}
-    If $G$ is triangle free then
-    $P(G) \leq 0.02073 \cdot |G|\Delta(G)^4 \approx 1.658\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
-\end{theorem}
-
-We prove this result using local flags, but the approach is slightly too complex to serve
-as the "warmup" application, so we first first prove this slightly weaker result:
-
-\begin{theorem}
-    \label{thm:simple_pentagon_bound}
-    If $G$ is triangle free then
-    $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8} = 2\cdot\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
-\end{theorem}
-
-We will show how we proved the stronger result at the end in section
-\ref{sec:pentagon_stronger}.
-
-First we argue that proving an asymptotic bound $P(G) \lesssim \lambda|G|\Delta(G)^4$
-proves $P(G) \leq \lambda|G|\Delta(G)^4$ for all $G$.
-We then argue that it suffices to prove this asymptotic bound only for regular $G$.
 
 \section{Reductions}
 
@@ -234,6 +232,7 @@ Unfortunately we know that this approach cannot be directly improved to show the
 full $\frac{|G|}{5}\frac{\Delta(G)^4}{16}$ bound as this result is tight:
 
 \begin{lemma}
+    \label{lemma:pentagon_1_8_tight}
     There exists regular graphs $G$ with arbitrarily large $\Delta(G)$ such that
     some $v\in V(G)$ sits on $\frac{|G|}{5}\frac{\Delta(G)^4}{8}$ 5-cycles.
 \end{lemma}
@@ -375,15 +374,15 @@ These extensions are important for the following reason:
     These relations suggest that if we focused only on regular graph classes
     from the beginning we could have quotiented out the set of relations
     $\llbracket \ext_i^\sigma - \ext_j^\sigma\rrbracket$ from our vector space $\R\HeredG^\emptyset$
-    to get a "cleaner" algebra. I have not verified that this is possible. If this is true
+    to get a "cleaner" algebra. We have not verified that this is possible. If this is true
     it could theoretically enable us to generate smaller semidefinite programs but we would
     need an algorithmic way of reducing vectors over this subspace which prima facie is not
     a straightforward task.
 \end{note}
 
-The value of these results for us is twofold. Firstly this gives us a wide set of
+The value of these results for us is twofold: Firstly, this gives us a wide set of
 easy to generate elements of the semantic cone which we can use in our semidefinite
-program. Secondly though this property where
+program. Secondly, though this property where
 $\phi(\llbracket f \rrbracket)=\phi(\llbracket f \cdot \ext_i^\sigma\rrbracket)$ gives
 us a way of expressing a vector in a subspace of larger flags. In particular multiplying by
 $\ext_i^\sigma$ gives a vector over flags which are 1 larger than those in the original
@@ -791,7 +790,7 @@ of theorem \ref{thm:simple_pentagon_bound}.
 \label{sec:pentagon_stronger}
 
 We can use local flags in a more complex way to get the stronger result
-of theorem \ref{thm:full_pentagon_bound}. This approach is originally an idea from Eoin Hurley.
+of theorem \ref{thm:full_pentagon_bound}.
 
 To prove the bound in theorem \ref{thm:simple_pentagon_bound} we defined
 $P(G,v)$ to be the number of pentagons containing a $v \in G$
@@ -817,7 +816,7 @@ We will prove this lemma now using local flags.
 We use the same class of graphs $\Gcl$ as before, where the black vertices represent
 those in the neighbourhood of $v$ and the others are red.
 We've seen already then how to convert a triangle free regular graph $G$ into
-the corresponding $G' \in \Gcl$ such that $\rho(\brrb, G) = P(G,v)/\binom{\Delta(G)}{4}$.
+the corresponding $G' \in \Gcl$ such that $\rho(\brrb, G') = P(G,v)/\binom{\Delta(G)}{4}$.
 
 Note that any pentagon passing through the neighbourhood of $v$ contains at most 2
 such vertices. Therefore

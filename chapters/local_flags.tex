@@ -1,32 +1,31 @@
 \chapter{Local Flags}
 \label{chap:local_flags}
 
-In the previous chapter we saw how to use flag algebras to bound density functions
-asymptotically. Some things are not described by a density function but still feel
-"density like" which might lead us to speculate if we can modify the flag algebra method to work
-for these functions.
-For example, in chapter \ref{chap:pentagon_conjecture} we will see a problem we're calling the
-bounded degree Erd\H{o}s' pentagon problem. In approaching that problem we will ask:
+Consider the following question from chapter \ref{chap:pentagon_conjecture}:
 "Given a triangle-free graph $G$ with max degree $\Delta(G)$ and some fixed vertex
 $v\in V(G)$, how many pentagons (5-cycles) are there containing $v$"?
-We want to upper bound this number of pentagons as a function of $\Delta(G)$. The upper
-bound of $\Delta(G)^4$ is easily seen, but $\frac{1}{2}\Delta(G)^4$ is also easy to prove.
-
+The upper bound of $\Delta(G)^4$ is easily seen, but we can do better.
 Phrased differently: If $P(G,v)$ is the number of pentagons in $G$ containing $v$ then
-we want to find an asymptotic upper bound on $P(G,v) / \Delta(G)^4$. If we pick a
-flag $F=\cfivemarked$ which is a pentagon with a single labelled vertex then this
+we want to find an asymptotic upper bound on $P(G,v) / \Delta(G)^4$.
+If we pick a flag $F=\cfivemarked$ which is a pentagon with a single labelled vertex then this
 could be written as $c(F; G^v) / \Delta(G)^4$.
 This looks a lot like
 a density function, except that our denominator is of the wrong form: It should
 be $\in\Theta(|G|^4)$, not $\Delta(G)^4$. It is for this reason that applying classic
 flag algebras directly is not promising: Our function is of the wrong form.
 
-It turns out that we can define a new type of "density function" which
-can be used to bound functions like $c(F; G^v) / \Delta(G)^4$. These density functions
-then also have a rich (but limited) algebraic structure which we can exploit.
-In the following sections we introduce our new local density function and then go on to
-define local versions of many of the same structures that exist in the classic flag
-algebra. We then prove the algebraic structure these \textit{local flags} possess.
+In this chapter we will introduce the \textit{local density} function
+$\rho(F; G) := c(F; G)/\binom{\Delta(G)}{|F|-|\sigma|}$ and define a product on
+vectors of flags such that
+\[\rho(f; H)\rho(g; H) = \rho(f\cdot g; H) + O\left(\frac{1}{\Delta(G)}\right).\]
+We also show that we have an averaging operator which works in the limit:
+\[
+    \E_\theta[\rho(F; (G,\theta))] \sim
+    \frac{\rho(\llbracket F\rrbracket; G)}{\rho(\llbracket \sigma\rrbracket; G)}
+\]
+We show then that these constructions suffice to allow us to apply the semidefinite
+method in order to prove rigorous bounds on $\rho(f; G)$ in the limit as
+$\Delta(G)\to\infty$.
 
 \section{Local Flags}
 
@@ -40,14 +39,14 @@ Let $\Delta$ be some graph parameter $\Delta\colon \Gcl \to \N_0$.
 \end{note}
 
 We start by defining the \textit{local density} in the same way as the induced
-density (Definition \ref{def:induced_density}) but with a different denominator.
-We use the definition of $\sigma$-flags (Definition \ref{def:sigma_flag}) from the
+density (definition \ref{def:induced_density}) but with a different denominator.
+We use the definition of $\sigma$-flags (definition \ref{def:sigma_flag}) from the
 classic flag algebras directly.
 
 \begin{definition}[Local Density]
     Let $(F, \theta), (G,\eta)$ be $\sigma$-flags as before. Then\\
     $c((F,\theta); (G,\eta))$ is
-    the induced count (Definition \ref{def:induced_count}). Define the
+    the induced count (definition \ref{def:induced_count}). Define the
     \textbf{local density}\\
     $\rho((F, \theta); (G, \eta))$ to be
     \[
@@ -57,9 +56,9 @@ classic flag algebras directly.
 \end{definition}
 
 Because of our choice of normalisation we are not
-guaranteed the $[0,1]$ codomain as in the classic case. In particular this
+guaranteed the $[0,1]$ codomain as in the classic case. In particular, this
 destroys the nice probabilistic sampling interpretation that we had with the
-induced density function. In general this function may be bounded or unbounded:
+induced density function. In general, this function may be bounded or unbounded:
 
 \begin{example}
     If $\Gcl$ is all graphs then $c(\vertex; G)= |V(G)|$ hence
@@ -112,7 +111,6 @@ obstacle but means we need to adjust our notation.
     Given a graph class $\Gcl$ we define the \textbf{hereditary closure} of $\Gcl$ to be
     the smallest graph class which contains $\Gcl$ and is closed under taking
     induced subgraphs. i.e. it's the graphs $G\in\Gcl$ with their induced subgraphs.
-
     We denote this as $\HeredG$.
 \end{definition}
 
@@ -190,7 +188,7 @@ small flags into a space of larger flags.
     meaning $F$ is not a local $\emptyset$-flag.
 \end{proof}
 
-Intuitively $F$ is a local $\sigma$-flag (relative to our choice of $\Gcl$ and
+Intuitively, $F$ is a local $\sigma$-flag (relative to our choice of $\Gcl$ and
 $\Delta$) if $\Delta(G)$ bounds the "degree of freedom" for the possible mapping
 of $F$'s unlabelled vertices.
 
@@ -202,13 +200,14 @@ of $F$'s unlabelled vertices.
 \end{lemma}
 
 \begin{proof}
-    Intuitively the labelled vertices are fixed. The vertices directly connected to
-    labelled vertices have $\Delta(G)$ choices. After mapping those we again have
-    $\Delta(G)$ choices for their unmapped neighbours etc leading to a total
-    bound of $O(\Delta(G)^{|F|-|\sigma|})$ choices.
-
-    The full details of the proof can be found in the proof of
+    We give a sketch of the proof: The full details of the proof can be found in the proof of
     lemma \ref{lemma:pentagon_local_flags}.
+
+    Consider bounding the number of isomorphisms $F \to G[U]$. The labelled vertices are
+    fixed. The vertices directly connected to
+    labelled vertices have $\Delta(G)$ choices. After mapping those we again have
+    $\Delta(G)$ choices for their unmapped neighbours etc. leading to a total
+    bound of $O(\Delta(G)^{|F|-|\sigma|})$ choices.
 \end{proof}
 
 \section{Algebraic Structure}
@@ -216,8 +215,8 @@ of $F$'s unlabelled vertices.
 Now that we have described local $\sigma$-flags $\Gloc^\sigma$ we can describe their
 algebraic structure. Ideally we would like to construct a product structure
 on $\Gloc^\sigma$ such that we get a result like theorem \ref{thm:classic_product_lim} but for
-the local density function $\rho$. In fact this is exactly what we get: An algebraic structure such
-that $\rho(f; G)\rho(g;G) = \rho(f\cdot g; G) + o(1)$ (Theorem \ref{thm:local_product_lim}).
+the local density function $\rho$. In fact, this is exactly what we get: An algebraic structure such
+that $\rho(f; G)\rho(g;G) = \rho(f\cdot g; G) + o(1)$ (theorem \ref{thm:local_product_lim}).
 
 First we take the concept of limit functionals (section \ref{sec:limit_functionals})
 from the classic flag algebras with some minor modifications:
@@ -291,8 +290,8 @@ product work:
 
 \begin{theorem}
     Let $F, F' \in \Gloc^\sigma$ be local $\sigma$-flags and $H$ a $\sigma$-flag
-    $\in \HeredG^\sigma$
-    of size $n=|F|+|F'|-|\sigma|$ such that $p(F, F'; H) > 0$ then $H$ is a local
+    $\in \HeredG{}^\sigma$
+    of size\\ $n=|F|+|F'|-|\sigma|$ such that $p(F, F'; H) > 0$, then $H$ is a local
     $\sigma$-flag.
 \end{theorem}
 
@@ -303,17 +302,15 @@ product work:
     i.e. $(G \mapsto c(H; G)) \in O(\Delta(G)^{|H|-|\sigma|}).$
 
     As $p(F, F'; H) > 0$ there is some $U, U'\subseteq V(H)$ such that $U\cap U'=\im\eta$ and
-    $F \cong H[U] \land F'\cong H[U']$ as $\sigma$ flags. As $|H|=|F|+|F'|-|\sigma$ we
+    $F \cong H[U]$ and $F'\cong H[U']$ as $\sigma$ flags. As $|H|=|F|+|F'|-|\sigma$ we
     have $U \cup U' = V(H)$.
 
     Let $(G, \zeta)$ be another $\sigma$-flag. If $c(H; G) = 0$ we're done so assume otherwise and
     let $\im\zeta \subseteq V\subseteq V(G)$ be such that $H \cong G[V]$ as $\sigma$-flags. Let
     $\phi$ be this isomorphism. Then In particular $\phi$ induces an embedding of $U, U'$ into
-    $V(G)$ such that $\im\zeta = \phi(U) \cap \phi(U')$ and $G[\phi(U)] \cong F\land G[\phi(U')]
-    \cong F'$ as $\sigma$-flags.  Hence any choice of an instance of $H$ in $G$ and choice of
-    instances $U, U'$ of $F, F'$ in $H$ gives rise to a pair of instances of $F$ and $F'$ in $G.$
-    There are at most some constant number $C$ instances of $F, F'$ in $H$ (as the size of $H$ is
-    fixed).
+    $V(G)$ such that $\im\zeta = \phi(U) \cap \phi(U')$ and $G[\phi(U)] \cong F$ and $G[\phi(U')]
+    \cong F'$ as $\sigma$-flags.  Hence any choice of an instance of $H$ in $G$
+    gives rise to a pair of instances of $F$ and $F'$ in $G.$
 
     Note then also that any choice of a pair of instances of $F, F'$ in $G$ can be derived from at
     most 1 instance of $H$, as the size of $H$ was chosen to be the minimum possible such that both
@@ -321,10 +318,10 @@ product work:
     then they don't correspond to an instance of $H.$ If they don't overlap then their
     union corresponds to a single \textit{possible} instance of $H$.
 
-    In summary each instance of $H$ gives rise to some non-zero but bounded number of pairs of
+    In summary, each instance of $H$ gives rise to at least one pair of
     instances of $F, F'$ in $G$, and each pair of instances of $F, F'$ is induced by at most
     1 instance of $H.$
-    Therefore $c(H; G) \leq \frac{1}{C}\cdot c(F; G)\cdot c(F'; G)$. We use then
+    Therefore $c(H; G) \leq c(F; G)\cdot c(F'; G)$. We use then
     the fact that $F$ and $F'$ are local $\sigma$-flags so $c(F; \cdot)$ and
     $c(F'; \cdot)$ are $\in O(\Delta(G)^{|F|-|\sigma|})$ and $\in O(\Delta(G)^{|F'|-|\sigma|})$
     respectively. Hence their product is
@@ -338,16 +335,15 @@ product work:
     \end{figure}
 
     It remains to prove that $H$ still has bounded density after fixing any unlabelled vertices.
-    This argument goes almost identically so I just give the high level details. Once again
+    This argument goes almost identically so we just give the high level details. Once again
     pick $U, U' \subseteq V(H)$ where $U\cap U'=\im\eta$ and $F\cong H[U]$ and $F' \cong H[U']$.
     Pick some unlabelled vertex $v\in V(H)\setminus \im\eta$.
     Let $H^v$ be the labelled extension fixing $v$. Then any copy of $H^v$ in $G$ induces
     via $U, U'$ copies of $F, F'$ in $G$. WLOG $v \in U \setminus \im \eta$ so each copy
     of $F$ induced by $U$ is also a copy of $F^v$, the labelled extension of $f$ fixing the
     preimage of $v$. Then as $F$ is local $F^v$ has bounded corresponding density
-    function. Once again we have some constant $C$ number of choices for $U, U'$ so we
-    get
-    $c(H^v; G) \leq \frac{1}{C} c(F^v; G) \cdot c(F'; G) \in
+    function. Once again we get
+    $c(H^v; G) \leq c(F^v; G) \cdot c(F'; G) \in
     O(\Delta(G)^{|F|-(|\sigma|+1)+|F'|-|\sigma|}) = O(\Delta(G)^{|H|-(|\sigma|+1)})$
     as required.  $\therefore H$ is a local flag.
 \end{proof}
@@ -407,8 +403,8 @@ This allows us to prove our product limiting result (Theorem \ref{thm:local_prod
     The term $c(F; G)c(F';G)$ counts the number of pairs of subsets
     $\im\eta \subseteq U, U' \subseteq V(G)$ such that $F \cong G[U]$ and $F'\cong G[U']$.
     Comparatively the sum $\sum_{H\in\HeredG{}^\sigma_n} c(F, F'; H)c(H; G)$ counts the number
-    of subsets $\im\eta U, U' \in V(G)$ such that $F\cong G[U]$, $F'\cong G[U']$ \textit{and}
-    $U \cap U' = \im \eta$. This relies on
+    of subsets $\im\eta \subseteq U, U' \subseteq V(G)$ such that
+    $F\cong G[U]$, $F'\cong G[U']$ \textit{and} $U \cap U' = \im \eta$. This relies on
     corollary \ref{corollary:local_product}
     which let us sum over all possible flags of size $n$.
 
