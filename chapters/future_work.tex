@@ -1,0 +1,44 @@
+\chapter{Future Directions}
+
+We list here a few directions in which this work could be continued:
+
+\begin{itemize}
+    \item We identified in note \ref{note:delta_meaning} that we always assumed $\Delta$
+        referred to the maximum degree function. There is no reason to believe that this
+        is the only graph parameter which could be used. For example, consider the maximum codegree
+        function $\Delta_2$ (the max size of $N(u)\cap N(v)$ for any $u,v\in V(G)$).
+        Then the flag $\codegreeflag$ has the property that
+        $c(\codegreeflag; (G,\eta)) \leq \Delta_2(G)$
+        for any embedding $\eta$. Hence choosing this function as our normalisation function
+        makes $\codegreeflag$ a local flag.
+    \item In this thesis we focused entirely on flags as applied to simple graphs. However,
+        flags have been applied more broadly, including both closely related concepts such
+        as directed graphs \cite{gilboaLocalStructureOriented2022},
+        permutations \cite{baloghMinimumNumberMonotone2015} and discrete geometry
+        \cite{goaocLimitsOrderTypes2018}. An interesting line of investigation would be
+        to see if this method can be adapted to those areas.
+    \item In chapter \ref{chap:pentagon_conjecture} we investigated bounding pentagons
+        in a triangle free graph. This method could be adapted to other problems in this
+        area, referred to as \textit{generalised Turán numbers}. e.g. Bounding how many
+        $C_7$s you can have in a $C_5$ free graph.
+    \item In chapter \ref{chap:pentagon_conjecture} we showed that $P(G, v) \lesssim 1/8$
+        for $G$ triangle free, and showed that this bound is tight (lemma
+        \ref{lemma:pentagon_1_8_tight}). A natural question to ask is whether this
+        extremal graph is unique.
+    \item We defined a local type (definition \ref{def:local_type}) so that we had
+        a well defined, positivity preserving, averaging operator (lemma
+        \ref{lemma:local_pos_preserve}). However we can note that the averaging lemma
+        (lemma \ref{lemma:local_averaging_exp}) does not depend on $\sigma$ being a
+        local type. There is a sense in which we can still "unlabel" these flags.
+        For example, if $\Gcl$ is all graphs then $\cfivemarked$ is a local $\vertex$-flag
+        but $\cfive$ is not a local $\emptyset$-flag. However, if we introduce a new
+        "density function" on $\emptyset$-flags as 
+        \[
+            \zeta(F; G) := \frac{c(F; G)}{|G|\binom{\Delta(G)}{|F|-1}}
+        \]
+        Then we believe we can linearly extend this over $\R\Gcl$ and define limit functionals.
+        Then applying lemma \ref{lemma:local_averaging_exp} similar to the proof of
+        lemma \ref{lemma:local_pos_preserve} we can show that $f \geq 0$ does imply
+        $\zeta(\llbracket f \rrbracket; G) \gtrsim 0$. We believe this approach could
+        improve even further on the bound on the pentagon conjecture.
+\end{itemize}

@@ -4,7 +4,10 @@
 As defined in the \hyperref[sec:intro_strong_edge_coloring]{introduction}
 a strong edge colouring of a graph is an edge colouring where two edges which are incident to some
 common edge must have different colours. The minimum colours required for a strong edge colouring of
-$G$ is called the strong chromatic index $\chi'_s(G)$.
+$G$ is called the strong chromatic index $\chi'_s(Gj$.
+In 1985 Erd\H{o}s and Nešetřil conjectured that
+$\chi'_s(G) \leq 1.73\Delta(G)^2$, and in 1989 Faudree et al. conjectured that
+$\chi'_s(G) \leq \Delta(G)^2$ if $G$ is bipartite \cite{faudreeInducedMatchingsBipartite1989}.
 
 In this chapter we will use the semidefinite method on local flags to prove the following
 theorems:
@@ -16,8 +19,9 @@ theorems:
     If $G$ is bipartite then for $\Delta(G)$ large enough we have
     \[\chi'_s(G) \leq 1.6254\Delta(G)^2.\]
 \end{knowntheorem}
-Both of these theorems are the best known bounds in their respective cases.
-
+Both of these theorems are the best known bounds in their respective cases. We start
+by showing the first result, and leave the bipartite case until section
+\ref{sec:sec_bipartite}.
 
 \section{Line Graph Equivalence}
 
@@ -40,11 +44,6 @@ are connected. See figure \ref{fig:lg_example} for an example construction.
     $N_s(e)$ of $e$ as those edges $f \in E(G)$ which are adjacent to $e$ in 
     $L(G)^2$ (i.e. those which cannot share a colour with $e$ in a strong edge colouring).
 \end{definition}
-
-In this chapter we will first look at a long standing conjecture which claims to bound
-the strong chromatic index and show how we used local flags to get the closest yet bound.
-Then in section \ref{sec:sec_bipartite} we will look at the bipartite version of the
-conjecture and adapt our argument to get an even better bound in that case.
 
 \section{The Erd\H{o}s and Nešetřil conjecture}
 
