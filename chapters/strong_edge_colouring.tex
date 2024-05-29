@@ -481,7 +481,7 @@ value of $\eta$ we can find an upper bound on $\phi(O)$ but we cannot use this
 approach to find a general closed form for such a bound in terms of $\eta$.
 In practice though to prove theorem \ref{thm:strong_edge_colouring_bound}
 we need only to find some "good" value of $\eta$. We found such an $\eta$ using
-a search method described in appendix TODO.
+a search method described in section \ref{sec:sec_impl_notes}.
 
 We use our SDP software (appendix \ref{app:flag_software}) and choose $n=5$ to find the following
 bound:
@@ -495,7 +495,7 @@ bound:
 
 We will not translate the SDP solution back to a separate proof here as we did in
 section \ref{sec:pentagon_proof_validation}, instead we leave details on verifying
-the construction to appendix TODO.
+the construction to appendix \ref{app:sdp_verification}.
 
 Now we can prove theorem \ref{thm:strong_edge_colouring_bound}.
 \begin{proof}[Proof of theorem \ref{thm:strong_edge_colouring_bound}]
@@ -550,11 +550,33 @@ Now we can prove theorem \ref{thm:strong_edge_colouring_bound}.
     A more careful validation of the dual solution from the SDP solver is required,
     but for the purposes of this thesis we considered it unnecessary as it is is not
     mathematically interesting. I give a brief discussion of how you can do this in
-    appendix TODO.
+    appendix \ref{app:sdp_verification}.
     After such a validation of the floating point error you could in theory get
     a strictly below 1.73. We don't do this
     as any such result is negligibly better than 1.73 so not very interesting.
 \end{note}
+
+\subsection{Implementation Notes}
+\label{sec:sec_impl_notes}
+
+\begin{itemize}
+    \item Our choice of $\eta$ here is provided above without explanation. In practice we found
+        an optimal $\eta$ by a \textit{ternary search process}. Ternary search allows you to
+        numerically minimise a function $f(x)$ over $x$ in some range assuming that $f$ is
+        convex over that range. In particular, our choice of $\eta$ dictates our bound on
+        $\chi'_s(G)$. If $\eta$ is small then $2-\eta$ is large and our bound is always $\geq
+        2-\eta$. On the other hand if $\eta$ is large then we expect our strong neighbourhood
+        density bound to approach the $\frac{3}{2}$ bound of Bruhn and Joos
+        \cite{bruhnStrongerBoundStrong2018}. Hence we hypothesise that the bound obtained by
+        choosing $\eta \in [0,2]$ is a convex function. We apply the ternary search process
+        to find that $\eta=0.2703$ is a good value.
+    \item The SDP program associated which finds the bound in lemma
+        \ref{lemma:sec_sdp_soln} is very slow. We know by experimentation that limiting
+        our class $\Gcl$ to only have red edges (those not in $F$) between black and red vertices
+        gives the same bounds but is much faster. If further work is done on this problem
+        with this SDP we recommend either proving we can assume this WLOG or at the very least
+        ensure your derived bound is still true for the case where we don't have this limitation.
+\end{itemize}
 
 \section{The Bipartite Case}
 \label{sec:sec_bipartite}
