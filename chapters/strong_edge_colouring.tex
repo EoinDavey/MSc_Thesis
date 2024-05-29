@@ -489,7 +489,7 @@ bound:
     \label{lemma:sec_sdp_soln}
     For $\eta = 0.2703$ we have
     \[
-        10.643189\emptyset - O \in \SemCone^\emptyset
+        10.644\emptyset - O \in \SemCone^\emptyset
     \]
 \end{lemma}
 
@@ -538,9 +538,9 @@ Now we can prove theorem \ref{thm:strong_edge_colouring_bound}.
     $\chi(H[F]) \leq (1-\varepsilon(\sigma) + \iota)2\Delta(G)^2$
     where $\varepsilon(\sigma) = \sigma/2 - \sigma^{3/2}/6$.
 
-    Evaluating $\varepsilon(\sigma)$ for $\lambda = 10.643189$ from 
+    Evaluating $\varepsilon(\sigma)$ for $\lambda = 10.644$ from 
     lemma \ref{lemma:sec_sdp_soln} gives a bound of
-    $\chi(H[F]) \leq (1.7297734 + \iota)\Delta(G)^2$
+    $\chi(H[F]) \leq (1.72981 + \iota)\Delta(G)^2$
     Note then $2-\eta = 1.7297 < 1.73$ so by the proof of Theorem 1.6 in
     \cite{hurleyImprovedProcedureColouring2022}
     this proves $\chi(H) \leq 1.73\Delta(G)^2$ proving
@@ -552,7 +552,7 @@ Now we can prove theorem \ref{thm:strong_edge_colouring_bound}.
     mathematically interesting. I give a brief discussion of how you can do this in
     appendix TODO.
     After such a validation of the floating point error you could in theory get
-    a bound closer to the 1.72977734 result, technically beating 1.73. We don't do this
+    a strictly below 1.73. We don't do this
     as any such result is negligibly better than 1.73 so not very interesting.
 \end{note}
 

@@ -19,12 +19,12 @@ then solved using CSDP\footnote{\url{https://github.com/coin-or/Csdp/wiki}},
 a standard open source SDP solver
 \cite{borchersCSDPLibrarySemidefinite1999}.
 
-\begin{note}
+\begin{note*}
     Rust is a good choice of language for this application. It is a strongly, statically typed
     language with high level constructions meaning we can define concepts such as flags, types
     etc directly in the code. It is however also extremely fast, meaning the bulk computation
     of matrices of coefficients over large bases is still extremely fast.
-\end{note}
+\end{note*}
 
 The implementations for the applications in this thesis can be found at these locations:
 \begin{itemize}
@@ -162,12 +162,12 @@ as expected. The program writes the dual and primal solutions to disk as a file
 The report should allow a quick visual check that the flag vectors look as expected.
 This is most useful for small $n$, as for large $n$ the flags vectors are too large.
 
-\begin{note}
+\begin{note*}
     The programs generate a lot of precomputed data which is stored locally in a
     directory \verb|data/|. This can be quite a large amount of data, so users should
     take care to not run flag programs for $n$ too large unchecked, as they could in
     theory use up all disk space.
-\end{note}
+\end{note*}
 
 \section*{Notes on Correctness}
 

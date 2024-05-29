@@ -1,0 +1,80 @@
+\chapter{SDP Verification}
+
+In section \ref{sec:pentagon_proof_validation} we showed the results converting an
+SDP solution back into a standalone proof. This was mostly for elucidatory purposes,
+confirming that the SDP solutions do indeed correspond to a convex combination of elements
+of the semantic cone.
+I will give a brief overview of how I did this conversion here.
+However, the process of doing this conversion is tedious and often
+unnecessary. I will also describe how we can avoid doing this conversion for other problems.
+
+\section*{Conversion to Standalone Proof}
+
+The SDP software outlined in appendix \ref{app:flag_software} contains some
+functionality to find a minimised set of constraints. It does this by
+running the search with all constraints, then removing them one at a time so long as
+the optimum solution is maintained. The function which does this is
+\verb|FlagSolver::minimize|. There are several such methods implemented but I
+only verified the correctness of \verb|minimize| as implemented in the
+\url{github.com/EoinDavey/rust-flag-algebra} fork of the \verb|rust-flag-algebra|
+library.
+
+\begin{note*}
+    CSDP will fail to run if there are any variables which have no associated constraints.
+    For that reason I recommend using the \verb|.protect| method to prevent the minimising
+    process from removing the $F \geq 0\ \forall F$ inequalities.
+\end{note*}
+
+This minimisation process reduces the size of the dual matrices that we need to deal with.
+However, if the search process itself is slow, then this process will be extremely slow.
+Hence it has limited applications for larger problems.
+
+Given then a dual certificate (minimised or not) from our SDP program it will be in
+SDPA-Sparse format. This is a sparse block-diagonal format of describing a matrix.
+These blocks then correspond to the coefficients associated with our inequalities. i.e.
+they are blocks of size 1 for linear inequalities or PSD matrices for the Cauchy-Schwarz
+$\llbracket f^2 \rrbracket \geq 0$ inequalities. In the
+\url{github.com/EoinDavey/rust-flag-algebra} repository you will find a
+Python\footnote{\url{https://python.org/}} script \verb|sdpa_parse.py| which can
+interpret the SDPA problem input file and certificate file.
+
+At this point the main goal is to remove floating point inaccuracy. In practice you
+will find that most coefficients are clearly floating point approximations of identifiable
+rationals, $1/4$, $7/5$ etc. To do this process of replacing floating point approximations with
+their associated rational I copied the \verb|sdpa_parse.py| file and modified it to
+overwrite the associated coefficients, while asserting that we still get an
+objective function bound close to what we expected.
+This was a tedious manual process but after some time I had converted the coefficients to
+nice rationals.
+
+This process includes replacing the entries of the PSD matrices with rationals. This meant
+I needed to check that each such matrix was still PSD. After obtaining these rational
+PSD matrices I wanted to extract the associated vectors $\nu_i$ which give us the
+elements $\llbracket \nu_i^2 \rrbracket$ as described in section \ref{sec:sdp_duality}.
+The most direct way to do this is to compute the spectral decomposition, I used
+\url{https://wolframalpha.com/} to do this symbolically. However, one of the PSD matrices
+gave me some "ugly" coefficients such as $\sqrt{11 + \sqrt{89}}$. For that matrix
+I instead used the Z3 Solver\footnote{\url{https://www.microsoft.com/en-us/research/project/z3-3/}}
+to find a nicer set of vectors $\nu_i$ such that $\sum_i \nu_i\nu_i^T$ gave the same
+matrix. This was just an aesthetic choice.
+
+\begin{note*}
+    When researching this project I found the paper
+    \textit{Exact Semidefinite Programming Bounds for Packing Problems} by
+    Dostert, de Laat and Moustrou \cite{dostertExactSemidefiniteProgramming2021}
+    which describes a more mathematical approach to making a floating point SDP solution
+    exact. I didn't use this approach but I think it's valuable to mention it here.
+\end{note*}
+
+\section*{Verification Without Conversion}
+
+Most of the results in this thesis are not "tight", in the sense that we are rounding
+the SDP solutions up. e.g. In lemma \ref{lemma:sec_sdp_soln} we give the result that
+$10.644\emptyset - O \in\SemCone^\emptyset$, but in fact the SDP solver claims a
+better result of $10.643189$. Rounding up gives us some room to maneuver with respect
+to the floating point, while still achieving the nice $1.73$ bound of theorem
+\ref{thm:strong_edge_colouring_bound}. For this reason we need only to take the
+dual solution, round to some level of precision and verify that this is still a PSD matrix
+using full precision arithmetic.
+Then we can calculate the associated bound and verify that it still is low enough, along
+with verifying the inequalities still hold.
