@@ -1,13 +1,24 @@
 \chapter{SDP Verification}
 \label{app:sdp_verification}
 
-In section \ref{sec:pentagon_proof_validation} we showed the results converting an
-SDP solution back into a standalone proof. This was mostly for elucidatory purposes,
+When we apply an SDP solver to our problems as in appendix \ref{app:flag_software}
+we have claimed that the SDP solver will give us a matrix which proves the claimed bound.
+However, these SDP solvers are numerical algorithms meaning they can only give us a very
+close approximation of what they claim. This is in particular due to the mechanics of
+floating point arithmetic. To be rigorous we need to take these \textit{approximate}
+solutions and find a true solution which achieves the same results.
+For some results we have a very tight bound (e.g. lemma \ref{lemma:pentagon_1_4_bound}
+is best possible by lemma \ref{lemma:pentagon_1_8_tight}). In these cases we cannot afford
+to introduce any error when finding a true solution close to the approximate one. In
+other cases there is some room for "rounding" of the approximate solution.
+
+In section \ref{sec:pentagon_proof_validation} we showed the results of converting an
+SDP solution back into a standalone proof. This was done for elucidatory purposes,
 confirming that the SDP solutions do indeed correspond to a convex combination of elements
-of the semantic cone.
-I will give a brief overview of how I did this conversion here.
-However, the process of doing this conversion is tedious and often
-unnecessary. I will also describe how we can avoid doing this conversion for other problems.
+of the semantic cone. In this first section we will discuss how this was done.
+However, this full conversion to a standalone proof is not necessary: In the second
+section we will discuss how you might verify that SDP solution is sound without as much
+manual effort.
 
 \section*{Conversion to Standalone Proof}
 
@@ -48,7 +59,7 @@ objective function bound close to what we expected.
 This was a tedious manual process but after some time I had converted the coefficients to
 nice rationals.
 
-This process includes replacing the entries of the PSD matrices with rationals. This meant
+Modifying the entries of PSD matrices may render them no longer PSD so
 I needed to check that each such matrix was still PSD. After obtaining these rational
 PSD matrices I wanted to extract the associated vectors $\nu_i$ which give us the
 elements $\llbracket \nu_i^2 \rrbracket$ as described in section \ref{sec:sdp_duality}.
@@ -74,8 +85,45 @@ the SDP solutions up. e.g. In lemma \ref{lemma:sec_sdp_soln} we give the result 
 $10.644\emptyset - O \in\SemCone^\emptyset$, but in fact the SDP solver claims a
 better result of $10.643189$. Rounding up gives us some room to maneuver with respect
 to the floating point, while still achieving the nice $1.73$ bound of theorem
-\ref{thm:strong_edge_colouring_bound}. For this reason we need only to take the
-dual solution, round to some level of precision and verify that this is still a PSD matrix
-using full precision arithmetic.
-Then we can calculate the associated bound and verify that it still is low enough, along
-with verifying the inequalities still hold.
+\ref{thm:strong_edge_colouring_bound}.
+
+For the results in this thesis (other than section \ref{sec:pentagon_proof_validation})
+we did not go through a full verification as we felt it
+fell outside the scope of this research project, being more a manual process required for
+full publication of the results. However, I will briefly describe here how this process
+would work.
+
+First, we should ensure that the SDP problems our programs generate are full precision.
+In practice we do this by expressing every problem in terms of rationals and then scaling
+expressions by common denominators to get SPD problems expressed entirely as integers.
+Then, the SDP solver will give us a solution as a matrix of floating point numbers. We
+can interpret this matrix as a list of coefficients $c_i > 0$ and PSD matrices $P_k$
+(section \ref{sec:sdp_duality}) as implemented in \verb|sdpa_parse.py|. Each of the 
+coefficients can be interpreted from its floating point representation to some
+rational $\overline{c_i} > 0$. We could try to cast the entries of the matrices $P_k$
+in the same fashion but we need the resulting $\overline{P_k}$ to definitely be PSD.
+We know $P_k$ is PSD up to floating point precision so we apply a numerical algorithm
+to compute it's spectral decomposition $P_k=\sum_j\nu_{k,j}\nu_{k,j}^T$. We then cast
+each of these vectors $\nu_{j,k}$ as rationals $\overline{\nu_{j,k}}$ and compute
+$\overline{P_k}=\sum_j\overline{\nu_{j,k}}\overline{\nu_{j,k}}^T$ which by construction
+is definitely PSD.
+
+Now we expect to get
+\[
+    \sum_i \overline{c_i} v_i + \sum_k \sum_j \llbracket \overline{\nu_{j,k}}^2 \rrbracket
+    = \lambda\emptyset - O + \varepsilon
+    \in \SemCone
+\]
+where $O$ is our objective vector and $v_i$ are the fixed elements of
+$\SemCone^\emptyset$. We expect that $\lambda$ should be close enough to
+the bound we want to prove and $\varepsilon$ is some small error vector which is
+left over. This proves that $\phi(O) \leq \lambda - \phi(\varepsilon)$ for all
+$\phi\in\Phi^\emptyset$. If we can bound the size of $\phi(\varepsilon)$ then we can
+get a proper bound on $\phi(O)$.
+
+An alternative strategy is to try and minimise the size of $\varepsilon$. To do this
+we could take our list of known elements $v_1, \dots, v_k$ and the
+vectors $\llbracket \overline{\nu_{j,k}}^2\rrbracket$ and treat this as
+a linear programming problem. There exist exact LP solvers over there which
+use rational arithmetic so don't suffer from floating point error.
+eg. \url{https://www.math.uwaterloo.ca/~bico/qsopt/ex/}.
