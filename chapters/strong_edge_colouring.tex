@@ -22,6 +22,10 @@ theorems:
 Both of these theorems are the best known bounds in their respective cases. We start
 by showing the first result, and leave the bipartite case until section
 \ref{sec:sec_bipartite}.
+Additionally, in section
+\ref{sec:asymmetric_bipartite_sec} we will investigate the asymmetric version of the
+bipartite case, leading to an interesting discovery which suggests that the asymmetric
+version may be reducible to the symmetric case.
 
 \section{Line Graph Equivalence}
 
@@ -664,6 +668,7 @@ and the following description of local flags.
 \end{proof}
 
 \subsection{Objective Vector}
+\label{sec:sec_bipartite_obj}
 
 As with section \ref{sec:sec_obj_vector} we'll define $D(\sigma)$ where
 $\sigma \in \{\bredge,\blredge,\bgedge\}$ as the sum of all local $\sigma$-flags
@@ -854,3 +859,185 @@ theorem \ref{thm:strong_edge_colouring_bound} in the previous section.
     this proves $\chi(H) \leq 1.6254\Delta(G)^2$ proving
     $\chi'_s(G) \leq 1.6254\Delta(G)^2$ for $\Delta(G)$ large enough.
 \end{proof}
+
+\section{Asymmetric Bipartite Strong Edge Colouring}
+\label{sec:asymmetric_bipartite_sec}
+
+In the previous section we found a bound on the strong edge colouring for bipartite
+$\Delta(G)$-regular graphs. A natural question to consider is what if the graph
+is bipartite, but each of the components have different maximum degrees.
+Brualdi and Quinn Massey conjectured made the following conjecture
+in 1993:
+
+\begin{conjecture}[Brualdi, Quinn Massey \cite{brualdiIncidenceStrongEdge1993}]
+    If $G=A \sqcup B$ is a bipartition then
+    $\chi'_s(G) \leq \Delta(A)\Delta(B)$.
+\end{conjecture}
+
+In particular we will focus on the following problem: Given some
+$p\in (0, 1]$ consider a bipartite graph
+$G=A \sqcup B$ where $A$ is $\Delta(A)$-regular, $B$ is $\Delta(B)$-regular
+and $\Delta(B) = p\Delta(A)$, what asymptotic bound can be derived on the strong chromatic
+index of $G$? Clearly $p=1$ is the regular bipartite case from the previous section.
+
+Previously, we have been using the method introduced by Bonamy, Perrett and Postle
+\cite{bonamyColouringGraphsSparse2018} where we have a subset $F\subseteq E(G)$ 
+with minimum degree $\geq (2-\eta)\Delta(G)^2$ in $L(G)^2$ and want to bound the
+strong edge density only within this subgraph. For this section we will revert back
+to the simpler method originally introduced by Molloy and Reed
+\cite{molloyBoundStrongChromatic1997} where we find a general bound on the strong
+neighbourhood density, then use the colouring lemma of Hurley, de Verclos and Kang
+\cite{hurleyImprovedProcedureColouring2022} to get a bound on the chromatic number.
+The reason for this is that this method was more readily adapted. There is no reason
+to believe that the stronger method using the high degeneracy subgraph can't be adapted
+but we will see that this simpler method already reveals something very interesting about this
+problem: Namely that we get the same scalar coefficient in the bound for 
+$\chi'_s(G)$ for every value of $p$ we tested.
+
+\begin{theorem}
+    \label{thm:asymmetric_bipartite_bound}
+    For $p\in [0.1, 0.2, 0.3, \dots, 1]$ we get the following results.
+    For $\Delta(G)$ large enough where $G=A\sqcup B$ is a bipartition with
+    $\Delta(B)=p\Delta(A)$ we have the bound
+    \[
+        \chi'_s(G) \leq 1.6632 \Delta(A)\Delta(B)
+    \]
+\end{theorem}
+
+This is not a stronger result than theorem \ref{thm:sec_bipartite_bound}\footnote{This could likely
+be remedied by using the method of Bonamy et. al.},
+but it is extremely interesting that the different values of $p$ do not give different bounds on
+$\chi'_s(G)$.
+
+We will now give a brief description of how this was shown. We will skip the proofs as they
+follow exactly as in the previous sections with minor modifications.
+
+\subsection{Reduction}
+
+We will follow a similar approach to section \ref{sec:sec_bipartite}. Let
+$G=A \sqcup B$ be as described above and let $e=\{a, b\}\in E(G)$ be given where
+$a \in A, b \in B$. We construct $G'$ a 4-coloured graph where $N(a)$ is coloured red,
+$N(b)$ coloured black and the rest of $A$ and $B$ are coloured blue and green respectively
+in the same fashion as figure \ref{fig:bipartite_sec_transform}. The primary thing to 
+note is that we are not looking at some subgraph induced by $F\subseteq E(G)$ as before
+so we do not need to introduce edge colours.
+
+Note then $|N(a)|=\Delta(A)=\Delta(G)$ and $|N(b)|=\Delta(B)=p\Delta(G)$. Hence we
+take our class $\Gcl$ to be 4-coloured bipartite graphs $G'$ which have
+$\Delta(G)$ red vertices, $p\Delta(B)$ black vertices and the components of
+black/blue and red/green vertices form a bipartition $G=A\sqcup B$ where
+$A$, $B$ are $\Delta(G)$-regular and $p\Delta(A)$-regular respectively.
+
+\begin{lemma}
+    For any bipartite $G=A\sqcup B$ where $A$ is $\Delta(G)$ regular
+    and $B$ is $p\Delta(G)$, $f\in E(G)$ we can asymptotically bound
+    the strong neighbourhood density of $G$ at $f$ by any asymptotic
+    bound on $|E_O(G')|$ where $G'$ is derived from $G$ by the above
+    process and $E_O(G')\subseteq \binom{E(G')}{2}$
+    is the set of pairs of non-incident
+    edges $e,e'$ with a common incident edge and at least one vertex of both $e,e'$ 
+    is red or black.
+\end{lemma}
+
+Now, these graphs $G\in\Gcl$ are no longer regular so we cannot rely on the
+extension vectors from section \ref{sec:local_flags_regular_graphs} in the same way
+as we have been. However, we can modify our approach slightly to take care of this issue.
+
+For any type $\sigma$ consider vertex $i$. If $i$ is black or blue (corresponding to
+component $A$) then we will still have $\phi(\ext_i^\sigma)=1$ as $A$ is
+$\Delta(G)$-regular. Otherwise $i$ corresponds to a vertex in component $B$
+which is $p\Delta(A)$ regular. Hence $\phi(\ext_i^\sigma)=p$. However this
+implies that $\phi(\frac{1}{p}\ext_i^\sigma) = 1$. For this reason we define
+the \textit{unit extension} at $i$ to be
+\[
+    \uext_i^\sigma = \begin{cases}
+        \ext_i^\sigma & \text{if}\ i\ \text{black or blue}\\
+        \frac{1}{p}\ext_i^\sigma & \text{otherwise}
+    \end{cases}
+\]
+
+\begin{lemma}
+    \label{lemma:asymmetric_regularity}
+    For any type $\sigma$, $i,j\in [|\sigma|]$ we have
+    $\phi(\uext_i^\sigma - \uext_j^\sigma) = 0$ for all
+    $\phi\in\Phi^\sigma$. In particular $\llbracket \uext_i -
+    \uext_j\rrbracket\in\SemCone^\emptyset$ if $\sigma$ is a local type.
+\end{lemma}
+
+This gives us an analogue of the $\llbracket \ext_i^\sigma - \ext_j^\sigma \rrbracket$ constraints
+we have been using in our other applications.
+
+We then follow the approach of section
+\ref{sec:sec_bipartite_obj} to define $D(\sigma)$ as the sum of local
+$\sigma$-flags of size 4 which are connected and at least one unlabelled vertex is
+black or red. This gives us an objective vector $O$:
+\begin{multline*}
+O := \left\llbracket D(\bredge) \cdot \left(\uext^\bredge_1\right)^{n-4} \right\rrbracket
+    + \left\llbracket D(\blredge) \cdot \left(\uext^\blredge_1\right)^{n-4}\right\rrbracket\\
+    + \left\llbracket D(\bgedge) \cdot \left(\uext^\bgedge_1\right)^{n-4}\right\rrbracket
+\end{multline*}
+which is defined in terms of $n\in\N$ as usual.
+\begin{lemma}
+    For $G\in\Gcl$
+    \[
+        \rho(O; G) \sim \frac{|E_O(G)|}{\binom{\Delta(G)}{2}^2}
+    \]
+\end{lemma}
+
+\subsection{Constraints}
+
+First, we take the set of constraints $\phi(\llbracket \uext_i - \uext_j \rrbracket) = 0$
+from lemma \ref{lemma:asymmetric_regularity}.
+
+Next we define an \textit{black vertex extension} $\ext_B^\sigma$ and \textit{red vertex extension}
+vector as in section \ref{sec:sec_search_constraints}. We then note that
+as there are $\Delta(G)$ red vertices and $p\Delta(G)$ black vertices we
+have $\phi(\ext_B^\sigma) = p$ and $\phi(\ext_R^\sigma)=1$ for any type
+$\sigma$. We add the constraints then that
+$\llbracket \ext_1^\sigma - \frac{1}{p}\ext_B^\sigma\rrbracket = 0$
+and
+$\llbracket \ext_1^\sigma - \ext_R^\sigma\rrbracket = 0$ for all local types
+of size $n-1$.
+Finally then if $B_1$, $R_1$ are the flags consisting of a single black and red
+vertex we know $\phi(B_1)=p$ and $\phi(R_1)=1$ for all $\phi\in\Phi^\emptyset$.
+Hence $\phi(\llbracket B_1 \cdot \uext_1^{B_1}\rrbracket) = p$ and
+$\phi(\llbracket R_1 \cdot \uext_1^{R_1}\rrbracket) = 1$ are valid constraints we
+can add.
+
+\subsection{Results}
+\label{sec:asymmetric_sec_results}
+
+Using the constraints from the previous section we can construct a valid
+SDP as in the other applications for some fixed $p\in (0, 1]$. Solving this
+gives us a bound on the number of edges in the strong neighbourhood of the form
+$|E(H[N_s(e)])| \leq \lambda(p) \Delta(G)^4$.
+
+In order to apply theorem 1.2 from Hurley et. al. \cite{hurleyImprovedProcedureColouring2022}
+we need an asymptotic bound of the form $|E(H[N_s(e)])| \leq (1-\sigma)\binom{\Delta(H)}{2}$.
+We can calculate that WLOG $\Delta(H)=2p\Delta(G)^2$ so $\sigma=1-\lambda(p)/2p^2$
+suffices. Theorem 1.2 from \cite{hurleyImprovedProcedureColouring2022} then gives
+an asymptotic bound
+\[
+    \chi'_s(G) \leq (1-\varepsilon(\sigma)+\iota)\Delta(H)=2(1-\varepsilon(\sigma)+\iota)p\Delta(G)^2
+    = 2(1-\varepsilon(\sigma)+\iota)\Delta(A)\Delta(B)
+\]
+
+Performing this process for varying values of $p$ proves
+theorem \ref{thm:asymmetric_bipartite_bound}.
+
+We found then that for every value of $p$ that we tried we would get the same
+value for $\sigma$, meaning the bound on $\chi'_s(G)$ was also constant across
+$p$. This suggests that the bound $\lambda(p)$ is of the form $Cp^2$ for some
+constant $C \approx 1.13723$ suggesting that maybe the asymmetric case can be reduced
+to the $p=1$ case?
+
+There is a lot of interesting ways to look further into this including:
+\begin{itemize}
+    \item If we implement the high-degeneracy approach of Bonamy et. al. do we still get this
+        constant bound across $p$.
+    \item Can we generalise the SDP solution to prove that we do get the same sparsity
+        bound for all $p\in (0, 1]$, rather than just experimentally trying for fixed $p$.
+    \item It is possibly true that the optimal strong neighbourhood density bound is
+        some function $\lambda(p)=Cp^2$, but this doesn't necessarily imply that the
+        best chromatic index bound must be a constant for all $p$.
+\end{itemize}
