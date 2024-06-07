@@ -866,13 +866,13 @@ theorem \ref{thm:strong_edge_colouring_bound} in the previous section.
 In the previous section we found a bound on the strong edge colouring for bipartite
 $\Delta(G)$-regular graphs. A natural question to consider is what if the graph
 is bipartite, but each of the components have different maximum degrees.
-Brualdi and Quinn Massey conjectured made the following conjecture
+Brualdi and Quinn Massey made the following conjecture
 in 1993:
 
-\begin{conjecture}[Brualdi, Quinn Massey \cite{brualdiIncidenceStrongEdge1993}]
+\begin{knownconjecture}[Brualdi, Quinn Massey \cite{brualdiIncidenceStrongEdge1993}]
     If $G=A \sqcup B$ is a bipartition then
     $\chi'_s(G) \leq \Delta(A)\Delta(B)$.
-\end{conjecture}
+\end{knownconjecture}
 
 In particular we will focus on the following problem: Given some
 $p\in (0, 1]$ consider a bipartite graph
@@ -924,9 +924,9 @@ so we do not need to introduce edge colours.
 
 Note then $|N(a)|=\Delta(A)=\Delta(G)$ and $|N(b)|=\Delta(B)=p\Delta(G)$. Hence we
 take our class $\Gcl$ to be 4-coloured bipartite graphs $G'$ which have
-$\Delta(G)$ red vertices, $p\Delta(B)$ black vertices and the components of
+$\Delta(G)$ red vertices, $p\Delta(G)$ black vertices and the components of
 black/blue and red/green vertices form a bipartition $G=A\sqcup B$ where
-$A$, $B$ are $\Delta(G)$-regular and $p\Delta(A)$-regular respectively.
+$A$, $B$ are $\Delta(G)$-regular and $p\Delta(G)$-regular respectively.
 
 \begin{lemma}
     For any bipartite $G=A\sqcup B$ where $A$ is $\Delta(G)$ regular
@@ -946,7 +946,7 @@ as we have been. However, we can modify our approach slightly to take care of th
 For any type $\sigma$ consider vertex $i$. If $i$ is black or blue (corresponding to
 component $A$) then we will still have $\phi(\ext_i^\sigma)=1$ as $A$ is
 $\Delta(G)$-regular. Otherwise $i$ corresponds to a vertex in component $B$
-which is $p\Delta(A)$ regular. Hence $\phi(\ext_i^\sigma)=p$. However this
+which is $p\Delta(G)$ regular. Hence $\phi(\ext_i^\sigma)=p$. However this
 implies that $\phi(\frac{1}{p}\ext_i^\sigma) = 1$. For this reason we define
 the \textit{unit extension} at $i$ to be
 \[
@@ -1010,11 +1010,12 @@ can add.
 Using the constraints from the previous section we can construct a valid
 SDP as in the other applications for some fixed $p\in (0, 1]$. Solving this
 gives us a bound on the number of edges in the strong neighbourhood of the form
-$|E(H[N_s(e)])| \leq \lambda(p) \Delta(G)^4$.
+$|E(H[N_s(e)])| \leq \lambda_p \Delta(G)^4$.
 
 In order to apply theorem 1.2 from Hurley et. al. \cite{hurleyImprovedProcedureColouring2022}
-we need an asymptotic bound of the form $|E(H[N_s(e)])| \leq (1-\sigma)\binom{\Delta(H)}{2}$.
-We can calculate that WLOG $\Delta(H)=2p\Delta(G)^2$ so $\sigma=1-\lambda(p)/2p^2$
+we need an asymptotic bound of the form $|E(H[N_s(e)])| \leq (1-\sigma)\binom{\Delta(H)}{2}$
+where $H=L(G)^2$.
+We can calculate that WLOG $\Delta(H)=2p\Delta(G)^2$ so $\sigma=1-\lambda_p/2p^2$
 suffices. Theorem 1.2 from \cite{hurleyImprovedProcedureColouring2022} then gives
 an asymptotic bound
 \[
@@ -1027,9 +1028,8 @@ theorem \ref{thm:asymmetric_bipartite_bound}.
 
 We found then that for every value of $p$ that we tried we would get the same
 value for $\sigma$, meaning the bound on $\chi'_s(G)$ was also constant across
-$p$. This suggests that the bound $\lambda(p)$ is of the form $Cp^2$ for some
-constant $C \approx 1.13723$ suggesting that maybe the asymmetric case can be reduced
-to the $p=1$ case?
+$p$. This suggests that the bound $\lambda_p$ is of the form $Cp^2$ for some
+constant $C \approx 1.13723$.
 
 There is a lot of interesting ways to look further into this including:
 \begin{itemize}
@@ -1037,7 +1037,8 @@ There is a lot of interesting ways to look further into this including:
         constant bound across $p$.
     \item Can we generalise the SDP solution to prove that we do get the same sparsity
         bound for all $p\in (0, 1]$, rather than just experimentally trying for fixed $p$.
-    \item It is possibly true that the optimal strong neighbourhood density bound is
-        some function $\lambda(p)=Cp^2$, but this doesn't necessarily imply that the
-        best chromatic index bound must be a constant for all $p$.
+    \item The results of the SDP programs suggest that the supremum on the strong neighbourhood
+        density is some function $\lambda_p=Cp^2$. This is a topic worth investigating in
+        it's own right, to find out if this is just a limitation of the method or if there
+        is some underlying truth to this assertion.
 \end{itemize}
