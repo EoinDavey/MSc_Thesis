@@ -2,13 +2,13 @@
 \addcontentsline{toc}{chapter}{Introduction}
 
 Consider a simple\footnote{An undirected graph with no self loops and at most 1 edge between any two
-vertices.} graph $G$. How many colours do you need to colour each edge such that no edges which touch
-have the same colour? What if no edges which touch some common edge can have the same colour?
-Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colours, but
-the current best proof only shows an upper bound of $1.772\Delta(G)^2$ colours. In this thesis
-we show how we can lower this bound to $1.73\Delta(G)^2$ by introducing a novel framework
+vertices.} graph $G$. How many colours do you need to colour the edges such that no two edges which touch
+have the same colour? What if no two edges which touch some common edge can have the same colour?
+Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colours where $\Delta(G)$ denotes the maximum degree of $G$, but
+the current best proof only shows an upper bound of $1.772\Delta(G)^2$ colours (for large enough $\Delta(G)$). In this thesis
+we show how we can lower this to $1.73\Delta(G)^2$ by introducing a novel framework
 which is a modification of Razborov's flag algebras. We also apply this new framework
-to some other open problems including a bounded-degree version of
+to some other problems including a bounded-degree variant of the
 Erd\H{o}s's pentagon conjecture.
 
 \section*{Strong Edge Colouring}
@@ -18,11 +18,11 @@ Erd\H{o}s's pentagon conjecture.
 An edge colouring of a simple graph $G$ is an assignment $c\colon E(G) \to [k]$
 for some $k\in\N$. Such a colouring is \textit{proper} if no two incident\footnote{Have a vertex in common}
 edges have the same colour.
-A colouring is \textit{strong} if no edges which share a common incident edge have
-the same colour. Put differently, proper colouring requires edges at distance 1 to have distinct
-colours and strong colouring extends this to distance 2.
-In figure \ref{fig:proper-strong-example} we see an example of a non-proper colouring,
-a proper (but not strong) colouring and a strong colouring of $C_5$.
+An edge colouring is \textit{strong} if no two edges which share a common incident edge have
+the same colour. Put differently, proper edge colouring requires edges at distance 1 to have distinct
+colours and strong edge colouring extends this to distance 2.
+In figure \ref{fig:proper-strong-example} we see an example of a non-proper edge colouring,
+a proper (but not strong) edge colouring and a strong edge colouring of $C_5$, the cycle on $5$ vertices.
 
 \begin{figure}[h]
     \centering
@@ -42,12 +42,14 @@ the max degree of the graph $\Delta(G)$:
 \end{knowntheorem}
 Erd\H{o}s and Nešetřil conjectured in 1985 that
 the strong chromatic index can also be bounded precisely by a function of the max degree:
-\begin{knownconjecture}[Erd\H{o}s and Nešetřil \cite{faudreeInducedMatchingsBipartite1989}]
+\begin{knownconjecture}[Erd\H{o}s and Nešetřil, see~\cite{faudreeInducedMatchingsBipartite1989}]
     \label{conj:intro_erdos_nesetril}
     $\chi'_s(G) \leq \frac{5}{4}\Delta(G)^2$.
 \end{knownconjecture}
+The simple construction of a $C_5$, with each vertex substituted with an independent set of size $\Delta(G)/2$, shows that this conjecture would be best possible if true.
+
 A greedy argument shows a bound of $\chi'(G) \leq 2\Delta(G)^2 + o(\Delta(G)^2)$ but it wasn't until
-1997 that Molloy and Reed broke the $2\Delta(G)^2$ barrier \cite{molloyBoundStrongChromatic1997}.
+1997 that Molloy and Reed broke the factor $2$ barrier \cite{molloyBoundStrongChromatic1997}.
 A series of papers have since made progress on lowering this bound closer to $\frac{5}{4}\Delta(G)^2$.
 
 For $\Delta(G)$ large enough we have the following theorems:
@@ -58,7 +60,7 @@ For $\Delta(G)$ large enough we have the following theorems:
         $\chi'_s(G) \leq 1.93\Delta(G)^2$.
   \item \textit{Bonamy, Perrett \& Postle, 2018} \cite{bonamyColouringGraphsSparse2018}:
         $\chi'_s(G) \leq 1.835\Delta(G)^2$.
-  \item \textit{Hurley, de Verclos \& Kang, 2022} \cite{hurleyImprovedProcedureColouring2022}:
+  \item \textit{Hurley, de Joannis de Verclos \& Kang, 2022} \cite{hurleyImprovedProcedureColouring2022}:
         $\chi'_s(G) \leq 1.772\Delta(G)^2$.
 \end{enumerate}
 
@@ -69,7 +71,7 @@ In this thesis we will show how we brought this bound down even further to $1.73
 \end{knowntheorem}
 
 The 1997 paper by Molloy \& Reed introduced a method for strong edge colouring we call the
-\textit{2 step strategy}:
+\textit{2-step strategy}:
 \begin{enumerate}
     \item Find an upper bound for the \textit{strong neighbourhood density} of $G$ in terms of
         $\Delta(G)$.
@@ -79,17 +81,17 @@ The 1997 paper by Molloy \& Reed introduced a method for strong edge colouring w
 This method has been modified by the papers which followed the Molloy \& Reed paper but this
 strategy has remained the core idea. We will look at this strategy in more detail (including
 defining strong neighbourhood density) in chapter \ref{chap:strong_edge_colouring}.
-For this thesis we focus on the first step, using the second step as a black box. We will
+For this thesis we focus on the Step~1, using the Step~2 as a black box. We will
 find a new, lower, upper-bound on the strong neighbourhood density and hence achieve our
-new colouring number.
+new strong chromatic index bound.
 
 \section*{Flag Algebras}
 \addcontentsline{toc}{section}{Flag Algebras}
 
-Step 1 of the 2-step strategy
+Step~1 of the 2-step strategy
 asks us to find an upper bound on the strong neighbourhood density. The strong neighbourhood
-density belongs to a broad family of density functions which ask: "How many copies of some
-structure $F$ do we find in some larger structure $G$, expressed as a real number $\in [0,1]$"?
+density belongs to a broad family of density functions which ask: ``How many copies of some
+structure $F$ do we find in some larger structure $G$, expressed as a real number $\in [0,1]$''?
 These density functions usually count the number of copies of $F$ in $G$, then normalise by the
 maximum possible number of such copies.
 For example, the density of edges in some graph $G$ is $|E(G)|/\binom{|G|}{2}$.
@@ -119,7 +121,7 @@ the number of subsets $U\subseteq V(G)$ such that $G[U] \cong F$. Then we define
 \end{note*}
 
 What are some simple algebraic relationships between small subgraphs?
-Consider picking 2 vertices at random, then either they form an edge or they don't.
+Consider picking 2 vertices at random: then either they form an edge or they don't.
 Hence $p(\edge; G) + p(\nonedge; G) = 1$. In general, the sum of densities of all
 flags of some size $k$ is always 1. e.g. 
 \[ 
@@ -161,7 +163,7 @@ like:
 \end{gather*}
 
 We call these graph symbols \textit{flags}.
-We can then prove results with simple symbolic manipulation: In a triangle free graph
+We can then prove results with simple symbolic manipulation: In a triangle-free graph
 we would have $\triangleflag = 0$, hence
 \[
     \edge = \frac{2}{3}\triangletwoedge + \frac{1}{3}\triangleoneedge \leq
@@ -171,7 +173,7 @@ we would have $\triangleflag = 0$, hence
 \]
 as flags are non-negative. This (given all the formal definitions and proofs we've deferred)
 is a formal proof
-that $p(\edge; G) \leq \frac{2}{3}$ for any triangle free graph. The best possible result
+that $p(\edge; G) \leq \frac{2}{3}$ for any triangle-free graph. The best possible result
 says that $p(\edge; G) \leq \frac{1}{2}$ and is known as
 \textit{Mantel's theorem} \cite{Mantel_1910}. This is
 also easily proved with flag algebras which is seen in chapter \ref{chap:classic_flags}.
@@ -205,7 +207,7 @@ wants to bound $\chi'_s(G)$ with a polynomial in $\Delta(G).$ This does not lend
 to the same methods.
 
 Instead, we can define a new ``density'' function which instead normalises our induced
-count by a different denominator, one which captures the graph parameter we want to measure
+count by a different denominator: one which captures the graph parameter we want to measure
 our count ``relative to''. In particular, in chapter \ref{chap:local_flags} we introduce a
 new \textit{local density function} and a concept we call a \textit{local flag}.
 We show that, under certain conditions, these local flags also form a nice algebra
@@ -214,10 +216,10 @@ with which we can apply the semidefinite method to prove bounds.
 \section*{Contributions and Results}
 \addcontentsline{toc}{section}{Contributions and Results}
 
-The work in this thesis was completed with valuable contributions from Rémi de Verclos,
+The work in this thesis was completed with valuable contributions from Rémi de Joannis de Verclos,
 Eoin Hurley, Jan Volec and my supervisor Ross Kang.
 
-The concept for this new framework was originally explored by Rémi de Verclos in
+The concept for this new framework was originally explored by Rémi de Joannis de Verclos in
 2020\footnote{In unpublished notes.}.
 He conjectured the structure of the framework, then adapted flag algebra
 software\footnote{\url{https://crates.io/crates/flag-algebra}}
@@ -246,7 +248,7 @@ we have made progress on several open problems:
     \item In chapter \ref{chap:strong_edge_colouring} we apply this new framework to make progress on the
         \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}, achieving the best-yet
         bound of $\chi'_s(G) \lesssim 1.73\Delta(G)^2$. The approach used here is a modification
-        of the approach conjectured by de Verclos.
+        of the approach conjectured by de Joannis de Verclos.
     \item At the end of chapter \ref{chap:strong_edge_colouring} we alter the method to make
         the first targeted progress on the special bipartite version of this conjecture, showing that
         if $G$ is bipartite then we have the bound $\chi'_s(G) \lesssim 1.6254\Delta(G)^2$. We also
