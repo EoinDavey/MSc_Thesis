@@ -61,7 +61,8 @@ relates "fixed vertex" densities to their un-fixed counterparts.
 
 The fundamental object of our algebra is the \textit{flag} which is a partially
 labelled graph, meaning some of the vertices of the graph have integer labels assigned to
-them\footnote{The term flag apparently refers to the fact that some of the graph is fixed and the rest hangs loose, like a flag in the wind}. There may be no labelled vertices.
+them\footnote{The term flag apparently refers to the fact that some of the graph is fixed and the
+rest hangs loose, like a flag in the wind.}. There may be no labelled vertices.
 
 The \textit{type} of the flag is the subgraph induced by the labelled vertices.
 In figure \ref{fig:flags-types} we see some example flags and their types.
@@ -118,7 +119,7 @@ graphs which preserves the labels.
 
 In the introduction we defined the induced count $c(F; G)$ to be the number of
 $U\subseteq V(F)$ such that $G[U] \cong F$. If both $F$ and $G$ are partially labelled
-and have the same type (so are "compatible"), then we
+and have the same type (so are ``compatible'') then we
 can ask how many copies of $F$ are there in $G$ where the fixed part of $F$ maps to the
 fixed part in $G$.
 
@@ -136,7 +137,7 @@ asking how many tuples of disjoint copies of $F_1, \dots, F_t$ are there in $G$ 
 disjoint means vertex-disjoint apart from the fixed labelled vertices).
 
 Precisely we define $c(F_1, \dots, F_t; G)$ to be the number of
-$U_1, \dots, U_t\subseteq V(G)$ such that $\im\eta = U_i \cap U_j\ \forall\ i, j \in [t]$ where
+$U_1, \dots, U_t\subseteq V(G)$ such that $U_i \cap U_j = \im\eta\ \forall\ i, j \in [t]$ where
 $i\neq j$ and $(F_i, \theta_i) \cong (G[U_i], \eta)$ for all $i\in [t].$
 
 Note that if $c(F_1, \dots, F_t; G) > 0$ we know that $G$ must be large enough to fit
@@ -193,7 +194,7 @@ will want to consider only triangle-free graphs when
 \hyperref[example:first_mantels_proof]{proving Mantel's theorem}.
 
 We pick some class of graphs $\Gcl$. For Razborov's flag algebras we assume that
-$\mathcal{G}$ is hereditary, meaning it is closed under taking induced subgraphs. This will change
+$\mathcal{G}$ is \textit{hereditary}, meaning it is closed under taking induced subgraphs. This will change
 when we introduce our new local framework.
 Then for any type $\sigma$ we write $\Gcl^\sigma$ for the set of all $\sigma$-flags up to
 isomorphism. We write $\Gcl^\sigma_n$ for the set of all $\sigma$-flags of size $n$.
@@ -202,7 +203,7 @@ If $\sigma=\emptyset$ we often skip the superscript and just refer to
 $\Gcl$ or $\Gcl_n$.
 
 From this point all definitions and results are relative to some fixed graph class
-$\mathcal{G}$. Given some graph class $\mathcal{G}^\sigma$ then we get the very powerful
+$\mathcal{G}$. Given some graph class $\mathcal{G}^\sigma$ we get the very powerful
 \textit{chain rule}.
 
 \begin{lemma}[The Chain Rule, Lemma 2.2 \cite{razborovFlagAlgebras2007}]
@@ -254,7 +255,8 @@ We write $\Phi^\sigma$ for the collection of all limit functionals for type $\si
 
 \begin{example}
     If we prove that $\phi(\edge) \leq \frac{1}{2}$ for all $\phi\in\Phi^\emptyset$
-    where $\Gcl$ is the class of triangle free graphs, then we will have proved Mantel's theorem.
+    where $\Gcl$ is the class of triangle free graphs, then we will have proved Mantel's
+    theorem.\footnote{We will have proved the bound asymptotically but this actually suffices.}
 \end{example}
 
 \subsection{The Algebra}
@@ -262,7 +264,7 @@ We write $\Phi^\sigma$ for the collection of all limit functionals for type $\si
 We would like to formally
 describe a symbolic structure on these flags such that relations in the structure describe true
 relations about their associated density functions. As a start we want to be able
-to describe linear combinations of flags
+to describe linear combinations of flags.
 Take then the formal real vector space $\R\Gcl^\sigma$ for some fixed type $\sigma$,
 this gives us a proper notion of these linear combinations of flags. We can then
 linearly extend our density function $p$ to this space in the first argument giving
@@ -414,6 +416,12 @@ meaning.
     The zero vector is also positive.
 \end{example}
 
+\begin{lemma}
+    The set of positive elements of $\Acl^\sigma$ forms a convex cone, meaning it is
+    closed under non-negative linear combination.
+    We call this the \textbf{semantic cone} $\SemCone^\sigma$.
+\end{lemma}
+
 We then extend this notation writing $f \geq g$ iff $f-g \geq 0$ meaning
 $f \geq g$ iff $\phi(f) \geq \phi(g)$ for all $\phi\in\Phi^\sigma$.
 
@@ -424,12 +432,6 @@ $f \geq g$ iff $\phi(f) \geq \phi(g)$ for all $\phi\in\Phi^\sigma$.
     This gives $\edge \leq \frac{1}{2}$ the intended meaning that
     $\phi(\edge) \leq \frac{1}{2}\ \forall\ \phi\in\Phi^\sigma$.
 \end{note}
-
-\begin{lemma}
-    The set of positive elements of $\Acl^\sigma$ forms a convex cone, meaning it is
-    closed under non-negative linear combination.
-    We call this the semantic cone $\SemCone^\sigma$.
-\end{lemma}
 
 Finally we show how the \textit{averaging operator} connects $\Acl^\sigma$ and
 $\Acl^\emptyset$.
@@ -448,7 +450,7 @@ We then define a computable normalising factor $q_\sigma(F)$:
 \begin{definition}
     \label{def:averaging_normalisation}
     For a $\sigma$-flag $F$ define $q_\sigma(F)$ to be the probability that a
-    random injective
+    uniformly random injective
     $\theta\colon [|\sigma|]\to V(F)$ is such that
     $(\downflag{F},\theta)\cong F.$
 \end{definition}
@@ -551,10 +553,11 @@ we are now able to prove Mantel's theorem.
 \section{The Semidefinite Method}
 \label{sec:semidefinite_method}
 
-We saw in the previous section that we can derive new true statements about densities
-by finding elements of the semantic cone
-$\SemCone^\emptyset$, and that taking convex combinations of known
-"axiomatic" positive elements is a good way to do that. In general to prove
+In our proof of Mantel's theorem we took some fixed known elements of the semantic cone
+and took a conic combination of those elements to show $\frac{1}{2}\emptyset - \edge \geq 0$.
+This is a powerful method to prove bounds on densities, taking some fixed
+``axiomatic'' positive vectors and combining them to get new positive vectors.
+In general to prove
 $\phi(f) \leq \lambda\ \forall\ \phi\in\Phi^\emptyset$
 we need to show $\lambda\emptyset - f \geq_{\Acl^\emptyset} 0$. It also
 suffices to find $\lambda\emptyset - (f + r) \geq 0$ for some $r \geq 0$.
@@ -574,8 +577,8 @@ can be expressed in the basis $\Bcl = (F_1, \dots, F_l, \emptyset).$
 This gives us a notion of a coefficient function $\coef_i$ for each $i\in[\ell]$ and
 $\coef_\emptyset$. WLOG $f$ has no $\emptyset$ coefficient.
 
-Then if $c=[c_1, \dots, c_k]^T\in\R^k$ is elementwise non-negative
-$\sum_{i=1}^kc_iv_i$ is $\in\SemCone^\emptyset$. We want this to equal some
+If $c=[c_1, \dots, c_k]^T\in\R^k$ is elementwise non-negative
+then $\sum_{i=1}^kc_iv_i$ is $\in\SemCone^\emptyset$. We want this to equal some
 $\lambda\emptyset - (f+r)$ where $r\in\SemCone^\emptyset$.
 Each element of the basis is in the cone so it suffices
 to find $c_1, \dots, c_k$ such that $\coef_j(\sum_{i=1}^kc_i v_i) \leq -\coef_j(f)\ \forall\ j\in[\ell]$.
@@ -634,7 +637,8 @@ $\SemCone^\emptyset$ but how can we incorporate an entire space of these element
 
 \subsection{Semidefinite Programming}
 
-We know that $\llbracket \nu^2 \rrbracket \in\SemCone^\emptyset\ \forall\ \nu\in\Acl^\sigma$.
+We know that $\llbracket \nu^2 \rrbracket \in\SemCone^\emptyset\ \forall\ \nu\in\Acl^\sigma$ for any
+type $\sigma$.
 How do we encode this into our optimisation problem?
 One way to do this would be to add a search variable for $\nu\in\Acl^\sigma$
 and consider $\llbracket \nu^2 \rrbracket$ as one of our known elements of the semantic cone.
@@ -681,7 +685,7 @@ $\nu$ is considered a column vector over $\Bcl^\sigma$. By cyclicity
 of the trace we have
 $\nu^TC^\sigma_i\nu = \trace(\nu\nu^TC^\sigma_i)=\langle \nu\nu^T, C^\sigma_i\rangle$
 where $\langle \cdot \rangle$ is the standard inner product on real symmetric
-matrices\footnote{$\langle A,B\rangle=\trace(A^T,B)$. This is also the elementwise dot-product}.
+matrices\footnote{$\langle A,B\rangle=\trace(A^T,B)$. This is also the elementwise dot-product.}.
 
 The collection of matrices $C^\sigma_i$ are fixed by choice of $\Bcl^\sigma$ so we now know how
 to compute
@@ -698,7 +702,7 @@ over a single vector $\nu$.
 If we search instead over the space of positive semidefinite (PSD)
 matrices then it is a well known result (the spectral theorem) that
 any such $P$ has spectral decomposition $P=\sum_{i=1}^m \nu_i\nu_i^T$ where
-$\nu_1,\dots,\nu_m$ are orthogonal eigenvectors of $P$.
+$\nu_1,\dots,\nu_m$ are orthogonal eigenvectors\footnote{Not necessarily normalised.} of $P$.
 Then
 \[
     \langle P, C^\sigma_i \rangle
@@ -734,7 +738,7 @@ $\llbracket (\edgemarked - \nonedgemarked)^2\rrbracket$.
     Let $\sigma=\vertex$ and take the bases
     \[
         \Bcl = (\triangleoneedge, \triangletwoedge, \emptyset)
-        \ \ \ \Bcl^\sigma = (\edgemarked, \nonedgemarked)
+        \ \ \ \Bcl^\sigma = (\edgemarked, \nonedgemarked).
     \]
     Then we can compute the matrix of all $\llbracket F\cdot G\rrbracket$ for $F, G \in\Bcl^\sigma$:
     \[
@@ -801,29 +805,30 @@ $\llbracket (\edgemarked - \nonedgemarked)^2\rrbracket$.
     and
     $c_2\coef_1(v_1) + \langle P, C_2^\sigma \rangle = \frac{2}{3} = -\coef_2(f)$
     as required.
-    Therefore $\frac{1}{2}\emptyset - f \in \SemCone^\emptyset\implies\phi(f)\leq\frac{1}{2}\ \forall\ \phi\in\Phi^\emptyset$ as required.
+    Therefore $\frac{1}{2}\emptyset - f \in \SemCone^\emptyset\implies\phi(f)\leq\frac{1}{2}\
+    \forall\ \phi\in\Phi^\emptyset$ as expected.
 
     This value of $P$ shouldn't be surprising as $P = \frac{1}{2}\nu\nu^T$ where
-    $\nu = [1, -1]^T = \edgemarked - \nonedgemarked$ so the "discovered" element of
+    $\nu = [1, -1]^T = \edgemarked - \nonedgemarked$ so the ``discovered'' element of
     the semantic cone was the expected $\llbracket (\edgemarked - \nonedgemarked)^2 \rrbracket$.
 \end{example}
 
 \subsection{Duality}
 \label{sec:sdp_duality}
 
-Consider again our linear program: "Minimise $\coef_\emptyset(\sum_ic_iv_i)$ over
-$c\in\R^k_{\geq 0}$ such that $\coef_j(\sum_ic_iv_i)\leq -\coef_j(f)\ \forall\ j\in[\ell]$",
+Consider again our linear program: ``Minimise $\coef_\emptyset(\sum_ic_iv_i)$ over
+$c\in\R^k_{\geq 0}$ such that $\coef_j(\sum_ic_iv_i)\leq -\coef_j(f)\ \forall\ j\in[\ell]$'',
 which we expressed as a matrix problem:
-"Minimise $c^T\beta$ over $c\in\R^k$ such that $c^T(-A) \geq f$ and $c\geq 0$".
+``Minimise $c^T\beta$ over $c\in\R^k$ such that $c^T(-A) \geq f$ and $c\geq 0$''.
 
-The powerful thing about linear programming is duality. We can convert our minimisation
+The powerful thing about linear programming is \textit{duality}; We can convert our minimisation
 problem above into a dual maximisation problem which asks us to maximise
 $f^Tx$ over $x \in \R^\ell$ such that $x \geq 0$ and $(-A)x \leq \beta$.
 By weak duality of linear programming
 we know that any solution to this problem is a lower bound to any possible solution to
 our original (primal) problem.
 
-We can interpret this maximisation problem in a useful way. We can think of this dual
+We can interpret this maximisation problem in a useful way: We can think of this dual
 problem as being a relaxation of the search over possible limit functionals $\phi$.
 Take the search vector $x\in\R^\ell$ and construct a linear functional $\phi_x$ on the
 space $\spanop\Bcl$ by defining $\phi_x(F_i) := x_i$ and $\phi_x(\emptyset) = 1$, then
@@ -837,7 +842,7 @@ Hence the dual problem attempts to maximise some hypothetical $\phi_x(f)$ on the
 constraints that $\phi_x$ must behave like a true limit functional. This interpretation
 makes it clear that our fixed known elements of the semantic cone correspond to constraints
 on the possible space of linear functionals; Adding new positive elements to the list
-may exclude previous possible limit functionals and get us closer to a true answer.
+may exclude previously possible invalid limit functionals and get us closer to a true answer.
 
 We expanded our linear program into a semidefinite program. Luckily for us semidefinite
 programs also have duality. The dual version of the SDP above asks us to
@@ -869,11 +874,11 @@ semantic cone, proving true upper bounds on $\phi(f)\forall\phi\in\Phi^\emptyset
 We have already discussed graphs with colourings in the introduction. In that context
 we were considering some underlying graph $G$ and asking questions about what possible
 colourings $G$ can admit under certain constraints. In this section we are going to take
-a very different view of graphs and colourings, we instead consider a graphs with colourings
+a very different view of graphs and colourings, instead considering graphs with colourings
 as combinatorial objects in their own right.
 
 \begin{definition}[$(c_v, c_e)$-Graph]
-    Given $c_v, c_e \in \N$ where $c_v, c_e \geq 1$ we define a
+    Given $c_v, c_e \in \N$ where we define a
     \textbf{$(c_v, c_e)$-graph} to be a simple undirected graph where each edge and
     each vertex are assigned colours from $[c_v]$ and $[c_e]$ respectively.
 

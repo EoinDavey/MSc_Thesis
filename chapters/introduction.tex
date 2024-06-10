@@ -8,8 +8,8 @@ Erd\H{o}s and Nešetřil conjectured that you only need $1.25\Delta(G)^2$ colour
 the current best proof only shows an upper bound of $1.772\Delta(G)^2$ colours. In this thesis
 we show how we can lower this bound to $1.73\Delta(G)^2$ by introducing a novel framework
 which is a modification of Razborov's flag algebras. We also apply this new framework
-to some other open problems including a bounded-degree version of the
-Erd\H{o}s' pentagon conjecture.
+to some other open problems including a bounded-degree version of
+Erd\H{o}s's pentagon conjecture.
 
 \section*{Strong Edge Colouring}
 \addcontentsline{toc}{section}{Strong Edge Colouring}
@@ -48,7 +48,7 @@ the strong chromatic index can also be bounded precisely by a function of the ma
 \end{knownconjecture}
 A greedy argument shows a bound of $\chi'(G) \leq 2\Delta(G)^2 + o(\Delta(G)^2)$ but it wasn't until
 1997 that Molloy and Reed broke the $2\Delta(G)^2$ barrier \cite{molloyBoundStrongChromatic1997}.
-A series of papers have since made progress on bringing this bound down closer to $\frac{5}{4}\Delta(G)^2$.
+A series of papers have since made progress on lowering this bound closer to $\frac{5}{4}\Delta(G)^2$.
 
 For $\Delta(G)$ large enough we have the following theorems:
 \begin{enumerate}
@@ -124,7 +124,7 @@ Hence $p(\edge; G) + p(\nonedge; G) = 1$. In general, the sum of densities of al
 flags of some size $k$ is always 1. e.g. 
 \[ 
     p(\triangleflag; G) + p(\triangletwoedge; G) + p(\triangleoneedge; G)
-    + p(\triangleempty; G) = 1
+    + p(\triangleempty; G) = 1.
 \]
 Now we note that we can sample 2 vertices uniformly at random by
 first sampling a triple of vertices at random, and then sampling 2 of those 3 uniformly randomly
@@ -143,8 +143,8 @@ vertices and then splitting the 4 randomly into two halves tells us:
         + \frac{1}{3}\left(p(\kfourmtwo; G) + p(\kfourbucket; G) + p(\kfourtwopair; G)\right)
 \]
 
-Simplifying our notation then we might arrive at a symbolic algebra which has relations
-like
+Simplifying our notation then we might arrive at a hypothetical symbolic algebra which has relations
+like:
 \begin{gather*}
     \edge + \nonedge = 1\\
     \triangleflag
@@ -204,9 +204,9 @@ of $G$? e.g. The \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conje
 wants to bound $\chi'_s(G)$ with a polynomial in $\Delta(G).$ This does not lend itself
 to the same methods.
 
-Instead, we can define a new "density" function which instead normalises our induced
-count by a different denominator: one which captures the graph parameter we want to measure
-our count "relative to". In particular, in chapter \ref{chap:local_flags} we introduce a
+Instead, we can define a new ``density'' function which instead normalises our induced
+count by a different denominator, one which captures the graph parameter we want to measure
+our count ``relative to''. In particular, in chapter \ref{chap:local_flags} we introduce a
 new \textit{local density function} and a concept we call a \textit{local flag}.
 We show that, under certain conditions, these local flags also form a nice algebra
 with which we can apply the semidefinite method to prove bounds.
@@ -218,7 +218,7 @@ The work in this thesis was completed with valuable contributions from Rémi de 
 Eoin Hurley, Jan Volec and my supervisor Ross Kang.
 
 The concept for this new framework was originally explored by Rémi de Verclos in
-2020\footnote{In unpublished notes}.
+2020\footnote{In unpublished notes.}.
 He conjectured the structure of the framework, then adapted flag algebra
 software\footnote{\url{https://crates.io/crates/flag-algebra}}
 to test if this framework could in principle improve on existing results.
@@ -234,22 +234,24 @@ section \ref{sec:pentagon_stronger} were conceived by Eoin Hurley.
 Using our new framework which is introduced in chapter \ref{chap:local_flags}
 we have made progress on several open problems:
 \begin{itemize}
-    \item In chapter \ref{chap:pentagon_conjecture} we show a "warmup" application of the new
-        framework. We state a new conjecture which is a bounded degree version of the famous
+    \item In chapter \ref{chap:pentagon_conjecture} we show a ``warmup'' application of the new
+        framework: We state a new conjecture which is a bounded-degree version of the famous
         Erd\H{o}s pentagon conjecture \cite{erdos_pentagon_1984}.
-        We show then how a straightforward application of the local flags method makes non-trivial
+        We then show how a straightforward application of the local flags method makes non-trivial
         progress towards proving the conjecture, and show that a slightly more complex application
         then gets even closer to the full result.
         This problem was chosen as the original conjecture was first proven using
         the classic flag algebras (\cite{hatamiNumberPentagonsTrianglefree2013},
         \cite{grzesikMaximumNumberFivecycles2012}).
-    \item In chapter \ref{chap:strong_edge_colouring} then we apply this new framework to make progress on the
+    \item In chapter \ref{chap:strong_edge_colouring} we apply this new framework to make progress on the
         \hyperref[conj:intro_erdos_nesetril]{Erd\H{o}s-Nešetřil Conjecture}, achieving the best-yet
         bound of $\chi'_s(G) \lesssim 1.73\Delta(G)^2$. The approach used here is a modification
         of the approach conjectured by de Verclos.
     \item At the end of chapter \ref{chap:strong_edge_colouring} we alter the method to make
-        the first progress on the special bipartite version of this conjecture, showing that
-        if $G$ is bipartite then we have the bound $\chi'_s(G) \lesssim 1.6254\Delta(G)^2$.
+        the first targeted progress on the special bipartite version of this conjecture, showing that
+        if $G$ is bipartite then we have the bound $\chi'_s(G) \lesssim 1.6254\Delta(G)^2$. We also
+        investigate the asymmetric version of this bipartite case and make an interesting discovery
+        where the chromatic bound is constant across all degrees of asymmetry.
 \end{itemize}
 
 At the end of the document you will find 3 appendices which might be of interest.

@@ -3,21 +3,21 @@
 
 Given a graph $G$ let $P(G)$ denote the number of pentagons (5-cycles)\footnote{Counted as
 subsets: the order does not matter} in $G$.
-In 1983 \cite{erdosProblemsGraphTheory1984} Erd\H{o}s made the following conjecture:
+In 1983 Erd\H{o}s made the following conjecture:
 
-\begin{knownconjecture}[Erd\H{o}s 1983]
+\begin{knownconjecture}[Erd\H{o}s 1983 \cite{erdosProblemsGraphTheory1984}]
     If $G$ is triangle free then $P(G) \leq \left(\frac{|G|}{5}\right)^5$.
 \end{knownconjecture}
 
 This conjecture remained open until 2012 when it was proved by both Grzesik
 \cite{grzesikMaximumNumberFivecycles2012} and Hatami, Hladký, Kráľ, Norine and Razborov
 \cite{hatamiNumberPentagonsTrianglefree2013}. 
-Importantly for us, both of these papers used the Razborov flag algebras to prove the result!
+Importantly for us, both of these papers used Razborov's flag algebras to prove the result!
 
-Inspired by Erd\H{o}s' conjecture we ask
+Inspired by Erd\H{o}s's conjecture we ask
 the following question: Can we bound the number of pentagons in a triangle free graph
 as a function of the maximum degree $\Delta(G)$?
-This leads us to the following \textit{bounded degree pentagon conjecture}:
+This leads us to the following \textit{bounded-degree pentagon conjecture}:
 
 \begin{conjecture}
     \label{conj:bounded_pentagon}
@@ -33,8 +33,8 @@ We claim then the following theorem:
     $P(G) \leq 0.02073 \cdot |G|\Delta(G)^4 \approx 1.658\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
 \end{theorem}
 
-We prove this result using local flags, but the approach is slightly too complex to serve
-as the "warmup" application, so we first first prove this slightly weaker result:
+We proved this result using local flags, but the approach is slightly too complex to serve
+as the ``warmup'' application, so we first first prove this slightly weaker result:
 
 \begin{theorem}
     \label{thm:simple_pentagon_bound}
@@ -49,13 +49,13 @@ result.
 \section{Tightness}
 
 \begin{lemma}
-    If the bounded degree pentagon conjecture is true then it is tight.
+    If the bounded-degree pentagon conjecture is true then it is tight.
 \end{lemma}
 
 \begin{proof}
     Let $k\in\N$ even be given and take $G$ to be the $k/2$-blowup of $C_5$
     (figure \ref{fig:5_partite_graph}) meaning take 5 independent sets of size $k/2$ as
-    "supernodes" then densely connect the supernodes into a 5-cycle.
+    ``supernodes'' then densely connect the supernodes into a 5-cycle.
     \begin{figure}[ht]
         \centering
         \includegraphics[scale=0.3]{5_partite_graph}
@@ -382,7 +382,7 @@ These extensions are important for the following reason:
 
 The value of these results for us is twofold: Firstly, this gives us a wide set of
 easy to generate elements of the semantic cone which we can use in our semidefinite
-program. Secondly, though this property where
+program. Secondly, this property where
 $\phi(\llbracket f \rrbracket)=\phi(\llbracket f \cdot \ext_i^\sigma\rrbracket)$ gives
 us a way of expressing a vector in a subspace of larger flags. In particular multiplying by
 $\ext_i^\sigma$ gives a vector over flags which are 1 larger than those in the original
@@ -507,7 +507,7 @@ black vertices is independent.
 We want to asymptotically bound the number of black-red-red-black paths in this
 class. This means we have the following objective function: $\brrb$.
 This is a local flag by lemma \ref{lemma:pentagon_local_flags}. We will now use
-the semidefinite method (Section \ref{sec:semidefinite_method}) to find a bound
+the semidefinite method (section \ref{sec:semidefinite_method}) to find a bound
 $\lambda\in\R$ such that $\phi(\brrb)\leq \lambda\ \forall\ \phi\in\Phi^\sigma$.
 
 \begin{note}
@@ -638,8 +638,8 @@ SDP solution rigorous. For now we show that this bound suffices to prove theorem
     $\frac{P(G)}{|G|\Delta(G)^4}\lesssim \frac{1}{5\cdot 8}$ for any regular triangle
     free $G$. Corollary \ref{corollary:pentagon_regular_suffices} shows that
     we can drop the regular requirement.
-    Finally then lemma \ref{lemma:pentagon_asymp_suffices} shows that this
-    asymptotic bound implies the non-amsymptotic bound.
+    Finally, lemma \ref{lemma:pentagon_asymp_suffices} shows that this
+    asymptotic bound implies the non-asymptotic bound.
     \[
         \therefore P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8}
         \ \forall\ G\ \text{triangle free}.
@@ -652,7 +652,7 @@ SDP solution rigorous. For now we show that this bound suffices to prove theorem
 We've shown in the previous section how to express our problem in the form of a
 semidefinite program and we claimed that SDP software found a solution proving a bound
 of $1/8$. Clearly though appealing to a software implementation, no matter how well tested,
-is not rigorous. We saw in section \ref{sec:semidefinite_method} how such an SDP
+is not rigorous: We should verify the outcome ourselves. We saw in section \ref{sec:semidefinite_method} how such an SDP
 solution corresponds to constructing a specific element of the semantic cone by taking
 convex combinations of known elements of the cone. In this section we will show the
 combination of elements that was found by the SDP software, verifying that it is indeed
@@ -773,7 +773,7 @@ The sum of these two elements of the semantic cone is:
     \label{eq:pent_cs_1}
 \end{multline}
 
-Finally then we take the combination of equations \ref{eq:pent_lin_sum}, \ref{eq:pent_cs_0}
+Finally, we take the combination of equations \ref{eq:pent_lin_sum}, \ref{eq:pent_cs_0}
 and \ref{eq:pent_cs_1} to get our final element of the cone.
 \[
     (\ref{eq:pent_lin_sum}) + (\ref{eq:pent_cs_0}) + (\ref{eq:pent_cs_1})

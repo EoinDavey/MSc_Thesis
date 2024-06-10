@@ -1,9 +1,9 @@
 \chapter{Local Flags}
 \label{chap:local_flags}
 
-Consider the following question from chapter \ref{chap:pentagon_conjecture}:
-"Given a triangle-free graph $G$ with max degree $\Delta(G)$ and some fixed vertex
-$v\in V(G)$, how many pentagons (5-cycles) are there containing $v$"?
+Consider the following TODO question from chapter \ref{chap:pentagon_conjecture}:
+``Given a triangle-free graph $G$ with max degree $\Delta(G)$ and some fixed vertex
+$v\in V(G)$, how many pentagons (5-cycles) are there containing $v$''?
 The upper bound of $\Delta(G)^4$ is easily seen, but we can do better.
 Phrased differently: If $P(G,v)$ is the number of pentagons in $G$ containing $v$ then
 we want to find an asymptotic upper bound on $P(G,v) / \Delta(G)^4$.
@@ -41,8 +41,8 @@ Let $\Delta$ be some graph parameter $\Delta\colon \Gcl \to \N_0$.
 \begin{note}
     \label{note:delta_meaning}
     We almost exclusively use the maximum degree function $\Delta$ so you can effectively always
-    interpret $\Delta(G)$ in this way. In particular all of
-    our examples use the max degree function for $\Delta(G)$.
+    interpret $\Delta(G)$ in this way. In particular, all of
+    our examples and applications use the max degree function for $\Delta(G)$.
 \end{note}
 
 We start by defining the \textit{local density} in the same way as the induced
@@ -81,7 +81,7 @@ induced density function. In general, this function may be bounded or unbounded:
 This bounded/unbounded distinction is the key distinction we want to make. Those
 flags $F$ with bounded behaviour are those with the exploitable algebraic structure. Indeed
 we will eventually define our \textit{local flags} to be those with bounded local density
-but we first need to address some technical definitions to avoid pathological cases:
+but we first need to address some technical definitions to avoid pathological cases.
 
 We need a way to technically describe the action of taking a $\sigma$-flag with some
 unlabelled vertices and labelling one of those vertices:
@@ -117,8 +117,8 @@ obstacle but means we need to adjust our notation.
 \begin{definition}[Hereditary Closure]
     Given a graph class $\Gcl$ we define the \textbf{hereditary closure} of $\Gcl$ to be
     the smallest graph class which contains $\Gcl$ and is closed under taking
-    induced subgraphs. i.e. it's the graphs $G\in\Gcl$ with their induced subgraphs.
-    We denote this as $\HeredG$.
+    induced subgraphs. i.e. it's the graphs $G\in\Gcl$ along with their induced subgraphs. We
+    denote this as $\HeredG$.
 \end{definition}
 
 Now we are ready to define our local flags:
@@ -141,7 +141,7 @@ This is not a circular definition as any label extension of $(F,\theta)$ reduces
 unlabelled vertices
 by 1; We could define inductively starting with those flags with no unlabelled vertices.
 
-What we're trying to capture here is that any "subflag" of $F$ is also a local flag, meaning we can
+What we're trying to capture here is that any ``subflag'' of $F$ is also a local flag, meaning we can
 pin down $F$'s vertices and continue to get bounded behaviour.
 
 \begin{example}
@@ -163,13 +163,13 @@ can drop the $\sigma$ superscript if $\sigma=\emptyset$.
 
 Comparing this section to the classic flag algebra case (section \ref{sec:flag_algebras})
 you might expect us to introduce something akin to the chain rule (lemma \ref{lemma:chain_rule}).
-Unfortunately no such relation exists in general for local flags. This is the first big
-loss when moving to the new framework: Prima facie, it's unclear how one can "project"
+Unfortunately, no such relation exists in general for local flags. This is the first big
+loss when moving to the new framework: Prima facie, it's unclear how one can ``project''
 small flags into a space of larger flags.
 
 \begin{note}
     This second property we require of local flags is not necessarily implied by
-    the first which we show now in lemma \ref{lemma:second_prop_required}.
+    the first, which we show now in lemma \ref{lemma:second_prop_required}.
 \end{note}
 
 \begin{lemma}
@@ -196,7 +196,7 @@ small flags into a space of larger flags.
 \end{proof}
 
 Intuitively, $F$ is a local $\sigma$-flag (relative to our choice of $\Gcl$ and
-$\Delta$) if $\Delta(G)$ bounds the "degree of freedom" for the possible mapping
+$\Delta$) if $\Delta(G)$ bounds the ``degree of freedom'' for the possible mapping
 of $F$'s unlabelled vertices.
 
 \begin{lemma}
@@ -220,14 +220,14 @@ of $F$'s unlabelled vertices.
 \section{Algebraic Structure}
 
 Now that we have described local $\sigma$-flags $\Gloc^\sigma$ we can describe their
-algebraic structure. Ideally we would like to construct a product structure
+algebraic structure. Ideally, we would like to construct a product structure
 on $\Gloc^\sigma$ such that we get a result like theorem \ref{thm:classic_product_lim} but for
 the local density function $\rho$. In fact, this is exactly what we get: An algebraic structure such
 that $\rho(f; G)\rho(g;G) = \rho(f\cdot g; G) + o(1)$ (theorem \ref{thm:local_product_lim}).
 
-First we take the concept of limit functionals (section \ref{sec:limit_functionals})
+First, we take the concept of limit functionals (section \ref{sec:limit_functionals})
 from the classic flag algebras with some minor modifications:
-First, we require now that a sequence of graphs $(G_k)_{k\in\N}$ is $\Delta$-increasing:
+We require now that a sequence of graphs $(G_k)_{k\in\N}$ is $\Delta$-increasing:
 \begin{definition}
     A sequence $(G_k)_{k\in\N}$ is $\Delta$-increasing if the sequence
     $(\Delta(G))_{k\in\N}$ is strictly increasing\footnote{We required that the codomain of
@@ -528,7 +528,7 @@ it will prove useful to look at only a select set of types we call \textit{local
 We also give a useful equivalent condition:
 \begin{lemma}
     \label{lemma:local_type_equiv}
-    A type $\sigma$ is a local type iff $\sigma$ is itself a local $\emptyset$-flag
+    A type $\sigma$ is a local type iff $\sigma$ is itself a local $\emptyset$-flag.
 \end{lemma}
 
 \begin{proof}
@@ -537,7 +537,8 @@ We also give a useful equivalent condition:
     $\sigma$ is a local $\emptyset$-flag.
 
     To show the other direction assume $\sigma$ is itself a local $\emptyset$-flag
-    meaning $c(\sigma; G) \in O(\Delta(G)^{|\sigma|})$. Let $(F, \theta) \in\Gloc^\sigma$ be
+    meaning\\
+    $c(\sigma; G) \in O(\Delta(G)^{|\sigma|})$. Let $(F, \theta) \in\Gloc^\sigma$ be
     given, then we also have\\
     $c((F, \theta); (G, \eta)) \in O(\Delta(G)^{|F|-|\sigma|})$.
     Let $C_\sigma$ be the constant such that\\
@@ -718,7 +719,7 @@ behaviour if $\sigma$ is a local type.
     Let $f\in\SemCone^\sigma$ be given and assume for sake of contradiction that
     $\llbracket f \rrbracket \notin\SemCone^\emptyset$. Then there must exist
     some limit functional $\phi\in\Phi^\emptyset$ such that $\phi(f)<0$. Equivalently
-    there is some $\Delta$-convergent sequence of graphs $(G_k)_{k\in\N}$
+    there is some $\Delta$-increasing convergent sequence of graphs $(G_k)_{k\in\N}$
     such that $\lim_{k\to\infty}\rho(f; G_k) < 0$.
 
     By lemma \ref{lemma:local_averaging_exp} we know that
@@ -768,6 +769,6 @@ local type, so our set of types under consideration is slightly limited.
 
 In practical terms the lack of the chain rule and its corresponding quotient sets means that
 expressing our combinatorial questions in the form of $\sup_\phi \phi(f)$ for $f\in\Lcl^\sigma$ is
-more difficult; We will see in the next chapter a "warmup" application which shows how we can
+more difficult; We will see in the next chapter a ``warmup'' application which shows how we can
 exploit regularity to give us a wide set of constraints and allow us to project small
 flags into a basis of larger flags.

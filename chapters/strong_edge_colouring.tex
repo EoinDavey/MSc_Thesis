@@ -1,12 +1,12 @@
 \chapter{Application: Strong Edge Colouring}
 \label{chap:strong_edge_colouring}
 
-As defined in the \hyperref[sec:intro_strong_edge_coloring]{introduction}
+As defined in the \hyperref[sec:intro_strong_edge_coloring]{introduction},
 a strong edge colouring of a graph is an edge colouring where two edges which are incident to some
 common edge must have different colours. The minimum colours required for a strong edge colouring of
-$G$ is called the strong chromatic index $\chi'_s(Gj$.
+$G$ is called the strong chromatic index $\chi'_s(G)$.
 In 1985 Erd\H{o}s and Nešetřil conjectured that
-$\chi'_s(G) \leq 1.73\Delta(G)^2$, and in 1989 Faudree et al. conjectured that
+$\chi'_s(G) \leq 1.25\Delta(G)^2$, and in 1989 Faudree et al. conjectured that
 $\chi'_s(G) \leq \Delta(G)^2$ if $G$ is bipartite \cite{faudreeInducedMatchingsBipartite1989}.
 
 In this chapter we will use the semidefinite method on local flags to prove the following
@@ -24,12 +24,12 @@ by showing the first result, and leave the bipartite case until section
 \ref{sec:sec_bipartite}.
 Additionally, in section
 \ref{sec:asymmetric_bipartite_sec} we will investigate the asymmetric version of the
-bipartite case, leading to an interesting discovery which suggests that the asymmetric
-version may be reducible to the symmetric case.
+bipartite case, leading to an interesting discovery which suggests the strong neighbourhood
+density bound coefficient is constant across all asymmetry ratios.
 
 \section{Line Graph Equivalence}
 
-We can view a strong edge colouring of a graph as a proper vertex colour of $L(G)^2$, the
+A strong edge colouring of a graph $G$ is equivalent to a proper vertex colouring of $L(G)^2$, the
 square of the line graph of $G$ (see \cite{molloyBoundStrongChromatic1997}).
 The line graph $L(G)$ is a graph with a vertex $v_e$ for
 each $e\in E(G)$ such that $\{v_e, v_f\} \in E(L(G))$ iff $e$ is incident to $f$ in
@@ -75,7 +75,7 @@ this the \textit{strong neighbourhood density}.
 After showing the strong neighbourhoods in $L(G)^2$ are sparse they use a colouring
 lemma to colour $L(G)^2$:
 \begin{knownlemma}[Lemma 2 from \cite{molloyBoundStrongChromatic1997}]
-    Let $\delta, \gamma > 0$ satisfy some condition. Then if
+    Let $\delta, \gamma > 0$ satisfying some condition. Then if
     $\Delta(H) \leq X$ such that $N(v)$ has at most $(1-\delta)\binom{X}{2}$ edges
     then $\chi(H)\leq (1-\gamma)X$.
 \end{knownlemma}
@@ -118,7 +118,7 @@ box we claim the following result.
 The rest of this chapter is the proof of this theorem.
 We will follow the same structure as used in chapter \ref{chap:pentagon_conjecture},
 first reducing the problem to a problem on a certain class of coloured graphs,
-finding a vector $O$ of local flags for which an asymptotic bound on the density of $O$ will allow
+finding an objective vector $O$ of local flags for which an asymptotic bound on the density of $O$ will allow
 us to derive an asymptotic bound on the size of $|E(H[N_{H[F]}(f)])|$.
 We then enumerate some elements
 of the semantic cone and apply the semidefinite method to get a bound on $O$.
@@ -450,8 +450,8 @@ add the constraints
 for all $2 \leq k \leq n-1$ which are all constraints over flags of size $n$.
 
 We then we add the constraint using $\sigma=\vertex$ that
-$\phi(\llbracket \vertex \cdot \ext_1^{n-1}\rrbracket) \leq 2$
-which holds because $\llbracket O \rrbracket = O$.
+$\phi(\llbracket \vertex \cdot (\ext_1^\vertex)^{n-1}\rrbracket) \leq 2$
+which holds because $\llbracket \vertex \rrbracket = \vertex$.
 
 Finally then we add the constraints of the form
 $\phi(\llbracket f^2 \rrbracket) \geq 0$ for all $f\in\Lcl^\sigma$
@@ -596,7 +596,7 @@ upper bound on the strong chromatic index.
 From what we can find, there are no papers showing a better bound than the general
 bounds for the special case of bipartite graphs. Luckily for us the method of local flags
 is easily specialised to the case of bipartite graphs meaning we can make the first
-progress toward this conjecture. This is a big advantage of the method of local flags,
+targeted progress toward this conjecture. This is a big advantage of the method of local flags,
 the methods used in previous papers to bound the strong neighbourhood density do not seem
 to be so easily adaptable to a special case like this.
 
@@ -704,7 +704,7 @@ for $n\in\N$ yet to be chosen and get the following result:
 Following the pattern of this thesis we now list some constraints on the space of
 limit functionals and find ways to express them in the basis of flags of fixed size
 $n$. As $\Gcl$ is a regular class we get the constraints of the form
-$\phi(\llbracket \ext^\sigma_i \ext^\sigma_j \rrbracket) = 0$ for all local types
+$\phi(\llbracket \ext^\sigma_i - \ext^\sigma_j \rrbracket) = 0$ for all local types
 $\sigma$, $i,j\in[|\sigma|]$. We can add these for all local $\sigma$ of size
 $n-1$.
 
@@ -896,7 +896,7 @@ $\chi'_s(G)$ for every value of $p$ we tested.
 
 \begin{theorem}
     \label{thm:asymmetric_bipartite_bound}
-    For $p\in [0.1, 0.2, 0.3, \dots, 1]$ we get the following results.
+    For $p\in [0.1, 0.2, 0.3, \dots, 1]$ we get the following result:
     For $\Delta(G)$ large enough where $G=A\sqcup B$ is a bipartition with
     $\Delta(B)=p\Delta(A)$ we have the bound
     \[
@@ -960,8 +960,8 @@ the \textit{unit extension} at $i$ to be
     \label{lemma:asymmetric_regularity}
     For any type $\sigma$, $i,j\in [|\sigma|]$ we have
     $\phi(\uext_i^\sigma - \uext_j^\sigma) = 0$ for all
-    $\phi\in\Phi^\sigma$. In particular $\llbracket \uext_i -
-    \uext_j\rrbracket\in\SemCone^\emptyset$ if $\sigma$ is a local type.
+    $\phi\in\Phi^\sigma$. In particular $\llbracket \uext_i^\sigma -
+    \uext_j^\sigma\rrbracket\in\SemCone^\emptyset$ if $\sigma$ is a local type.
 \end{lemma}
 
 This gives us an analogue of the $\llbracket \ext_i^\sigma - \ext_j^\sigma \rrbracket$ constraints
