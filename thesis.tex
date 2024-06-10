@@ -7,8 +7,6 @@
 
 \usepackage{graphicx}
 \graphicspath{{assets/}}
-\usepackage{listings}
-\usepackage{scrhack} % required for listings to work with KOMA script document class
 \usepackage{graphbox}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -24,8 +22,13 @@
 
 \usepackage[a4paper, nohead]{geometry}
 
+\usepackage{color}
+\usepackage{listings}
+\usepackage{scrhack} % required for listings to work with KOMA script document class
+
 % Load custom macros
 \input{macros.sty}
+\input{rusthl.sty}
 
 \title{Local Flags: Bounding the Strong Chromatic Index} % Title of your thesis
 \author[eoin.davey@student.uva.nl, 14246287]{Eoin Davey} %Your name, email and student number

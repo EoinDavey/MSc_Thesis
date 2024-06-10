@@ -75,7 +75,7 @@ First we have some code describing the local $\emptyset$-flags which are those
 where each connected component contains a black vertex and there are no
 triangles or edges between black vertices.
 
-\begin{lstlisting}[basicstyle=\scriptsize]
+\begin{lstlisting}[basicstyle=\scriptsize, language=rust]
 impl SubFlag<G> for TriangleFreeConnected {
     const HEREDITARY: bool = false;
 
@@ -111,7 +111,7 @@ We then create the basis of flags of size 5 and construct our
 objective vector $O=\llbracket \brrb \cdot \ext_1^\sigma \rrbracket$.
 We use a helper function \verb|Degree::project| to construct the extension vectors.
 
-\begin{lstlisting}[basicstyle=\scriptsize]
+\begin{lstlisting}[basicstyle=\scriptsize, language=rust]
 pub fn main() {
     let n = 5;
     let basis = Basis::new(n);
@@ -120,13 +120,15 @@ pub fn main() {
             Graph::new(4, &[(0, 1), (1, 2), (2, 3)]), vec![0, 1, 1, 0])
             .into();
     let obj = Degree::project(&c5_path, n).untype();
+    ...
+}
 \end{lstlisting}
 
 Then we create a vector of inequalities, which we fill with the inequalities
 meaning $\phi(F) \geq 0$ for all flags, $\phi(\llbracket B_k \cdot \ext^{B_k}_1 \rrbracket) = 1$
 and the regularity constraints
 $\phi(\llbracket \ext_i^\sigma - \ext_j^\sigma\rrbracket) = 0$.
-\begin{lstlisting}[basicstyle=\scriptsize]
+\begin{lstlisting}[basicstyle=\scriptsize, language=rust]
 let mut ineqs = vec![flags_are_nonnegative(basis)];
 for i in 1..=n {
     ineqs.push(ones(n, i).untype().equal(1.));
@@ -141,7 +143,7 @@ as Cauchy-Schwarz inequalities in the codebase}.
 We then use the convenience object \verb|FlagSolver| to execute this problem
 and to print a HTML report.
 
-\begin{lstlisting}[basicstyle=\scriptsize]
+\begin{lstlisting}[basicstyle=\scriptsize, language=rust]
 let pb = Problem::<N, _> {
     ineqs,
     cs: basis.all_cs(),
