@@ -104,18 +104,18 @@ The study of graphs (Graph Theory) has been a central pillar of mathematics sinc
 bridges of Königsberg in 1736. One of the first things we can study is the fact
 that graphs can contain other graphs: Take some subset of the vertices
 and look at only those vertices and the edges between them and you end up with another graph.
-One can then ask, "How many copies of a graph $F$ are there in a graph $G$"?
+One can then ask, ``How many copies of a graph $F$ are there in a graph $G$''?
 A famous Dutch result is \textit{Mantel's theorem} which says a graph of size $n$
 with no triangles ($\triangleflag$) has $\leq \frac{n^2}{4}$ edges.
 
-We can then ask, "What is the \textit{density} of a graph $F$ in another graph $G$"? i.e. How
+We can then ask, ``What is the \textit{density} of a graph $F$ in another graph $G$''? i.e. How
 many copies of $F$ are there in $G$, divided by the max possible number of copies of $F$.
 We call this $p(F; G)$.
 Consider a graph with $n$ vertices and $m$ edges:
 There are at most $\binom{n}{2}$ edges in a graph of size $n$, so we say the \textit{edge
 density} is $p(\edge; G) = m/\binom{n}{2}$.
 We can re-write Mantel's
-theorem to say the density of edges in a triangle free graph is at most
+theorem to say the density of edges in a triangle-free graph is at most
 $m/\binom{n}{2} \leq \frac{n^2}{4}/\binom{n}{2} \approx \frac{1}{2}$.
 It turns out these densities have some
 nice properties. For example, in any graph the density of edges (\edge) and non-edges
@@ -141,8 +141,8 @@ One classic problem we made progress on is the \textit{strong edge colouring con
 Given a graph we can assign a colour to each edge. A \textit{proper} colouring is one where
 no edges which touch (share a vertex) have the same
 colour. A \textit{strong} colouring then also requires edges which touch a common edge
-have different colours. We can then ask "What is the minimum colours needed for a
-strong edge colouring"?
+have different colours. We can then ask ``What is the minimum colours needed for a
+strong edge colouring''?
 Erd\H{o}s and Nešetřil conjectured in 1985 that you only need $1.25\Delta(G)^2$ colours
 where $\Delta(G)$ is the max degree (the max number of edges at any vertex). We prove,
 using our local flags, that you need at most $1.73\Delta(G)^2$ colours,

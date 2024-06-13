@@ -2,7 +2,7 @@
 \label{app:flag_software}
 
 Our implementations of the SDP programs are built on the flag software written by
-Rémi de Verclos. In particular there are the following two projects:
+Rémi de Joannis de Verclos. In particular there are the following two projects:
 \begin{itemize}
     \item An implementation of the classic flag algebras based on work done during his
         PhD (\cite{deverclosApplicationsLimitsCombinatorial2016})
@@ -28,7 +28,7 @@ a standard open source SDP solver
 
 The implementations for the applications in this thesis can be found at these locations:
 \begin{itemize}
-    \item The "direct" pentagon bounding result, lemma
+    \item The ``direct'' pentagon bounding result, lemma
         \ref{lemma:pentagon_1_4_bound}:\\
         \verb|local-flags/examples/bounded_pentagon.rs|.
     \item The stronger pentagon bounding result, lemma
@@ -182,7 +182,7 @@ we did not prove that they were valid.
         Having\\
         \verb|HEREDITARY = false| in the graph class definition should disable
         these operations.
-    \item The \verb|rust-flag-algebra| library as written by de Verclos has some behaviour where it
+    \item The \verb|rust-flag-algebra| library as written by de Joannis de Verclos has some behaviour where it
         modifies some of the Cauchy-Schwarz matrices. I could not identify why it does
         this but I think it was intended to reduce the size of the generated SDP
         programs by taking advantage of some invariants across flags. As I could not validate what

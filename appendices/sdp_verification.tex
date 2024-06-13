@@ -10,7 +10,7 @@ solutions and find a true solution which achieves the same results.
 For some results we have a very tight bound (e.g. lemma \ref{lemma:pentagon_1_4_bound}
 is best possible by lemma \ref{lemma:pentagon_1_8_tight}). In these cases we cannot afford
 to introduce any error when finding a true solution close to the approximate one. In
-other cases there is some room for "rounding" of the approximate solution.
+other cases there is some room for ``rounding'' of the approximate solution.
 
 In section \ref{sec:pentagon_proof_validation} we showed the results of converting an
 SDP solution back into a standalone proof. This was done for elucidatory purposes,
@@ -69,7 +69,7 @@ PSD matrices I wanted to extract the associated vectors $\nu_i$ which give us th
 elements $\llbracket \nu_i^2 \rrbracket$ as described in section \ref{sec:sdp_duality}.
 The most direct way to do this is to compute the spectral decomposition, I used
 \url{https://wolframalpha.com/} to do this symbolically. However, one of the PSD matrices
-gave me some "ugly" coefficients such as $\sqrt{11 + \sqrt{89}}$. For that matrix
+gave me some ``ugly'' coefficients such as $\sqrt{11 + \sqrt{89}}$. For that matrix
 I instead used the Z3 Solver\footnote{\url{https://www.microsoft.com/en-us/research/project/z3-3/}}
 to find a nicer set of vectors $\nu_i$ such that $\sum_i \nu_i\nu_i^T$ gave the same
 matrix. This was just an aesthetic choice.
@@ -84,7 +84,7 @@ matrix. This was just an aesthetic choice.
 
 \section*{Verification Without Conversion}
 
-Most of the results in this thesis are not "tight", in the sense that we are rounding
+Most of the results in this thesis are not ``tight'', in the sense that we are rounding
 the SDP solutions up. e.g. In lemma \ref{lemma:sec_sdp_soln} we give the result that
 $10.644\emptyset - O \in\SemCone^\emptyset$, but in fact the SDP solver claims a
 better result of $10.643189$. Rounding up gives us some room to maneuver with respect

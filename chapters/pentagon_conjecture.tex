@@ -1,4 +1,4 @@
-\chapter{Application: Pentagons in Triangle Free Graphs}
+\chapter{Application: Pentagons in Triangle-Free Graphs}
 \label{chap:pentagon_conjecture}
 
 Given a graph $G$ let $P(G)$ denote the number of pentagons (5-cycles)\footnote{Counted as
@@ -6,7 +6,7 @@ subsets: the order does not matter} in $G$.
 In 1983 Erd\H{o}s made the following conjecture:
 
 \begin{knownconjecture}[Erd\H{o}s 1983 \cite{erdosProblemsGraphTheory1984}]
-    If $G$ is triangle free then $P(G) \leq \left(\frac{|G|}{5}\right)^5$.
+    If $G$ is triangle-free then $P(G) \leq \left(\frac{|G|}{5}\right)^5$.
 \end{knownconjecture}
 
 This conjecture remained open until 2012 when it was proved by both Grzesik
@@ -15,13 +15,13 @@ This conjecture remained open until 2012 when it was proved by both Grzesik
 Importantly for us, both of these papers used Razborov's flag algebras to prove the result!
 
 Inspired by Erd\H{o}s's conjecture we ask
-the following question: Can we bound the number of pentagons in a triangle free graph
+the following question: Can we bound the number of pentagons in a triangle-free graph
 as a function of the maximum degree $\Delta(G)$?
 This leads us to the following \textit{bounded-degree pentagon conjecture}:
 
 \begin{conjecture}
     \label{conj:bounded_pentagon}
-    If $G$ is triangle free then 
+    If $G$ is triangle-free then 
     $P(G) \leq \frac{|G|}{5}\left(\frac{\Delta(G)}{2}\right)^4
     =\frac{|G|\Delta(G)^4}{5\cdot 16}$.
 \end{conjecture}
@@ -29,16 +29,16 @@ This leads us to the following \textit{bounded-degree pentagon conjecture}:
 We claim then the following theorem:
 \begin{theorem}
     \label{thm:full_pentagon_bound}
-    If $G$ is triangle free then
+    If $G$ is triangle-free then
     $P(G) \leq 0.02073 \cdot |G|\Delta(G)^4 \approx 1.658\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
 \end{theorem}
 
 We proved this result using local flags, but the approach is slightly too complex to serve
-as the ``warmup'' application, so we first first prove this slightly weaker result:
+as the ``warmup'' application, so we first prove this slightly weaker result:
 
 \begin{theorem}
     \label{thm:simple_pentagon_bound}
-    If $G$ is triangle free then
+    If $G$ is triangle-free then
     $P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8} = 2\cdot\frac{|G|}{5}\frac{\Delta(G)^4}{16}$.
 \end{theorem}
 
@@ -62,7 +62,7 @@ result.
         \caption{Balanced 5-partite cycle graph on $5k/2$ vertices}
         \label{fig:5_partite_graph}
     \end{figure}
-    This graph is triangle free (clear by case analysis).
+    This graph is triangle-free (clear by case analysis).
     Then we see that choosing
     a vertex from each of the 5 supernodes gives a distinct 5-cycle so there are at
     least $\left(\frac{k}{2}\right)^5$ pentagons in the graph (this is actually exact). But
@@ -79,16 +79,16 @@ graph with a high pentagon density can be expanded to arbitrary high degree.
 \begin{lemma}
     \label{lemma:pentagon_asymp_suffices}
     If $P(G) \lesssim \lambda|G|\Delta(G)^4$ as $\Delta(G)\to\infty$ for
-    $G$ triangle free
-    then $P(G) \leq \lambda|G|\Delta(G)^4$ for all triangle free $G$.
+    $G$ triangle-free
+    then $P(G) \leq \lambda|G|\Delta(G)^4$ for all triangle-free $G$.
 \end{lemma}
 
 \begin{proof}
     More precisely our condition states that for any $\Delta$-increasing sequence of
-    triangle free graphs $(G_k)_{k\in\N}$ we have
+    triangle-free graphs $(G_k)_{k\in\N}$ we have
     $\limsup_{k\to\infty} \frac{P(G_k)}{|G|\Delta(G)^4} \leq \lambda$.
 
-    Assume then for sake of contradiction that there exists $G_0$ triangle free
+    Assume then for sake of contradiction that there exists $G_0$ triangle-free
     such that $\frac{P(G_0)}{|G_0|\Delta(G_0)^4} > \lambda$.
     Let $\delta := \frac{P(G_0)}{|G_0|\Delta(G_0)^4}$ and consider the following
     sequence of graphs $(G_k)_{k\in\N}$: Start with $G_0$ and construct
@@ -101,12 +101,12 @@ graph with a high pentagon density can be expanded to arbitrary high degree.
     \end{figure}
 
     Then we have $|G_{i+1}| = 2|G_i|$ and $\Delta(G_i) = 2\Delta(G_{i+1})$ for all
-    $i\in\N$. Note also that $G_i$ triangle free implies $G_{i+1}$ triangle free.
-    To see this consider assume $G_i$ triangle free and $G_{i+1}$ has a triangle
+    $i\in\N$. Note also that $G_i$ triangle-free implies $G_{i+1}$ triangle-free.
+    To see this consider assume $G_i$ triangle-free and $G_{i+1}$ has a triangle
     $\{u, v, w\}$. As each of $u,v,w$ are connected they must be copies of three
     different nodes from $G_i$. However such copies are connected iff their originals are
     connected so there must be a corresponding triangle in $G_i$ which is a contradiction.
-    Hence each $G_i$ is triangle free.
+    Hence each $G_i$ is triangle-free.
 
     Take any pentagon in $G_i$. This correspond to $2^5$ pentagons in $G_{i+1}$. Each
     such pentagon in $G_{i+1}$ we get by expanding a $C_5$ in $G_i$ comes from
@@ -124,7 +124,7 @@ graph with a high pentagon density can be expanded to arbitrary high degree.
         \liminf_{k\to\infty}\frac{P(G_k)}{|G_k|\Delta(G_k)^4}
         \geq \delta > \lambda
     \]
-    but $(G_k)_{k\in\N}$ is a $\Delta$-increasing sequence of triangle free graphs
+    but $(G_k)_{k\in\N}$ is a $\Delta$-increasing sequence of triangle-free graphs
     so this contradictions our assumption. Hence no such $G_0$ exists.
 \end{proof}
 
@@ -132,7 +132,7 @@ Now we show not only is it enough to show this bound asymptotically, it also suf
 to show the bound only for regular graphs.
 
 \begin{lemma}
-    For any triangle free $G$ there exists a regular triangle free $G'$ such that
+    For any triangle-free $G$ there exists a regular triangle-free $G'$ such that
     $\Delta(G')=\Delta(G)$ and
     \[
         \frac{P(G')}{|G'|\Delta(G')^4} \geq
@@ -141,7 +141,7 @@ to show the bound only for regular graphs.
 \end{lemma}
 
 \begin{proof}
-    Let $G_0$ be such a triangle free graph. Construct a sequence $(G_k)_{k\in\N}$ as
+    Let $G_0$ be such a triangle-free graph. Construct a sequence $(G_k)_{k\in\N}$ as
     follows: To construct $G_{i+1}$ take two copies of $G_i$ then for each vertex $v\in V(G_i)$
     with $\deg v < \Delta(G_i)$ add an edge to $G_{i+1}$ between the two copies of $v$.
 
@@ -150,7 +150,7 @@ to show the bound only for regular graphs.
         \includegraphics[scale=1.75]{wlog_regular_pentagon}
     \end{figure}
 
-    We show by induction that each $G_i$ is triangle free, $\Delta(G_i)=\Delta(G_0)\ \forall i\in\N$
+    We show by induction that each $G_i$ is triangle-free, $\Delta(G_i)=\Delta(G_0)\ \forall i\in\N$
     and $\frac{P(G_i)}{|G_i|\Delta(G_i)^4} \geq \frac{P(G_0)}{|G_0|\Delta(G_0)^4}$.
     $G_0$ satisfies these conditions
     by assumption; Assume they hold for $G_i$. First we argue that $G_{i+1}$ has no
@@ -160,7 +160,7 @@ to show the bound only for regular graphs.
     each vertex in $G_{i+1}$ has at most 1 neighbour outside of its own copy of $G_i$.
     Therefore adding an edge between two copies of some $v$ cannot induce a 3-cycle
     as the neighbourhoods of each copy of $v$ will be disjoint so $G_{i+1}$ is
-    triangle free. Next we show $\Delta(G_{i+1})=\Delta(G_i)=\Delta(G_0)$; This is
+    triangle-free. Next we show $\Delta(G_{i+1})=\Delta(G_i)=\Delta(G_0)$; This is
     clear as we add an edge only to vertices $v$ which have $\deg v < \Delta(G_i)=\Delta(G_0)$
     meaning we do not increase the maximum degree.
     Finally we show that
@@ -178,19 +178,19 @@ to show the bound only for regular graphs.
 \begin{corollary}
     \label{corollary:pentagon_regular_suffices}
     It suffices to show that $\frac{P(G)}{|G|\Delta(G)^4} \lesssim \lambda$
-    only for regular triangle free $G$.
+    only for regular triangle-free $G$.
 \end{corollary}
 
 \begin{proof}
     Assume the bound holds for regular graphs.
     Assume then for contradiction that
-    there is some triangle free $\Delta$-increasing sequence $(G_k)_{k\in\N}$
+    there is some triangle-free $\Delta$-increasing sequence $(G_k)_{k\in\N}$
     such that $\lim_{k\to\infty} \frac{P(G_k)}{|G_k|\Delta(G_k)^4} > \frac{1}{5\cdot 8}$.
     Then by the previous lemma we can construct a sequence
-    $(G_k')_{k\in\N}$ where each $G_k'$ is triangle free and regular
+    $(G_k')_{k\in\N}$ where each $G_k'$ is triangle-free and regular
     such that $\Delta(G_k')=\Delta(G_k)$ and
     $\frac{P(G_k')}{|G_k'|\Delta(G_k')^4} >\frac{P(G_k)}{|G_k|\Delta(G_k)^4}$
-    for all $k\in\N$. Hence this is a $\Delta$-increasing triangle free regular
+    for all $k\in\N$. Hence this is a $\Delta$-increasing triangle-free regular
     sequence such that
     \[
         \limsup_{k\to\infty} \frac{P(G_k')}{|G_k'|\Delta(G_k')}
@@ -224,7 +224,7 @@ The final reduction step is the following simple lemma
 \end{proof}
 
 Now we see how our proof of theorem \ref{thm:simple_pentagon_bound} will go.
-We need only show that for a regular triangle free graphs $G$ and
+We need only show that for a regular triangle-free graphs $G$ and
 $v\in V(G)$ we have an asymptotic bound of $P(G, v) \lesssim \frac{\Delta(G)^4}{8}$.
 This is something that local flags can prove.
 
@@ -257,7 +257,7 @@ full $\frac{|G|}{5}\frac{\Delta(G)^4}{16}$ bound as this result is tight:
     Note then that we can construct a pentagon going through $v$ by first choosing
     a vertex from each of the connected supernodes which is $\left(\frac{k}{2}\right)^2$
     choices. Then we can choose the final 2 vertices of the pentagon by either going
-    "up" or "down" and picking any vertex from each of the supernodes. This gives us
+    ``up'' or ``down'' and picking any vertex from each of the supernodes. This gives us
     $2\left(\frac{k}{2}\right)^2$ choices leading to an overall number of
     $\frac{k^4}{8}$ 5-cycles as required.
 \end{proof}
@@ -374,7 +374,7 @@ These extensions are important for the following reason:
     These relations suggest that if we focused only on regular graph classes
     from the beginning we could have quotiented out the set of relations
     $\llbracket \ext_i^\sigma - \ext_j^\sigma\rrbracket$ from our vector space $\R\HeredG^\emptyset$
-    to get a "cleaner" algebra. We have not verified that this is possible. If this is true
+    to get a ``cleaner'' algebra. We have not verified that this is possible. If this is true
     it could theoretically enable us to generate smaller semidefinite programs but we would
     need an algorithmic way of reducing vectors over this subspace which prima facie is not
     a straightforward task.
@@ -391,12 +391,12 @@ vector. This will be very useful to us.
 \section{Counting Pentagons with Local Flags}
 \label{sec:counting_pentagons}
 
-We want to use local flags to show an asymptotic bound that for any regular, triangle free
+We want to use local flags to show an asymptotic bound that for any regular, triangle-free
 graph $G$ we have
 $P(G, v) \lesssim \frac{\Delta(G)^4}{8}$ for any $v \in V(G)$.
 We first reduce this to a problem on coloured graphs.
 
-Let $\Gcl$ be the class of red-black vertex coloured graphs which are triangle free,
+Let $\Gcl$ be the class of red-black vertex coloured graphs which are triangle-free,
 regular and such that for each $G\in\Gcl$ the number of black vertices
 in $G$ is exactly $\Delta(G)$ and the set of black vertices in $G$ is independent.
 Note then that $\HeredG$ is the same class without the regularity as all other
@@ -409,12 +409,12 @@ Then we have the following reduction:
     Let $\brrb$ be the black-red-red-black path. Then for any $\lambda\in\R$
     $\frac{c(\brrb; G)}{\Delta(G)^4} \lesssim \lambda$ as
     $\Delta(G) \to \infty$ over $\Gcl$ implies $\frac{P(H, v)}{\Delta(H)^4}\lesssim\lambda$
-    as $\Delta(H)\to\infty$ over the class of regular triangle free graphs.
+    as $\Delta(H)\to\infty$ over the class of regular triangle-free graphs.
 \end{lemma}
 
 \begin{proof}
 
-    Let $G$ be a simple regular triangle free graph and fix some $v\in V(G)$. Then
+    Let $G$ be a simple regular triangle-free graph and fix some $v\in V(G)$. Then
     $|N(v)| = \Delta(G)$ and the set $N(v)$ is independent.
 
     Any pentagon containing $v$ then must contain 2 vertices of $N(v)$ and 2 vertices
@@ -632,7 +632,7 @@ SDP solution rigorous. For now we show that this bound suffices to prove theorem
         \end{split}
     \]
     Then by lemma \ref{lemma:brrb_suffices}
-    $\frac{P(G, v)}{\Delta(G)^4}\lesssim \frac{1}{8}$ for any regular triangle free
+    $\frac{P(G, v)}{\Delta(G)^4}\lesssim \frac{1}{8}$ for any regular triangle-free
     $G$ and $v \in V(G)$.
     Lemma \ref{lemma:pentagon_local_count} tells us then
     $\frac{P(G)}{|G|\Delta(G)^4}\lesssim \frac{1}{5\cdot 8}$ for any regular triangle
@@ -642,7 +642,7 @@ SDP solution rigorous. For now we show that this bound suffices to prove theorem
     asymptotic bound implies the non-asymptotic bound.
     \[
         \therefore P(G) \leq \frac{|G|}{5}\frac{\Delta(G)^4}{8}
-        \ \forall\ G\ \text{triangle free}.
+        \ \forall\ G\ \text{triangle-free}.
     \]
 \end{proof}
 
@@ -805,7 +805,7 @@ we will bound the following function. For fixed $v\in G$ define
 Then we claim
 \begin{lemma}
     \label{lemma:pent_q_v}
-    For $G$ triangle free and $v\in V(G)$
+    For $G$ triangle-free and $v\in V(G)$
     \[
         Q(G, v) \lesssim 0.2073 \Delta(G)^5
         \ \text{as}\ \Delta(G) \to\infty
@@ -815,7 +815,7 @@ Then we claim
 We will prove this lemma now using local flags.
 We use the same class of graphs $\Gcl$ as before, where the black vertices represent
 those in the neighbourhood of $v$ and the others are red.
-We've seen already then how to convert a triangle free regular graph $G$ into
+We've seen already then how to convert a triangle-free regular graph $G$ into
 the corresponding $G' \in \Gcl$ such that $\rho(\brrb, G') = P(G,v)/\binom{\Delta(G)}{4}$.
 
 Note that any pentagon passing through the neighbourhood of $v$ contains at most 2
